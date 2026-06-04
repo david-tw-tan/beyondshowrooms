@@ -49,9 +49,12 @@ const EXTREME_LANDSCAPE_TEXTURE_RATE = 1 / 3;
 /** width÷height for texture zoom frames — square or slight portrait */
 const EXTREME_LANDSCAPE_TEXTURE_ASPECTS = [1, 5 / 6, 4 / 5];
 
-/** Hosted thumbnails (GitHub Pages) — replaces local img_db_final/ */
-const THUMBNAIL_BASE_URL =
-    'https://david-tw-tan.github.io/beyond_visualizer_GS/waterfall_thumbnails/';
+/**
+ * Thumbnail folder (relative to index.html).
+ * Local dev: keep img_db_final/ in this project.
+ * GitHub Pages: upload img_db_final/ beside index.html, waterfall.js, waterfall.css.
+ */
+const THUMBNAIL_BASE_URL = 'img_db_final/';
 
 /* ═══════════════════════════════════════════
    STATE
