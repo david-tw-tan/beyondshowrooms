@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Furniture Moodboard</title>
+
+<link rel="stylesheet" href="waterfall.css">
+<script defer src="waterfall.js"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>Furniture Moodboard</h1>
+
+    <div id="bookmarkBtn">★ <span id="bookmarkCount">0</span></div>
+
+    <div class="filters">
+      <button class="filter-btn" data-cat="minimalist luxury">Minimalist Luxury</button>
+      <button class="filter-btn" data-cat="refined luxury">Refined Luxury</button>
+      <button class="filter-btn" data-cat="ultra luxury">Ultra Luxury</button>
+      <button class="filter-btn" data-cat="mid century luxury">Mid Century</button>
+      <button class="filter-btn" data-cat="playful luxury">Playful</button>
+    </div>
+</header>
+
+<div id="emptyState">
+    Choose your desired style to get started.
+</div>
+
+<div id="gallery"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+    <div class="lightbox-content">
+        <div id="starBtn">☆</div>
+        <img id="lightboxImg" />
+    </div>
+</div>
+
+<!-- BOOKMARK PAGE -->
+<div id="bookmarkView"></div>
+
+</body>
+</html>
