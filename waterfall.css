@@ -30,7 +30,7 @@ body {
 
 .home-content {
     text-align: center;
-    max-width: 720px;
+    max-width: 480px;
     width: 100%;
 }
 
@@ -44,57 +44,97 @@ body {
 .home-subtitle {
     font-size: 1.1rem;
     color: #666;
-    margin: 0 0 48px 0;
+    margin: 0 0 36px 0;
 }
 
-.home-cards {
+.home-room-heading {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 24px 0;
+}
+
+#homeView .home-room-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    width: min(400px, calc(100vw - 72px));
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+#homeView .home-room-cards .step-card {
+    box-sizing: border-box;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 12px;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+#homeView .home-room-cards .step-card-visual {
+    font-size: 3.25rem;
+    margin-bottom: 12px;
+    line-height: 1;
+}
+
+#homeView .home-room-cards .step-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#homeView .home-room-cards .step-card:hover {
+    transform: translateY(-4px);
+}
+
+.home-explore-row {
+    margin: 32px 0 0;
+    font-size: 0.95rem;
+    color: #666;
+}
+
+.home-explore-link {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.home-explore-link:hover {
+    color: #000;
 }
 
 @media (max-width: 600px) {
-    .home-cards {
-        grid-template-columns: 1fr;
-    }
     .home-title {
         font-size: 1.8rem;
     }
 }
 
-.home-card {
-    background: white;
-    border-radius: 20px;
-    padding: 40px 28px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    border: 1px solid #eee;
-    text-align: center;
-}
+@media (max-width: 420px) {
+    #homeView .home-room-cards {
+        width: min(340px, calc(100vw - 48px));
+        gap: 18px;
+    }
 
-.home-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 28px rgba(0,0,0,0.1);
-}
+    #homeView .home-room-cards .step-card-visual {
+        font-size: 2.75rem;
+    }
 
-.home-card-visual {
-    font-size: 48px;
-    margin-bottom: 16px;
-    line-height: 1;
-}
-
-.home-card h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin: 0 0 10px 0;
-}
-
-.home-card p {
-    font-size: 0.95rem;
-    color: #666;
-    margin: 0;
-    line-height: 1.5;
+    #homeView .home-room-cards .step-card h3 {
+        font-size: 1rem;
+    }
 }
 
 /* ═══════════════════════════════════════════
@@ -145,69 +185,6 @@ body {
     margin: 0 0 36px 0;
 }
 
-/* Room picker: 2×2 square tiles (fixed grid width so layout stays on screen) */
-#stepRoomView .step-content {
-    max-width: 480px;
-}
-
-#stepRoomView .step-title {
-    margin-top: 40px;
-}
-
-#stepRoomView .step-subtitle {
-    margin-bottom: 28px;
-}
-
-#stepRoomView .step-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px;
-    width: min(400px, calc(100vw - 72px));
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-#stepRoomView .step-card {
-    box-sizing: border-box;
-    aspect-ratio: 1 / 1;
-    width: 100%;
-    max-width: 100%;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 18px 12px;
-    border-radius: 18px;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-#stepRoomView .step-card-visual {
-    font-size: 3.25rem;
-    margin-bottom: 12px;
-    line-height: 1;
-}
-
-#stepRoomView .step-card h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-@media (max-width: 420px) {
-    #stepRoomView .step-cards {
-        width: min(340px, calc(100vw - 48px));
-        gap: 18px;
-    }
-
-    #stepRoomView .step-card-visual {
-        font-size: 2.75rem;
-    }
-
-    #stepRoomView .step-card h3 {
-        font-size: 1rem;
-    }
-}
-
 .step-card {
     background: white;
     border-radius: 16px;
@@ -240,10 +217,6 @@ body {
     font-size: 1.15rem;
     font-weight: 600;
     margin: 0;
-}
-
-#stepRoomView .step-card:hover {
-    transform: translateY(-4px);
 }
 
 /* Style toggles (step 2) */

@@ -5,67 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Furniture Moodboard</title>
 
-<link rel="stylesheet" href="waterfall.css?v=collection-id-headers">
-<script defer src="waterfall.js?v=bookmark-detail-direct"></script>
+<link rel="stylesheet" href="waterfall.css?v=combined-start">
+<script defer src="waterfall.js?v=bookmark-2col-mobile"></script>
 </head>
 
 <body>
 
 <!-- ═══════════════════════════════════════
-     HOME VIEW
+     START — room + explore link (step 1)
      ═══════════════════════════════════════ -->
 <div id="homeView">
     <div class="home-content">
         <h1 class="home-title">Furniture Moodboard</h1>
         <p class="home-subtitle">Discover your style. Design your space.</p>
 
-        <div class="home-cards">
-            <div class="home-card" id="exploreCard">
-                <div class="home-card-visual">✨</div>
-                <h2>Explore Styles</h2>
-                <p>Browse curated furniture imagery to discover what resonates with you</p>
-            </div>
-            <div class="home-card" id="designCard">
-                <div class="home-card-visual">🛋️</div>
-                <h2>Design a Room</h2>
-                <p>Find the perfect pieces for your specific room and style</p>
-            </div>
-        </div>
-    </div>
-</div>
+        <h2 class="home-room-heading">Which room are you designing?</h2>
 
-<!-- ═══════════════════════════════════════
-     DESIGN ROOM — STEP 1: SELECT ROOM
-     ═══════════════════════════════════════ -->
-<div id="stepRoomView" class="step-view" style="display:none;">
-    <div class="step-content">
-        <button class="back-btn" id="backFromRoom">← Back</button>
-        <h2 class="step-title">Select a Room</h2>
-        <p class="step-subtitle">Which room are you designing?</p>
-
-        <div class="step-cards">
-            <div class="step-card" data-room="bedroom">
+        <div class="step-cards home-room-cards">
+            <div class="step-card" data-room="bedroom" role="button" tabindex="0">
                 <div class="step-card-visual">🛏️</div>
                 <h3>Bedroom</h3>
             </div>
-            <div class="step-card" data-room="living">
+            <div class="step-card" data-room="living" role="button" tabindex="0">
                 <div class="step-card-visual">🛋️</div>
                 <h3>Living Room</h3>
             </div>
-            <div class="step-card" data-room="dining">
+            <div class="step-card" data-room="dining" role="button" tabindex="0">
                 <div class="step-card-visual">🍽️</div>
                 <h3>Dining Room</h3>
             </div>
-            <div class="step-card" data-room="study">
+            <div class="step-card" data-room="study" role="button" tabindex="0">
                 <div class="step-card-visual">📚</div>
                 <h3>Study Room</h3>
             </div>
         </div>
+
+        <p class="home-explore-row">
+            Just browsing?
+            <button type="button" id="exploreStylesLink" class="home-explore-link">Explore styles →</button>
+        </p>
     </div>
 </div>
 
 <!-- ═══════════════════════════════════════
-     DESIGN ROOM — STEP 2: SELECT STYLE
+     SELECT STYLE (step 2)
      ═══════════════════════════════════════ -->
 <div id="stepStyleView" class="step-view" style="display:none;">
     <div class="step-content">

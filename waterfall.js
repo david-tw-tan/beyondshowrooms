@@ -80,10 +80,9 @@ let PRODUCT_TYPES = [];                           // extracted from data for aut
    DOM REFS
    ═══════════════════════════════════════════ */
 const views = {
-    home:      document.getElementById('homeView'),
-    room:      document.getElementById('stepRoomView'),
-    style:     document.getElementById('stepStyleView'),
-    gallery:   document.getElementById('galleryView')
+    home:    document.getElementById('homeView'),
+    style:   document.getElementById('stepStyleView'),
+    gallery: document.getElementById('galleryView')
 };
 
 const gallery      = document.getElementById('gallery');
@@ -434,21 +433,26 @@ function enterExplore() {
 }
 
 /* ═══════════════════════════════════════════
-   DESIGN A ROOM  —  Step 1: Room
+   START  —  Room (step 1) + Explore link
    ═══════════════════════════════════════════ */
-function enterDesignRoom() {
-    showView('room');
+function selectRoomAndEnterStyle(room) {
+    selectedRoom = room;
+    document.getElementById('selectedRoomLabel').textContent = formatRoomLabel(selectedRoom);
+    enterDesignStyle();
 }
 
-document.querySelectorAll('#stepRoomView .step-card').forEach(card => {
-    card.addEventListener('click', () => {
-        selectedRoom = card.dataset.room;
-        document.getElementById('selectedRoomLabel').textContent = formatRoomLabel(selectedRoom);
-        enterDesignStyle();
+document.querySelectorAll('#homeView .step-card').forEach(card => {
+    const room = card.dataset.room;
+    card.addEventListener('click', () => selectRoomAndEnterStyle(room));
+    card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectRoomAndEnterStyle(room);
+        }
     });
 });
 
-document.getElementById('backFromRoom').addEventListener('click', goHome);
+document.getElementById('exploreStylesLink').addEventListener('click', enterExplore);
 
 /* ═══════════════════════════════════════════
    DESIGN A ROOM  —  Step 2: Style
@@ -499,19 +503,13 @@ document.getElementById('showResultsBtn').addEventListener('click', () => {
 
 document.getElementById('backFromStyle').addEventListener('click', () => {
     designFilters.clear();
-    showView('room');
+    showView('home');
 });
 
 /* ═══════════════════════════════════════════
    HOME BUTTON
    ═══════════════════════════════════════════ */
 document.getElementById('homeBtn').addEventListener('click', goHome);
-
-/* ═══════════════════════════════════════════
-   HOME CARDS
-   ═══════════════════════════════════════════ */
-document.getElementById('exploreCard').addEventListener('click', enterExplore);
-document.getElementById('designCard').addEventListener('click', enterDesignRoom);
 
 /* ═══════════════════════════════════════════
    FILTER RENDERING
@@ -998,7 +996,6 @@ function getGalleryColumnCount() {
 
 function getBookmarkColumnCount(container) {
     const w = container.clientWidth || window.innerWidth;
-    if (w <= 520) return 1;
     if (w <= 1000) return 2;
     return 3;
 }
