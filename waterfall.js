@@ -132,6 +132,8 @@ const views = {
 
 const gallery      = document.getElementById('gallery');
 const emptyState   = document.getElementById('emptyState');
+const galleryShowroomNote = document.getElementById('galleryShowroomNote');
+const accessoriesShowroomNote = document.getElementById('accessoriesShowroomNote');
 const filterContainer = document.getElementById('filterContainer');
 const galleryTitle    = document.getElementById('galleryTitle');
 const lightbox     = document.getElementById('lightbox');
@@ -1008,6 +1010,16 @@ searchModal.addEventListener('click', (e) => {
     }
 });
 
+function setGalleryShowroomNoteVisible(visible) {
+    if (!galleryShowroomNote) return;
+    galleryShowroomNote.hidden = !visible;
+}
+
+function setAccessoriesShowroomNoteVisible(visible) {
+    if (!accessoriesShowroomNote) return;
+    accessoriesShowroomNote.hidden = !visible;
+}
+
 /* ═══════════════════════════════════════════
    GALLERY RENDERING
    ═══════════════════════════════════════════ */
@@ -1018,6 +1030,7 @@ function render() {
         emptyState.style.display = 'flex';
         gallery.style.display = 'none';
         emptyState.textContent = 'Choose a style to get started.';
+        setGalleryShowroomNoteVisible(false);
         return;
     }
 
@@ -1093,6 +1106,7 @@ function render() {
         emptyState.style.display = 'flex';
         gallery.style.display = 'none';
         emptyState.textContent = getEmptyMessage();
+        setGalleryShowroomNoteVisible(false);
         updateScrollToTopButton();
         return;
     }
@@ -1104,6 +1118,7 @@ function render() {
     const columnCount = getGalleryColumnCount();
     distributeMasonryCards(gallery, cards, columnCount);
     lastGalleryLayoutColumns = columnCount;
+    setGalleryShowroomNoteVisible(true);
     updateScrollToTopButton();
 }
 
@@ -1288,7 +1303,7 @@ function syncCardStars(container, thumbUrl, bookmarked) {
     container.querySelectorAll('.card').forEach(card => {
         if (card.dataset.thumbUrl !== thumbUrl) return;
         const star = card.querySelector('.star-thumb');
-        if (star) star.style.display = bookmarked ? 'block' : 'none';
+        if (star) star.style.display = bookmarked ? 'flex' : 'none';
     });
 }
 
@@ -1344,7 +1359,8 @@ function renderAccessoriesView() {
         accessoriesEmpty.style.display = 'block';
         accessoriesGallery.style.display = 'none';
         accessoriesEmpty.textContent =
-            'No accessory images for this room with your current style and price filters.';
+            'No accessory images for this room with your current price filters.';
+        setAccessoriesShowroomNoteVisible(false);
         lastAccessoriesLayoutColumns = null;
         updateScrollToTopButton();
         return;
@@ -1357,6 +1373,7 @@ function renderAccessoriesView() {
     const columnCount = getGalleryColumnCount();
     distributeMasonryCards(accessoriesGallery, cards, columnCount);
     lastAccessoriesLayoutColumns = columnCount;
+    setAccessoriesShowroomNoteVisible(true);
     updateScrollToTopButton();
 }
 
@@ -1421,7 +1438,7 @@ function createGalleryCard(item, options = {}) {
     star.className = 'star-thumb';
     star.textContent = '★';
     if (isBookmarked(hero)) {
-        star.style.display = 'block';
+        star.style.display = 'flex';
     }
 
     if (shouldShowSetBadge(item)) {
@@ -1821,10 +1838,12 @@ function updateLightboxStar() {
     if (!currentLightboxItem) return;
     if (isBookmarked(currentLightboxItem)) {
         starBtn.textContent = '★';
-        starBtn.style.color = '#c4a97a';
+        starBtn.classList.add('starred');
+        starBtn.dataset.starred = 'true';
     } else {
         starBtn.textContent = '☆';
-        starBtn.style.color = 'rgba(255, 255, 255, 0.88)';
+        starBtn.classList.remove('starred');
+        delete starBtn.dataset.starred;
     }
 }
 

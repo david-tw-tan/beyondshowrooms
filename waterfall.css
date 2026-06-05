@@ -18,6 +18,8 @@
     --color-brass: #a68b5b;
     --color-brass-light: #c4a97a;
     --color-brass-muted: rgba(166, 139, 91, 0.14);
+    --color-star-active: #e2c06a;
+    --color-star-active-deep: #d4af58;
 
     --color-inverse: #141312;
     --color-inverse-surface: #1e1d1b;
@@ -1047,6 +1049,58 @@ header .active-search-row {
     background: var(--color-surface-elevated);
 }
 
+.waterfall-showroom-note {
+    max-width: 22rem;
+    margin: 0 auto;
+    padding: 8px 20px 52px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.waterfall-showroom-note-kicker {
+    margin: 0 0 7px;
+    font-family: var(--font-display);
+    font-size: clamp(0.92rem, 2.8vw, 1.05rem);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    color: var(--color-brass);
+    opacity: 0.9;
+}
+
+.waterfall-showroom-note-line {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-ink-faint);
+}
+
+.waterfall-showroom-note--accessories {
+    position: relative;
+    z-index: 1;
+    max-width: 24rem;
+    padding: 4px 20px 56px;
+}
+
+.waterfall-showroom-note--accessories .waterfall-showroom-note-kicker {
+    color: #d8c4a0;
+    opacity: 0.95;
+}
+
+.waterfall-showroom-note--accessories .waterfall-showroom-note-line {
+    color: rgba(255, 255, 255, 0.58);
+}
+
+#galleryView.gallery-view--explore .waterfall-showroom-note {
+    background: var(--color-surface);
+}
+
+#galleryView.gallery-view--design .waterfall-showroom-note {
+    background: var(--color-surface-elevated);
+}
+
 #gallery.masonry-layout,
 .bookmark-waterfall.masonry-layout {
     display: flex !important; /* beats any legacy inline display:block on #gallery */
@@ -1137,11 +1191,23 @@ header .active-search-row {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 15px;
-    color: var(--color-brass-light);
+    z-index: 3;
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    background: rgba(20, 19, 18, 0.52);
+    color: var(--color-star-active);
+    font-size: 14px;
+    line-height: 1;
     display: none;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* collection badge (bottom-left) */
@@ -1700,7 +1766,8 @@ header .active-search-row {
 
 #starBtn.starred,
 #starBtn[data-starred="true"] {
-    color: var(--color-brass-light);
+    color: var(--color-star-active);
+    border-color: rgba(226, 192, 106, 0.45);
 }
 
 .lightbox-close {
@@ -2106,7 +2173,7 @@ header .active-search-row {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 50%;
     background: rgba(20, 19, 18, 0.48);
-    color: var(--color-brass-light);
+    color: var(--color-star-active);
     font-size: 16px;
     line-height: 1;
     cursor: pointer;
