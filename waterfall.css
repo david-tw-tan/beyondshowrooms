@@ -28,10 +28,12 @@ body {
    ═══════════════════════════════════════════ */
 #homeView {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
+    box-sizing: border-box;
 }
 
 .home-content {
@@ -120,6 +122,18 @@ body {
 
 .home-explore-link:hover {
     color: #000;
+}
+
+@media (max-width: 768px) {
+    /* Bottom Safari/Chrome bar makes true vertical center feel low — nudge up */
+    #homeView {
+        padding-top: max(20px, env(safe-area-inset-top, 0px));
+        padding-bottom: calc(max(24px, env(safe-area-inset-bottom, 0px)) + 10vh);
+    }
+
+    #homeView .home-content {
+        transform: translateY(-5vh);
+    }
 }
 
 @media (max-width: 600px) {
