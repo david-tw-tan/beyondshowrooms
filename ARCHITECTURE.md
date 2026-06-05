@@ -52,7 +52,7 @@ Keyword search skips multi-cycle logic and shuffles the filtered list (see **Key
 ### Accessories view (design room only)
 
 - Link under price filters: **Add room accessories →** (slides in from the right).
-- **Accessory heroes** only (`loose_item`, `*_A.jpg`, `anchor_item` not `yes`) for the current `room_type`, respecting style + price filters. Same star bookmarks as the anchor gallery.
+- **Accessory heroes** only (`loose_item`, `*_A.jpg`, `anchor_item` not `yes`) for the current `room_type`. **Price** filters only (shared with anchor gallery — toggling either surface updates both). **Style** filters do not apply to accessories. Same star bookmarks as the anchor gallery.
 - Tap thumbnail → lightbox **overview** of all variants (`A`/`B`/`C`…) when multiple photos exist, else detail.
 - Back: **‹** returns to anchor waterfall. Disclaimer notes factory-dependent availability.
 

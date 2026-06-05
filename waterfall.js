@@ -117,6 +117,7 @@ let lightboxMode = null;           // 'overview' | 'detail'
 let lightboxOverviewAnchor = null; // anchor when overview is active
 
 let priceFilters = new Set(['premium', 'luxury']); // design mode: both active by default
+const PRICE_FILTER_OPTIONS = ['premium', 'luxury'];
 let productSearch = '';                           // design mode: product type search
 let PRODUCT_TYPES = [];                           // extracted from data for autocomplete
 
@@ -173,6 +174,8 @@ const accessoriesTitle   = document.getElementById('accessoriesTitle');
 const accessoriesSubtitle = document.getElementById('accessoriesSubtitle');
 const accessoriesGallery = document.getElementById('accessoriesGallery');
 const accessoriesEmpty   = document.getElementById('accessoriesEmpty');
+const accessoriesPriceFilterContainer =
+    document.getElementById('accessoriesPriceFilters');
 const scrollToTopBtn     = document.getElementById('scrollToTopBtn');
 
 /* ═══════════════════════════════════════════
@@ -753,31 +756,58 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+function togglePriceFilter(price) {
+    if (priceFilters.has(price) && priceFilters.size === 1) return false;
+    if (priceFilters.has(price)) priceFilters.delete(price);
+    else priceFilters.add(price);
+    return true;
+}
+
+function syncPriceFilterButtons(container) {
+    if (!container) return;
+    container.querySelectorAll('.filter-btn[data-price]').forEach(btn => {
+        btn.classList.toggle('active', priceFilters.has(btn.dataset.price));
+    });
+}
+
+function onPriceFiltersChanged() {
+    syncPriceFilterButtons(priceFilterContainer);
+    syncPriceFilterButtons(accessoriesPriceFilterContainer);
+    updateGalleryHeader();
+    if (isAccessoriesViewOpen()) {
+        renderAccessoriesView();
+    } else if (currentMode === 'design') {
+        render();
+    }
+}
+
+function buildPriceFilterButton(price) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'filter-btn';
+    btn.dataset.price = price;
+    btn.textContent = priceLabel(price);
+    if (priceFilters.has(price)) btn.classList.add('active');
+    btn.addEventListener('click', () => {
+        if (!togglePriceFilter(price)) return;
+        onPriceFiltersChanged();
+    });
+    return btn;
+}
+
 function renderPriceFilters() {
+    if (!priceFilterContainer) return;
     priceFilterContainer.innerHTML = '';
+    PRICE_FILTER_OPTIONS.forEach(price => {
+        priceFilterContainer.appendChild(buildPriceFilterButton(price));
+    });
+}
 
-    const PRICE_OPTIONS = ['premium', 'luxury'];
-    PRICE_OPTIONS.forEach(price => {
-        const btn = document.createElement('button');
-        btn.className = 'filter-btn';
-        btn.textContent = priceLabel(price);
-        if (priceFilters.has(price)) btn.classList.add('active');
-
-        btn.addEventListener('click', () => {
-            // Prevent deselecting the last active price filter
-            if (priceFilters.has(price) && priceFilters.size === 1) {
-                return; // must keep at least one
-            }
-
-            if (priceFilters.has(price)) priceFilters.delete(price);
-            else priceFilters.add(price);
-
-            btn.classList.toggle('active');
-            updateGalleryHeader();
-            render();
-        });
-
-        priceFilterContainer.appendChild(btn);
+function renderAccessoriesPriceFilters() {
+    if (!accessoriesPriceFilterContainer) return;
+    accessoriesPriceFilterContainer.innerHTML = '';
+    PRICE_FILTER_OPTIONS.forEach(price => {
+        accessoriesPriceFilterContainer.appendChild(buildPriceFilterButton(price));
     });
 }
 
@@ -1279,9 +1309,6 @@ function buildAccessoriesBrowseList() {
             x.anchor_item !== 'yes'
     );
 
-    if (designFilters.size > 0) {
-        list = list.filter(x => designFilters.has(x.style_cat));
-    }
     if (priceFilters.size > 0) {
         list = list.filter(x => priceFilters.has(x.price_level));
     }
@@ -1341,6 +1368,7 @@ function isAccessoriesViewOpen() {
 function openAccessoriesView() {
     if (currentMode !== 'design' || !selectedRoom || !accessoriesView) return;
 
+    renderAccessoriesPriceFilters();
     renderAccessoriesView();
 
     views.gallery.classList.add('gallery-view--accessories-behind');
@@ -1366,6 +1394,10 @@ function closeAccessoriesView() {
     const finish = () => {
         if (!isAccessoriesViewOpen()) {
             accessoriesView.style.display = 'none';
+            syncPriceFilterButtons(priceFilterContainer);
+            if (currentMode === 'design') {
+                render();
+            }
         }
     };
 
@@ -2103,15 +2135,31 @@ function createBookmarkTop(headerHtml) {
     return top;
 }
 
-function countVisibleBookmarkPieces(byRoom) {
-    let n = 0;
-    Object.values(byRoom).forEach(room => {
-        room.collections.forEach(coll => {
-            n += 1 + coll.nested.length;
-        });
-        n += room.loose.length;
+function countBookmarkSubtitleTotals() {
+    let collections = 0;
+    let standalone = 0;
+    BOOKMARKS.forEach(item => {
+        const hero = toHeroItem(item);
+        if (hero.img_category === 'collection') {
+            collections += 1;
+        } else if (
+            hero.img_category === 'loose_item' ||
+            hero.img_category === 'collection_item'
+        ) {
+            standalone += 1;
+        }
     });
-    return n;
+    return { collections, standalone };
+}
+
+function formatBookmarkHeaderCount() {
+    const { collections, standalone } = countBookmarkSubtitleTotals();
+    const collLabel = collections === 1 ? 'collection' : 'collections';
+    const pieceLabel = standalone === 1 ? 'standalone piece' : 'standalone pieces';
+    return (
+        `<strong>${collections}</strong> ${collLabel}` +
+        ` · <strong>${standalone}</strong> ${pieceLabel}`
+    );
 }
 
 /** Multi-piece block: anchor + at least one collection_item on the board. */
@@ -2164,15 +2212,10 @@ function renderBookmarkView() {
     }
 
     const byRoom = buildBookmarkGroups();
-    const visibleCount = countVisibleBookmarkPieces(byRoom);
-    const starredCount = BOOKMARKS.size;
 
     bookmarkView.appendChild(createBookmarkTop(`
         <h2>Your Favorites</h2>
-        <p class="bookmark-header-count">
-            <strong>${starredCount}</strong> starred
-            · <strong>${visibleCount}</strong> piece${visibleCount !== 1 ? 's' : ''} on your board
-        </p>
+        <p class="bookmark-header-count">${formatBookmarkHeaderCount()}</p>
     `));
 
     const scroll = document.createElement('div');
