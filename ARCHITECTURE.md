@@ -58,6 +58,12 @@ Keyword search skips multi-cycle logic and shuffles the filtered list (see **Key
 
 ---
 
+## Scroll to top (gallery waterfalls)
+
+Fixed **↑** control appears after ~520px scroll on **Explore**, **Design** gallery, and **Accessories** (not bookmark manager, lightbox, or search modal). Scrolls the active surface (`window` or `#accessoriesView`) smoothly to top.
+
+---
+
 ## Thumbnail aspect — landscape crop (gallery/bookmarks)
 
 **Scope:** Gallery + bookmark waterfall thumbs only. **Lightbox:** full natural aspect (`object-fit: contain`).

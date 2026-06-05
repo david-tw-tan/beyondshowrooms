@@ -1891,3 +1891,62 @@ header .active-search-row {
     cursor: pointer;
 }
 
+/* ═══════════════════════════════════════════
+   SCROLL TO TOP  (gallery + accessories waterfalls)
+   ═══════════════════════════════════════════ */
+.scroll-to-top {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: max(20px, env(safe-area-inset-bottom, 0px));
+    z-index: 1600;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.96);
+    color: #222;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(14px) scale(0.92);
+    pointer-events: none;
+    transition:
+        opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.15s ease;
+}
+
+.scroll-to-top.scroll-to-top--visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.scroll-to-top:hover {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-to-top:active {
+    transform: translateY(0) scale(0.96);
+}
+
+.scroll-to-top-icon {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-to-top {
+        transition: opacity 0.15s ease;
+    }
+
+    .scroll-to-top:active {
+        transform: none;
+    }
+}
+

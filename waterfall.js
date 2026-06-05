@@ -173,6 +173,56 @@ const accessoriesTitle   = document.getElementById('accessoriesTitle');
 const accessoriesSubtitle = document.getElementById('accessoriesSubtitle');
 const accessoriesGallery = document.getElementById('accessoriesGallery');
 const accessoriesEmpty   = document.getElementById('accessoriesEmpty');
+const scrollToTopBtn     = document.getElementById('scrollToTopBtn');
+
+/* ═══════════════════════════════════════════
+   SCROLL TO TOP  (gallery + accessories only)
+   ═══════════════════════════════════════════ */
+const SCROLL_TO_TOP_THRESHOLD = 520;
+let scrollToTopRaf = 0;
+
+function isWaterfallScrollContextActive() {
+    if (!scrollToTopBtn) return false;
+    if (bookmarkView && bookmarkView.style.display === 'block') return false;
+    if (lightbox && lightbox.style.display === 'flex') return false;
+    if (searchModal && searchModal.style.display === 'flex') return false;
+    if (accessoriesView && isAccessoriesViewOpen()) return true;
+    return views.gallery && views.gallery.style.display !== 'none' && !!currentMode;
+}
+
+function getWaterfallScrollTop() {
+    if (accessoriesView && isAccessoriesViewOpen()) {
+        return accessoriesView.scrollTop;
+    }
+    return window.scrollY || document.documentElement.scrollTop || 0;
+}
+
+function scrollWaterfallToTop() {
+    if (accessoriesView && isAccessoriesViewOpen()) {
+        accessoriesView.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateScrollToTopButton() {
+    if (!scrollToTopBtn) return;
+
+    const show =
+        isWaterfallScrollContextActive() &&
+        getWaterfallScrollTop() >= SCROLL_TO_TOP_THRESHOLD;
+
+    scrollToTopBtn.classList.toggle('scroll-to-top--visible', show);
+    scrollToTopBtn.setAttribute('aria-hidden', show ? 'false' : 'true');
+}
+
+function scheduleScrollToTopUpdate() {
+    if (scrollToTopRaf) return;
+    scrollToTopRaf = requestAnimationFrame(() => {
+        scrollToTopRaf = 0;
+        updateScrollToTopButton();
+    });
+}
 
 /* ═══════════════════════════════════════════
    DATA LOADING
@@ -247,6 +297,7 @@ function showView(name) {
     if (name === 'gallery') {
         views.gallery.style.display = 'block';
     }
+    updateScrollToTopButton();
 }
 
 function goHome() {
@@ -805,6 +856,7 @@ function handleFilterClick(style, btn) {
    ═══════════════════════════════════════════ */
 function openSearchModal() {
     searchModal.style.display = 'flex';
+    updateScrollToTopButton();
     searchModalInput.value = productSearch;
     searchModalClear.style.display = productSearch ? 'flex' : 'none';
     if (searchModalRoomNote) {
@@ -817,6 +869,7 @@ function openSearchModal() {
 function closeSearchModal() {
     searchModal.style.display = 'none';
     hideModalSuggestions();
+    updateScrollToTopButton();
 }
 
 searchIcon.addEventListener('click', openSearchModal);
@@ -1010,6 +1063,7 @@ function render() {
         emptyState.style.display = 'flex';
         gallery.style.display = 'none';
         emptyState.textContent = getEmptyMessage();
+        updateScrollToTopButton();
         return;
     }
 
@@ -1020,6 +1074,7 @@ function render() {
     const columnCount = getGalleryColumnCount();
     distributeMasonryCards(gallery, cards, columnCount);
     lastGalleryLayoutColumns = columnCount;
+    updateScrollToTopButton();
 }
 
 function getEmptyMessage() {
@@ -1264,6 +1319,7 @@ function renderAccessoriesView() {
         accessoriesEmpty.textContent =
             'No accessory images for this room with your current style and price filters.';
         lastAccessoriesLayoutColumns = null;
+        updateScrollToTopButton();
         return;
     }
 
@@ -1274,6 +1330,7 @@ function renderAccessoriesView() {
     const columnCount = getGalleryColumnCount();
     distributeMasonryCards(accessoriesGallery, cards, columnCount);
     lastAccessoriesLayoutColumns = columnCount;
+    updateScrollToTopButton();
 }
 
 function isAccessoriesViewOpen() {
@@ -1293,6 +1350,7 @@ function openAccessoriesView() {
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             accessoriesView.classList.add('accessories-view--open');
+            updateScrollToTopButton();
         });
     });
 }
@@ -1301,6 +1359,7 @@ function closeAccessoriesView() {
     if (!accessoriesView) return;
 
     accessoriesView.classList.remove('accessories-view--open');
+    updateScrollToTopButton();
     views.gallery.classList.remove('gallery-view--accessories-behind');
     accessoriesView.setAttribute('aria-hidden', 'true');
 
@@ -1585,6 +1644,7 @@ function openLightboxOverview(anchor, opts) {
 
     lightboxBackBtn.style.display = 'flex';
     lightbox.style.display = 'flex';
+    updateScrollToTopButton();
 }
 
 function showLightboxDetailImage(item) {
@@ -1630,6 +1690,7 @@ function openLightboxDetail(item, options = {}) {
 
     showLightboxDetailImage(item);
     lightbox.style.display = 'flex';
+    updateScrollToTopButton();
 }
 
 function openLightbox(item, options = {}) {
@@ -1690,6 +1751,7 @@ function closeLightbox() {
     lightboxCloseBtn.style.display = 'none';
     lightboxBackBtn.style.display = 'none';
     applyLightboxOverviewLayout();
+    updateScrollToTopButton();
 
     if (bookmarkView.style.display === 'block') {
         renderBookmarkView();
@@ -1717,6 +1779,7 @@ function dismissLightbox() {
     lightboxCloseBtn.style.display = 'none';
     lightboxBackBtn.style.display = 'none';
     applyLightboxOverviewLayout();
+    updateScrollToTopButton();
     if (wasAccessories && isAccessoriesViewOpen()) {
         renderAccessoriesView();
     }
@@ -1909,6 +1972,7 @@ function loadBookmarks() {
 bookmarkBtn.addEventListener('click', () => {
     renderBookmarkView();
     bookmarkView.style.display = 'block';
+    updateScrollToTopButton();
 });
 
 function buildBookmarkGroups() {
@@ -2001,6 +2065,7 @@ function clearAllBookmarks() {
 
 function closeBookmarkView() {
     bookmarkView.style.display = 'none';
+    updateScrollToTopButton();
 }
 
 function createBookmarkToolbar() {
@@ -2339,6 +2404,18 @@ if (window.visualViewport) {
         clearTimeout(masonryResizeTimer);
         masonryResizeTimer = setTimeout(handleMasonryResize, 200);
     });
+}
+
+if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', () => {
+        scrollWaterfallToTop();
+    });
+    window.addEventListener('scroll', scheduleScrollToTopUpdate, { passive: true });
+    if (accessoriesView) {
+        accessoriesView.addEventListener('scroll', scheduleScrollToTopUpdate, {
+            passive: true
+        });
+    }
 }
 
 loadData();
