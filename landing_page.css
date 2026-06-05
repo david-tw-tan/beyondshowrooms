@@ -599,6 +599,15 @@ a {
     color: var(--color-inverse-muted);
 }
 
+.lp-step__assurance {
+    display: block;
+    margin-top: 0.75rem;
+}
+
+.lp-section--inverse .lp-step__assurance {
+    color: var(--color-brass-light);
+}
+
 @media (min-width: 900px) {
     .lp-process__grid {
         grid-template-columns: repeat(3, 1fr);
