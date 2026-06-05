@@ -115,7 +115,7 @@ body {
 .home-room-heading {
     font-family: var(--font-display);
     font-size: clamp(1.1rem, 3.2vw, 1.25rem);
-    font-weight: 500;
+    font-weight: 600;
     font-style: italic;
     color: var(--color-ink);
     margin: 0 0 20px 0;
@@ -220,12 +220,30 @@ body {
 
 #homeView .home-room-cards .step-card h3 {
     margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
     font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: var(--tracking-caps);
     text-transform: uppercase;
     color: #fff;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+#homeView .home-room-cards .step-card-arrow {
+    font-size: 0.82rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    opacity: 0.92;
+    transition: transform var(--transition-fast);
+}
+
+#homeView .home-room-cards .step-card:hover .step-card-arrow,
+#homeView .home-room-cards .step-card:focus-visible .step-card-arrow {
+    transform: translateX(3px);
 }
 
 #homeView .home-room-cards .step-card:hover {
