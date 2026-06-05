@@ -9,12 +9,49 @@ const STYLE_OPTIONS = [
     'mid century luxury',
     'playful luxury'
 ];
+
+const STYLE_DESCRIPTIONS = {
+    'minimalist luxury':
+        'Refined simplicity and restrained design with exceptional clarity and purpose.',
+    'refined luxury':
+        'Elegant luxury defined by premium materials, balanced richness, and timeless appeal.',
+    'ultra luxury':
+        'Bold, expressive interiors defined by maximal opulence and statement-making design.',
+    'mid century luxury':
+        'Iconic mid-century forms reimagined through a modern luxury lens.',
+    'playful luxury':
+        'Youthful, expressive, and experimental design inspired by emerging trends and social-media culture.'
+};
+
+/** Short chip labels (data keys stay full "… luxury" strings). */
+const STYLE_LABELS = {
+    'minimalist luxury': 'Minimalist',
+    'refined luxury': 'Refined Luxury',
+    'ultra luxury': 'Ultra Luxury',
+    'mid century luxury': 'Mid Century',
+    'playful luxury': 'Playful'
+};
+
+function styleLabel(style) {
+    return STYLE_LABELS[style] || capitalize(style);
+}
+
+const PRICE_LABELS = {
+    premium: 'Premium $',
+    luxury: 'Luxury $$'
+};
+
+function priceLabel(price) {
+    return PRICE_LABELS[price] || capitalize(price);
+}
+
 const ROOM_OPTIONS = ['bedroom', 'living', 'dining', 'study'];
 
 /* ═══════════════════════════════════════════
    WATERFALL MIX RATIOS (tune these, 0.0–1.0)
-   Target share of *visible* tiles that are img_category "collection"
-   (remainder = "loose_item"; collection_item never appears in waterfall)
+   Browse pool: anchor_item === "yes" only (staged sets + manual anchor loose heroes).
+   Target share of visible tiles that are img_category "collection"
+   (remainder = anchor loose_item heroes; collection_item never in waterfall).
    ═══════════════════════════════════════════ */
 const EXPLORE_COLL_RATIO = 0.70;
 const DESIGN_COLL_RATIO  = 0.70;
@@ -28,23 +65,30 @@ const EXPLORE_ROOM_WEIGHT = {
 };
 const EXPLORE_ROOM_ORDER = ['living', 'bedroom', 'dining', 'study'];
 
-/** Browse feed: cycle 1 = heroes; cycle 2 = variants (+ fill). Search skips cycles. */
-const FEED_CYCLE_COUNT = 2;
-const CYCLE2_EXPLORE_COLL_RATIO = 0.80;
-const CYCLE2_DESIGN_COLL_RATIO  = 0.80;
+/**
+ * Browse feed (search off):
+ *   Cycle 1 — anchor A heroes, 70/30 collection vs anchor loose
+ *   Cycle 2 — remaining anchor A heroes (same mix)
+ *   Cycle 3 — remaining A if any; else B.jpg per shown piece, else repeat A (C+ lightbox only)
+ *   Tail — any anchor A still missing (guaranteed drain; interleaved, no cap)
+ */
+const FEED_CYCLE_COUNT = 3;
+
+/** Waterfall-only extra angle when all anchor A heroes were already shown. */
+const WATERFALL_EXTRA_VARIANT_SUFFIX = 'B';
 
 /**
- * Thumbnail crop: extreme landscape only (gallery/bookmarks). Lightbox = full image.
- * Most wide sofas: frame interpolates 5:4 → 3:2 (center crop, cover).
- * A stable subset becomes square / slight-portrait zoom "texture" shots (see TEXTURE_RATE).
+ * Thumbnail crop: gallery/bookmarks only (lightbox = full image).
+ * Moderate landscape (≥ THRESHOLD): taller frames + center cover.
+ * Extreme wides: stronger crop; ~half become square-ish texture zoom tiles.
  */
-const EXTREME_LANDSCAPE_THRESHOLD = 2.0;
-const EXTREME_LANDSCAPE_FULL = 2.75;
-const THUMB_FRAME_5_4 = 5 / 4;
-const THUMB_FRAME_3_2 = 3 / 2;
+const EXTREME_LANDSCAPE_THRESHOLD = 1.55;
+const EXTREME_LANDSCAPE_FULL = 2.15;
+const THUMB_FRAME_5_4 = 1.38;
+const THUMB_FRAME_3_2 = 1.68;
 
-/** Share of extreme landscapes that become texture zoom tiles (0–1). Try 1/3. */
-const EXTREME_LANDSCAPE_TEXTURE_RATE = 1 / 3;
+/** Share of cropped wides that become texture zoom tiles (0–1). */
+const EXTREME_LANDSCAPE_TEXTURE_RATE = 0.45;
 
 /** width÷height for texture zoom frames — square or slight portrait */
 const EXTREME_LANDSCAPE_TEXTURE_ASPECTS = [1, 5 / 6, 4 / 5];
@@ -103,7 +147,7 @@ const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
 /** collection_ids that have at least one collection_item in the DB */
 let collectionIdsWithItems = new Set();
 
-let lightboxSource = 'gallery';       // 'gallery' | 'bookmark'
+let lightboxSource = 'gallery';       // 'gallery' | 'bookmark' | 'accessories'
 let bookmarkLightboxWasStarred = false;
 const bookmarkBtn  = document.getElementById('bookmarkBtn');
 const bookmarkCount = document.getElementById('bookmarkCount');
@@ -121,6 +165,14 @@ const priceFilterContainer = document.getElementById('priceFilterContainer');
 const spinnerOverlay     = document.getElementById('spinnerOverlay');
 const activeSearchRow    = document.getElementById('activeSearchRow');
 const activeSearchTag    = document.getElementById('activeSearchTag');
+const accessoriesEntryRow = document.getElementById('accessoriesEntryRow');
+const accessoriesEntryBtn = document.getElementById('accessoriesEntryBtn');
+const accessoriesView    = document.getElementById('accessoriesView');
+const accessoriesBackBtn = document.getElementById('accessoriesBackBtn');
+const accessoriesTitle   = document.getElementById('accessoriesTitle');
+const accessoriesSubtitle = document.getElementById('accessoriesSubtitle');
+const accessoriesGallery = document.getElementById('accessoriesGallery');
+const accessoriesEmpty   = document.getElementById('accessoriesEmpty');
 
 /* ═══════════════════════════════════════════
    DATA LOADING
@@ -198,6 +250,7 @@ function showView(name) {
 }
 
 function goHome() {
+    closeAccessoriesView();
     currentMode = null;
     selectedRoom = null;
     exploreFilter = null;
@@ -216,30 +269,40 @@ function isHeroImage(item) {
     return item.filename_raw && /_A\.jpg$/i.test(item.filename_raw);
 }
 
-function mixWeighted(collections, looseItems, ratio) {
+/** Staged set or room anchor piece — eligible for default browse waterfall */
+function isAnchorBrowseItem(item) {
+    return item && item.anchor_item === 'yes';
+}
+
+function mixWeighted(collections, looseItems, ratio, exhaustPool = false) {
     const shuffledColl = shuffle([...collections]);
     const shuffledLoose = shuffle([...looseItems]);
 
     if (shuffledColl.length === 0) return shuffledLoose;
     if (shuffledLoose.length === 0) return shuffledColl;
 
-    // Hit ratio on the *feed we show*, not the whole filtered pool.
-    // When loose ≫ collection (common), old logic showed ~all loose items.
     let nColl;
     let nLoose;
-    const looseNeededForAllColl = Math.round(
-        shuffledColl.length * (1 - ratio) / ratio
-    );
 
-    if (looseNeededForAllColl <= shuffledLoose.length) {
+    if (exhaustPool) {
         nColl = shuffledColl.length;
-        nLoose = looseNeededForAllColl;
-    } else {
         nLoose = shuffledLoose.length;
-        nColl = Math.min(
-            shuffledColl.length,
-            Math.round(nLoose * ratio / (1 - ratio))
+    } else {
+        // Hit ratio on the *feed we show*, not the whole filtered pool.
+        const looseNeededForAllColl = Math.round(
+            shuffledColl.length * (1 - ratio) / ratio
         );
+
+        if (looseNeededForAllColl <= shuffledLoose.length) {
+            nColl = shuffledColl.length;
+            nLoose = looseNeededForAllColl;
+        } else {
+            nLoose = shuffledLoose.length;
+            nColl = Math.min(
+                shuffledColl.length,
+                Math.round(nLoose * ratio / (1 - ratio))
+            );
+        }
     }
 
     const collPool = shuffledColl.slice(0, nColl);
@@ -341,77 +404,118 @@ function buildDesignBrowseFeed(list, collRatio) {
     return mixWeighted(collections, looseItems, collRatio);
 }
 
-/**
- * Cycle 2: variant photos for pieces shown in cycle 1; remaining loose heroes;
- * collection hero repeat only when no B/C exists.
- */
-function buildCycle2BrowseFeed(browseList, shownUrls, collRatio, mode) {
-    const collections = browseList.filter(x => x.img_category === 'collection');
-    const loose = browseList.filter(x => x.img_category === 'loose_item');
+/** Anchor A heroes not yet in the feed — same 70/30 collection vs anchor loose mix. */
+function buildRemainingAnchorHeroFeed(browseList, shownUrls, collRatio, mode) {
+    const remaining = browseList.filter(x => !shownUrls.has(x.thumbnail_url));
+    if (remaining.length === 0) return [];
 
+    if (mode === 'explore') {
+        return buildExploreFeed(remaining, collRatio);
+    }
+    return buildDesignBrowseFeed(remaining, collRatio);
+}
+
+/**
+ * All anchor A heroes were shown — one B per piece if available, else repeat hero A.
+ * C+ variants stay in lightbox only.
+ */
+function buildVariantOrRepeatFeed(browseList, shownUrls, collRatio, mode) {
     const collTiles = [];
+    const looseTiles = [];
     const basesDone = new Set();
 
-    collections.forEach(hero => {
+    browseList.forEach(hero => {
         if (!shownUrls.has(hero.thumbnail_url)) return;
+
         const base = getItemBaseName(hero);
         if (!base || basesDone.has(base)) return;
         basesDone.add(base);
 
-        const variants = getItemImageGroup(hero).filter(
-            x => !isHeroImage(x) && !shownUrls.has(x.thumbnail_url)
+        const bVariant = getWaterfallExtraVariants(hero).find(
+            x => !shownUrls.has(x.thumbnail_url)
         );
-        if (variants.length) collTiles.push(...variants);
-        else collTiles.push(hero);
-    });
+        const tile = bVariant || hero;
 
-    const looseTiles = [];
-    loose.forEach(hero => {
-        const variants = getItemImageGroup(hero).filter(
-            x => !isHeroImage(x) && !shownUrls.has(x.thumbnail_url)
-        );
-        if (shownUrls.has(hero.thumbnail_url)) {
-            if (variants.length) looseTiles.push(...variants);
-            return;
-        }
-        if (variants.length) looseTiles.push(...variants);
-        else looseTiles.push(hero);
+        if (hero.img_category === 'collection') collTiles.push(tile);
+        else looseTiles.push(tile);
     });
 
     if (collTiles.length === 0 && looseTiles.length === 0) return [];
 
-    const collPool = shuffle(collTiles);
-    const loosePool = shuffle(looseTiles);
-
+    const combined = [...collTiles, ...looseTiles];
     if (mode === 'explore') {
-        return buildExploreFeed([...collPool, ...loosePool], collRatio);
+        return buildExploreFeed(combined, collRatio);
     }
-    return mixWeighted(collPool, loosePool, collRatio);
+    return mixWeighted(collTiles, looseTiles, collRatio);
 }
 
-/** Concatenate cycle 1 (heroes) + cycle 2 (variants / deeper loose). */
-function buildTwoCycleBrowseFeed(list, mode) {
-    const browse = list.filter(
-        x => (x.img_category === 'collection' || x.img_category === 'loose_item') && isHeroImage(x)
-    );
+/** Guaranteed append: every anchor A hero not yet in the feed (70/30 interleave, no cap). */
+function flushAllRemainingAnchorHeroes(browseList, shownUrls, collRatio, mode) {
+    const remaining = browseList.filter(x => !shownUrls.has(x.thumbnail_url));
+    if (remaining.length === 0) return [];
 
-    const ratio1 = mode === 'explore' ? EXPLORE_COLL_RATIO : DESIGN_COLL_RATIO;
-    const cycle1 = mode === 'explore'
-        ? buildExploreFeed(browse, ratio1)
-        : buildDesignBrowseFeed(browse, ratio1);
+    if (mode === 'explore') {
+        const roomPools = {};
+        EXPLORE_ROOM_ORDER.forEach(room => {
+            const roomList = remaining.filter(x => x.room_type === room);
+            if (roomList.length === 0) return;
 
-    if (FEED_CYCLE_COUNT < 2) {
-        return { items: cycle1, cycle1Count: cycle1.length, cycle2Count: 0 };
+            const coll = roomList.filter(x => x.img_category === 'collection');
+            const loose = roomList.filter(x => x.img_category === 'loose_item');
+            roomPools[room] = mixWeighted(coll, loose, collRatio, true);
+        });
+
+        const pickCycle = buildExploreRoomPickCycle(EXPLORE_ROOM_WEIGHT);
+        const mixed = interleaveRoomQueues(roomPools, pickCycle);
+
+        const other = remaining.filter(x => !EXPLORE_ROOM_ORDER.includes(x.room_type));
+        if (other.length) {
+            const coll = other.filter(x => x.img_category === 'collection');
+            const loose = other.filter(x => x.img_category === 'loose_item');
+            return mixed.concat(mixWeighted(coll, loose, collRatio, true));
+        }
+        return mixed;
     }
 
+    const collections = remaining.filter(x => x.img_category === 'collection');
+    const loose = remaining.filter(x => x.img_category === 'loose_item');
+    return mixWeighted(collections, loose, collRatio, true);
+}
+
+/** Cycles 1–3: heroes first (breadth), then B / hero repeat (depth). */
+function buildMultiCycleBrowseFeed(list, mode) {
+    const browse = list.filter(x => isAnchorBrowseItem(x) && isHeroImage(x));
+
+    const collRatio = mode === 'explore' ? EXPLORE_COLL_RATIO : DESIGN_COLL_RATIO;
+    const cycle1 = mode === 'explore'
+        ? buildExploreFeed(browse, collRatio)
+        : buildDesignBrowseFeed(browse, collRatio);
+
     const shownUrls = new Set(cycle1.map(x => x.thumbnail_url));
-    const ratio2 = mode === 'explore' ? CYCLE2_EXPLORE_COLL_RATIO : CYCLE2_DESIGN_COLL_RATIO;
-    const cycle2 = buildCycle2BrowseFeed(browse, shownUrls, ratio2, mode);
+    let cycle2 = [];
+    let cycle3 = [];
+
+    if (FEED_CYCLE_COUNT >= 2) {
+        cycle2 = buildRemainingAnchorHeroFeed(browse, shownUrls, collRatio, mode);
+        cycle2.forEach(x => shownUrls.add(x.thumbnail_url));
+    }
+
+    if (FEED_CYCLE_COUNT >= 3) {
+        const remainingHeroes = browse.filter(x => !shownUrls.has(x.thumbnail_url));
+        cycle3 = remainingHeroes.length > 0
+            ? buildRemainingAnchorHeroFeed(browse, shownUrls, collRatio, mode)
+            : buildVariantOrRepeatFeed(browse, shownUrls, collRatio, mode);
+        cycle3.forEach(x => shownUrls.add(x.thumbnail_url));
+    }
+
+    const cycleTail = flushAllRemainingAnchorHeroes(browse, shownUrls, collRatio, mode);
 
     return {
-        items: cycle1.concat(cycle2),
+        items: cycle1.concat(cycle2, cycle3, cycleTail),
         cycle1Count: cycle1.length,
-        cycle2Count: cycle2.length
+        cycle2Count: cycle2.length,
+        cycle3Count: cycle3.length,
+        cycleTailCount: cycleTail.length
     };
 }
 
@@ -469,7 +573,7 @@ function renderStyleToggles() {
     STYLE_OPTIONS.forEach(style => {
         const btn = document.createElement('button');
         btn.className = 'style-toggle';
-        btn.textContent = capitalize(style);
+        btn.textContent = styleLabel(style);
         btn.dataset.style = style;
 
         if (designFilters.has(style)) btn.classList.add('active');
@@ -552,7 +656,7 @@ function renderFilters() {
 
         const label = document.createElement('span');
         label.className = 'filter-btn-label';
-        label.textContent = capitalize(style);
+        label.textContent = styleLabel(style);
 
         btn.appendChild(check);
         btn.appendChild(label);
@@ -605,7 +709,7 @@ function renderPriceFilters() {
     PRICE_OPTIONS.forEach(price => {
         const btn = document.createElement('button');
         btn.className = 'filter-btn';
-        btn.textContent = capitalize(price);
+        btn.textContent = priceLabel(price);
         if (priceFilters.has(price)) btn.classList.add('active');
 
         btn.addEventListener('click', () => {
@@ -629,18 +733,30 @@ function renderPriceFilters() {
 function getGalleryTitle() {
     if (currentMode === 'design' && selectedRoom) {
         const titles = {
-            living: 'Design your living room',
-            bedroom: 'Design your bedroom',
-            dining: 'Design your dining room',
-            study: 'Design your study'
+            living: 'Style your living room',
+            bedroom: 'Style your bedroom',
+            dining: 'Style your dining room',
+            study: 'Style your study'
         };
         return titles[selectedRoom] ||
-            `Design your ${formatRoomLabel(selectedRoom)}`;
+            `Style your ${formatRoomLabel(selectedRoom)}`;
     }
+    if (currentMode === 'explore') {
+        return 'Explore Styles';
+    }
+    return 'Beyond Showrooms';
+}
+
+function updateExploreStyleCaption() {
+    const el = document.getElementById('exploreStyleCaption');
+    if (!el) return;
     if (currentMode === 'explore' && exploreFilter) {
-        return `Explore ${capitalize(exploreFilter)}`;
+        el.style.display = 'block';
+        el.textContent = STYLE_DESCRIPTIONS[exploreFilter] || '';
+    } else {
+        el.style.display = 'none';
+        el.textContent = '';
     }
-    return 'Furniture Moodboard';
 }
 
 function updateGalleryHeader() {
@@ -648,6 +764,22 @@ function updateGalleryHeader() {
     const title = getGalleryTitle();
     galleryTitle.textContent = title;
     document.title = title;
+
+    if (bookmarkBtn) {
+        bookmarkBtn.style.display = currentMode === 'explore' ? 'none' : 'flex';
+    }
+
+    if (views.gallery) {
+        views.gallery.classList.toggle('gallery-view--explore', currentMode === 'explore');
+        views.gallery.classList.toggle('gallery-view--design', currentMode === 'design');
+    }
+
+    updateExploreStyleCaption();
+
+    if (accessoriesEntryRow) {
+        accessoriesEntryRow.style.display =
+            currentMode === 'design' && selectedRoom && !productSearch ? 'block' : 'none';
+    }
 }
 
 function handleFilterClick(style, btn) {
@@ -859,16 +991,18 @@ function render() {
         mixed = shuffle([...list]);
     } else {
         list = list.filter(isHeroImage);
-        list = list.filter(x =>
-            x.img_category === 'collection' || x.img_category === 'loose_item'
-        );
-        const feed = buildTwoCycleBrowseFeed(list, currentMode);
+        list = list.filter(isAnchorBrowseItem);
+        const feed = buildMultiCycleBrowseFeed(list, currentMode);
         mixed = feed.items;
+        const collN = mixed.filter(x => x.img_category === 'collection').length;
+        const looseN = mixed.filter(x => x.img_category === 'loose_item').length;
         console.log('[WATERFALL]', currentMode,
-            '| cycle1:', feed.cycle1Count, '+ cycle2:', feed.cycle2Count,
+            '| c1:', feed.cycle1Count, 'c2:', feed.cycle2Count, 'c3:', feed.cycle3Count,
+            'tail:', feed.cycleTailCount,
             '| total:', mixed.length,
+            '| collection:', collN, '| anchor loose:', looseN,
             '| heroes:', mixed.filter(isHeroImage).length,
-            '| variants:', mixed.filter(x => !isHeroImage(x)).length);
+            '| B/other:', mixed.filter(x => !isHeroImage(x)).length);
     }
 
     // Empty state
@@ -890,14 +1024,14 @@ function render() {
 
 function getEmptyMessage() {
     if (currentMode === 'explore') {
-        return `No items found for "${capitalize(exploreFilter)}". Try another style.`;
+        return `No items found for "${styleLabel(exploreFilter)}". Try another style.`;
     }
     if (currentMode === 'design') {
         if (designFilters.size === 0) {
             return 'Choose a style to get started.';
         }
-        const styles = Array.from(designFilters).map(capitalize).join(', ');
-        const prices = Array.from(priceFilters).map(capitalize).join(' + ');
+        const styles = Array.from(designFilters).map(styleLabel).join(', ');
+        const prices = Array.from(priceFilters).map(priceLabel).join(' + ');
         let msg = `No items found for ${capitalize(formatRoomLabel(selectedRoom))} with ${styles} at ${prices} price.`;
         if (productSearch) {
             msg += ` Product search "${productSearch}" returned no matches.`;
@@ -1004,6 +1138,7 @@ const GALLERY_COLUMN_STAGGER_MS = 90;
 let galleryStaggerGeneration = 0;
 /** Last masonry column count; resize re-renders only when this changes (avoids mobile URL-bar refresh) */
 let lastGalleryLayoutColumns = null;
+let lastAccessoriesLayoutColumns = null;
 let lastBookmarkLayoutColumns = null;
 
 function randomGalleryColumnDelays(columnCount) {
@@ -1063,16 +1198,123 @@ function distributeMasonryCards(container, cards, columnCount) {
     });
 }
 
-function syncGalleryCardStar(thumbUrl, bookmarked) {
-    if (!thumbUrl || !gallery) return;
-    gallery.querySelectorAll('.card').forEach(card => {
+function syncCardStars(container, thumbUrl, bookmarked) {
+    if (!thumbUrl || !container) return;
+    container.querySelectorAll('.card').forEach(card => {
         if (card.dataset.thumbUrl !== thumbUrl) return;
         const star = card.querySelector('.star-thumb');
         if (star) star.style.display = bookmarked ? 'block' : 'none';
     });
 }
 
-function createGalleryCard(item) {
+function syncGalleryCardStar(thumbUrl, bookmarked) {
+    syncCardStars(gallery, thumbUrl, bookmarked);
+    syncCardStars(accessoriesGallery, thumbUrl, bookmarked);
+}
+
+/** Accessory hero shots (_A) for current room — not anchor-tagged pieces. */
+function buildAccessoriesBrowseList() {
+    if (!selectedRoom) return [];
+
+    let list = SHUFFLED.filter(
+        x =>
+            x.room_type === selectedRoom &&
+            x.img_category === 'loose_item' &&
+            isHeroImage(x) &&
+            x.anchor_item !== 'yes'
+    );
+
+    if (designFilters.size > 0) {
+        list = list.filter(x => designFilters.has(x.style_cat));
+    }
+    if (priceFilters.size > 0) {
+        list = list.filter(x => priceFilters.has(x.price_level));
+    }
+
+    return shuffle(list);
+}
+
+function getAccessoriesTitle() {
+    const roomLabels = {
+        living: 'Living room accessories',
+        bedroom: 'Bedroom accessories',
+        dining: 'Dining room accessories',
+        study: 'Study accessories'
+    };
+    return roomLabels[selectedRoom] ||
+        `${formatRoomLabel(selectedRoom)} accessories`;
+}
+
+function renderAccessoriesView() {
+    if (!accessoriesGallery || !accessoriesEmpty) return;
+
+    accessoriesGallery.innerHTML = '';
+    const list = buildAccessoriesBrowseList();
+
+    if (accessoriesTitle) {
+        accessoriesTitle.textContent = getAccessoriesTitle();
+    }
+    if (accessoriesSubtitle) {
+        accessoriesSubtitle.textContent = 'Accent pieces for livening up your room.';
+    }
+
+    if (list.length === 0) {
+        accessoriesEmpty.style.display = 'block';
+        accessoriesGallery.style.display = 'none';
+        accessoriesEmpty.textContent =
+            'No accessory images for this room with your current style and price filters.';
+        lastAccessoriesLayoutColumns = null;
+        return;
+    }
+
+    accessoriesEmpty.style.display = 'none';
+    accessoriesGallery.style.removeProperty('display');
+
+    const cards = list.map(item => createGalleryCard(item, { fromAccessories: true }));
+    const columnCount = getGalleryColumnCount();
+    distributeMasonryCards(accessoriesGallery, cards, columnCount);
+    lastAccessoriesLayoutColumns = columnCount;
+}
+
+function isAccessoriesViewOpen() {
+    return accessoriesView &&
+        accessoriesView.classList.contains('accessories-view--open');
+}
+
+function openAccessoriesView() {
+    if (currentMode !== 'design' || !selectedRoom || !accessoriesView) return;
+
+    renderAccessoriesView();
+
+    views.gallery.classList.add('gallery-view--accessories-behind');
+    accessoriesView.style.display = 'block';
+    accessoriesView.setAttribute('aria-hidden', 'false');
+    accessoriesView.classList.remove('accessories-view--open');
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            accessoriesView.classList.add('accessories-view--open');
+        });
+    });
+}
+
+function closeAccessoriesView() {
+    if (!accessoriesView) return;
+
+    accessoriesView.classList.remove('accessories-view--open');
+    views.gallery.classList.remove('gallery-view--accessories-behind');
+    accessoriesView.setAttribute('aria-hidden', 'true');
+
+    const finish = () => {
+        if (!isAccessoriesViewOpen()) {
+            accessoriesView.style.display = 'none';
+        }
+    };
+
+    accessoriesView.addEventListener('transitionend', finish, { once: true });
+    setTimeout(finish, 520);
+}
+
+function createGalleryCard(item, options = {}) {
     const hero = toHeroItem(item);
     const card = document.createElement('div');
     card.className = 'card';
@@ -1100,7 +1342,13 @@ function createGalleryCard(item) {
 
     card.appendChild(createThumbMedia(img, item.thumbnail_url));
     card.appendChild(star);
-    card.addEventListener('click', () => openLightbox(item));
+    card.addEventListener('click', () => {
+        if (options.fromAccessories) {
+            openLightbox(item, { fromAccessories: true });
+        } else {
+            openLightbox(item);
+        }
+    });
     return card;
 }
 
@@ -1125,6 +1373,13 @@ function getItemBaseName(item) {
 function getVariantSuffix(filename) {
     const match = filename && filename.match(/_([A-Z])\.jpg$/i);
     return match ? match[1].toUpperCase() : 'A';
+}
+
+/** B-only variants for waterfall after all anchor A heroes were shown. */
+function getWaterfallExtraVariants(hero) {
+    return getItemImageGroup(hero).filter(
+        x => getVariantSuffix(x.filename_raw) === WATERFALL_EXTRA_VARIANT_SUFFIX
+    );
 }
 
 /** All photo variants (A, B, C…) for one furniture piece */
@@ -1209,7 +1464,10 @@ function buildLightboxOverviewSections(anchor) {
             });
         }
     } else if (rootVariants.length > 1) {
-        sections.push({ title: 'Photos', images: rootVariants });
+        const title = root.img_product_type
+            ? root.img_product_type.replace(/_/g, ' ')
+            : 'Photos';
+        sections.push({ title, images: rootVariants });
     }
 
     collItems.forEach((nested, i) => {
@@ -1272,6 +1530,7 @@ function renderLightboxOverview(anchor) {
                 e.stopPropagation();
                 openLightboxDetail(imgItem, {
                     fromBookmark: lightboxSource === 'bookmark',
+                    fromAccessories: lightboxSource === 'accessories',
                     returnToOverview: true
                 });
             });
@@ -1294,19 +1553,35 @@ function applyLightboxOverviewLayout() {
     starBtn.style.display = showOverview ? 'none' : 'block';
 }
 
-function openLightboxOverview(anchor, opts) {
-    lightboxMode = 'overview';
-    lightboxOverviewAnchor = getCollectionAnchorItem(anchor);
-    renderLightboxOverview(lightboxOverviewAnchor);
-    applyLightboxOverviewLayout();
+/** Keep lightbox above bookmark board (2100) and accessories page (1500). */
+function applyLightboxLayering(opts) {
+    lightbox.classList.remove('lightbox-over-bookmarks', 'lightbox-over-accessories');
 
     if (opts.fromBookmark) {
         lightbox.classList.add('lightbox-over-bookmarks');
         lightboxCloseBtn.style.display = 'flex';
-    } else {
-        lightbox.classList.remove('lightbox-over-bookmarks');
-        lightboxCloseBtn.style.display = 'none';
+        return;
     }
+    if (opts.fromAccessories) {
+        lightbox.classList.add('lightbox-over-accessories');
+    }
+    lightboxCloseBtn.style.display = 'none';
+}
+
+function openLightboxOverview(anchor, opts) {
+    const options = normalizeLightboxOptions(opts);
+    lightboxMode = 'overview';
+    lightboxOverviewAnchor = getCollectionAnchorItem(anchor);
+    if (options.fromBookmark) {
+        lightboxSource = 'bookmark';
+    } else if (options.fromAccessories) {
+        lightboxSource = 'accessories';
+    } else {
+        lightboxSource = 'gallery';
+    }
+    renderLightboxOverview(lightboxOverviewAnchor);
+    applyLightboxLayering(options);
+    applyLightboxOverviewLayout();
 
     lightboxBackBtn.style.display = 'flex';
     lightbox.style.display = 'flex';
@@ -1322,39 +1597,36 @@ function showLightboxDetailImage(item) {
 
 function normalizeLightboxOptions(options) {
     if (options == null) {
-        return { fromBookmark: false, returnToOverview: false };
+        return { fromBookmark: false, returnToOverview: false, fromAccessories: false };
     }
     if (typeof options === 'string') {
-        return { fromBookmark: false, returnToOverview: options === 'overview' };
+        return { fromBookmark: false, returnToOverview: options === 'overview', fromAccessories: false };
     }
     return {
         fromBookmark: options.fromBookmark ?? false,
-        returnToOverview: options.returnToOverview ?? false
+        returnToOverview: options.returnToOverview ?? false,
+        fromAccessories: options.fromAccessories ?? false
     };
 }
 
 function openLightboxDetail(item, options = {}) {
     const opts = normalizeLightboxOptions(options);
     lightboxMode = 'detail';
-    lightboxSource = opts.fromBookmark ? 'bookmark' : 'gallery';
-
-    applyLightboxOverviewLayout();
-
-    const canReturnToOverview =
-        opts.returnToOverview &&
-        lightboxOverviewAnchor &&
-        needsLightboxOverview(lightboxOverviewAnchor);
+    if (opts.fromBookmark) {
+        lightboxSource = 'bookmark';
+    } else if (opts.fromAccessories) {
+        lightboxSource = 'accessories';
+    } else {
+        lightboxSource = 'gallery';
+    }
 
     if (opts.fromBookmark) {
         bookmarkLightboxWasStarred = isBookmarked(item);
-        lightbox.classList.add('lightbox-over-bookmarks');
-        lightboxCloseBtn.style.display = 'flex';
-        lightboxBackBtn.style.display = canReturnToOverview ? 'flex' : 'none';
-    } else {
-        lightbox.classList.remove('lightbox-over-bookmarks');
-        lightboxCloseBtn.style.display = 'none';
-        lightboxBackBtn.style.display = canReturnToOverview ? 'flex' : 'none';
     }
+    applyLightboxLayering(opts);
+    applyLightboxOverviewLayout();
+
+    lightboxBackBtn.style.display = 'flex';
 
     showLightboxDetailImage(item);
     lightbox.style.display = 'flex';
@@ -1362,23 +1634,28 @@ function openLightboxDetail(item, options = {}) {
 
 function openLightbox(item, options = {}) {
     const opts = normalizeLightboxOptions(options);
-    lightboxSource = opts.fromBookmark ? 'bookmark' : 'gallery';
+    const subject = opts.fromAccessories ? toHeroItem(item) : item;
 
-    // Bookmark board: always hero thumbnail → enlarged detail (skip overview grid)
     if (opts.fromBookmark) {
+        lightboxSource = 'bookmark';
         lightboxOverviewAnchor = null;
         openLightboxDetail(toHeroItem(item), { ...opts, returnToOverview: false });
         return;
     }
 
-    if (needsLightboxOverview(item)) {
-        lightboxOverviewAnchor = getCollectionAnchorItem(item);
-        openLightboxOverview(item, opts);
+    if (opts.fromAccessories) {
+        lightboxSource = 'accessories';
+    } else {
+        lightboxSource = 'gallery';
+    }
+
+    if (needsLightboxOverview(subject)) {
+        openLightboxOverview(subject, opts);
         return;
     }
 
     lightboxOverviewAnchor = null;
-    openLightboxDetail(item, opts);
+    openLightboxDetail(subject, opts);
 }
 
 function closeLightbox() {
@@ -1402,12 +1679,14 @@ function closeLightbox() {
         }
     }
 
+    const wasAccessories = lightboxSource === 'accessories';
+
     lightbox.style.display = 'none';
     currentLightboxItem = null;
     lightboxMode = null;
     lightboxOverviewAnchor = null;
     lightboxSource = 'gallery';
-    lightbox.classList.remove('lightbox-over-bookmarks');
+    lightbox.classList.remove('lightbox-over-bookmarks', 'lightbox-over-accessories');
     lightboxCloseBtn.style.display = 'none';
     lightboxBackBtn.style.display = 'none';
     applyLightboxOverviewLayout();
@@ -1415,7 +1694,12 @@ function closeLightbox() {
     if (bookmarkView.style.display === 'block') {
         renderBookmarkView();
     }
-    render();
+    updateBookmarkUI();
+    if (wasAccessories && isAccessoriesViewOpen()) {
+        renderAccessoriesView();
+    } else if (!wasAccessories) {
+        render();
+    }
 }
 
 function dismissLightbox() {
@@ -1423,10 +1707,19 @@ function dismissLightbox() {
         closeLightbox();
         return;
     }
+    const wasAccessories = lightboxSource === 'accessories';
     lightbox.style.display = 'none';
     currentLightboxItem = null;
     lightboxMode = null;
     lightboxOverviewAnchor = null;
+    lightboxSource = 'gallery';
+    lightbox.classList.remove('lightbox-over-bookmarks', 'lightbox-over-accessories');
+    lightboxCloseBtn.style.display = 'none';
+    lightboxBackBtn.style.display = 'none';
+    applyLightboxOverviewLayout();
+    if (wasAccessories && isAccessoriesViewOpen()) {
+        renderAccessoriesView();
+    }
 }
 
 function updateLightboxStar() {
@@ -1460,18 +1753,26 @@ lightboxBackBtn.addEventListener('click', (e) => {
         dismissLightbox();
         return;
     }
-    if (lightboxMode === 'detail' && lightboxOverviewAnchor) {
+    if (
+        lightboxMode === 'detail' &&
+        lightboxOverviewAnchor &&
+        needsLightboxOverview(lightboxOverviewAnchor)
+    ) {
         openLightboxOverview(lightboxOverviewAnchor, {
-            fromBookmark: lightboxSource === 'bookmark'
+            fromBookmark: lightboxSource === 'bookmark',
+            fromAccessories: lightboxSource === 'accessories'
         });
+        return;
     }
+    dismissLightbox();
 });
 
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) {
         if (lightboxMode === 'detail' && lightboxOverviewAnchor) {
             openLightboxOverview(lightboxOverviewAnchor, {
-                fromBookmark: lightboxSource === 'bookmark'
+                fromBookmark: lightboxSource === 'bookmark',
+                fromAccessories: lightboxSource === 'accessories'
             });
             return;
         }
@@ -1484,17 +1785,28 @@ function handleEscape() {
         closeSearchModal();
         return;
     }
-    if (lightbox.style.display !== 'flex') {
+    if (lightbox.style.display === 'flex') {
+        if (lightboxMode === 'detail' && lightboxOverviewAnchor) {
+            openLightboxOverview(lightboxOverviewAnchor, {
+                fromBookmark: lightboxSource === 'bookmark',
+                fromAccessories: lightboxSource === 'accessories'
+            });
+            return;
+        }
+        if (lightboxSource === 'bookmark') {
+            closeLightbox();
+        } else {
+            dismissLightbox();
+        }
+        return;
+    }
+    if (isAccessoriesViewOpen()) {
+        closeAccessoriesView();
+        return;
+    }
+    if (bookmarkView.style.display === 'block') {
         bookmarkView.style.display = 'none';
-        return;
     }
-    if (lightboxMode === 'detail' && lightboxOverviewAnchor) {
-        openLightboxOverview(lightboxOverviewAnchor, {
-            fromBookmark: lightboxSource === 'bookmark'
-        });
-        return;
-    }
-    dismissLightbox();
 }
 
 document.addEventListener('keydown', (e) => {
@@ -1687,28 +1999,43 @@ function clearAllBookmarks() {
     renderBookmarkView();
 }
 
-function appendBookmarkToolbar(container) {
+function closeBookmarkView() {
+    bookmarkView.style.display = 'none';
+}
+
+function createBookmarkToolbar() {
     const toolbar = document.createElement('div');
     toolbar.className = 'bookmark-toolbar';
+
+    const backBtn = document.createElement('button');
+    backBtn.type = 'button';
+    backBtn.className = 'bookmark-back';
+    backBtn.setAttribute('aria-label', 'Back');
+    backBtn.addEventListener('click', closeBookmarkView);
 
     const clearBtn = document.createElement('button');
     clearBtn.type = 'button';
     clearBtn.className = 'bookmark-clear';
-    clearBtn.textContent = 'Clear all bookmarks';
+    clearBtn.textContent = 'Clear all';
     clearBtn.disabled = BOOKMARKS.size === 0;
     clearBtn.addEventListener('click', clearAllBookmarks);
 
-    const closeBtn = document.createElement('button');
-    closeBtn.type = 'button';
-    closeBtn.className = 'bookmark-close';
-    closeBtn.textContent = '✕ Close';
-    closeBtn.addEventListener('click', () => {
-        bookmarkView.style.display = 'none';
-    });
-
+    toolbar.appendChild(backBtn);
     toolbar.appendChild(clearBtn);
-    toolbar.appendChild(closeBtn);
-    container.appendChild(toolbar);
+    return toolbar;
+}
+
+function createBookmarkTop(headerHtml) {
+    const top = document.createElement('div');
+    top.className = 'bookmark-top';
+    top.appendChild(createBookmarkToolbar());
+
+    const header = document.createElement('div');
+    header.className = 'bookmark-header';
+    header.innerHTML = headerHtml;
+    top.appendChild(header);
+
+    return top;
 }
 
 function countVisibleBookmarkPieces(byRoom) {
@@ -1722,19 +2049,48 @@ function countVisibleBookmarkPieces(byRoom) {
     return n;
 }
 
+/** Multi-piece block: anchor + at least one collection_item on the board. */
+function isMultiPieceBookmarkCollection(coll) {
+    return coll.nested.length > 0;
+}
+
+function buildBookmarkCollectionCards(coll) {
+    return [
+        createBookmarkCard(coll.anchor, {
+            starred: true,
+            linked: false,
+            role: 'collection'
+        }),
+        ...coll.nested.map(entry =>
+            createBookmarkCard(entry.item, {
+                starred: entry.starred,
+                linked: true,
+                role: 'collection_item'
+            })
+        )
+    ];
+}
+
+function mountBookmarkWaterfall(parent, cards) {
+    const waterfall = document.createElement('div');
+    waterfall.className = 'bookmark-waterfall masonry-layout';
+    distributeMasonryCards(
+        waterfall,
+        cards,
+        getBookmarkColumnCount(waterfall)
+    );
+    parent.appendChild(waterfall);
+    return waterfall;
+}
+
 function renderBookmarkView() {
     bookmarkView.innerHTML = '';
-    appendBookmarkToolbar(bookmarkView);
-
-    const header = document.createElement('div');
-    header.className = 'bookmark-header';
-    bookmarkView.appendChild(header);
 
     if (BOOKMARKS.size === 0) {
-        header.innerHTML = `
-            <h2>Your Saved Items</h2>
+        bookmarkView.appendChild(createBookmarkTop(`
+            <h2>Your Favorites</h2>
             <p>Your personal taste board</p>
-        `;
+        `));
         const empty = document.createElement('div');
         empty.className = 'bookmark-empty';
         empty.textContent = 'No bookmarks yet. Tap the star on any image to save it.';
@@ -1746,13 +2102,13 @@ function renderBookmarkView() {
     const visibleCount = countVisibleBookmarkPieces(byRoom);
     const starredCount = BOOKMARKS.size;
 
-    header.innerHTML = `
-        <h2>Your Saved Items</h2>
+    bookmarkView.appendChild(createBookmarkTop(`
+        <h2>Your Favorites</h2>
         <p class="bookmark-header-count">
             <strong>${starredCount}</strong> starred
             · <strong>${visibleCount}</strong> piece${visibleCount !== 1 ? 's' : ''} on your board
         </p>
-    `;
+    `));
 
     const scroll = document.createElement('div');
     scroll.className = 'bookmark-scroll';
@@ -1782,44 +2138,47 @@ function renderBookmarkView() {
         roomSection.appendChild(roomTitle);
 
         const roomData = byRoom[room];
+        const sortedCollections = [...roomData.collections].sort((a, b) =>
+            a.id.localeCompare(b.id)
+        );
+        const multiCollections = sortedCollections.filter(isMultiPieceBookmarkCollection);
+        const singletonCollections = sortedCollections.filter(
+            c => !isMultiPieceBookmarkCollection(c)
+        );
 
-        roomData.collections
-            .sort((a, b) => a.id.localeCompare(b.id))
-            .forEach(coll => {
-                const collSection = document.createElement('div');
-                collSection.className = 'bookmark-subgroup bookmark-subgroup-collection';
+        multiCollections.forEach(coll => {
+            const collSection = document.createElement('div');
+            collSection.className = 'bookmark-subgroup bookmark-subgroup-collection';
 
-                const collTitle = document.createElement('h4');
-                collTitle.className = 'bookmark-subgroup-title';
-                collTitle.textContent = formatCollectionName(coll.id);
-                collSection.appendChild(collTitle);
+            const collTitle = document.createElement('h4');
+            collTitle.className = 'bookmark-subgroup-title';
+            collTitle.textContent = formatCollectionName(coll.id);
+            collSection.appendChild(collTitle);
 
-                const waterfall = document.createElement('div');
-                waterfall.className = 'bookmark-waterfall';
+            mountBookmarkWaterfall(collSection, buildBookmarkCollectionCards(coll));
+            roomSection.appendChild(collSection);
+        });
 
-                const collCards = [
-                    createBookmarkCard(coll.anchor, {
-                        starred: true,
-                        linked: false,
-                        role: 'collection'
-                    }),
-                    ...coll.nested.map(entry =>
-                        createBookmarkCard(entry.item, {
-                            starred: entry.starred,
-                            linked: true,
-                            role: 'collection_item'
-                        })
-                    )
-                ];
-                distributeMasonryCards(
-                    waterfall,
-                    collCards,
-                    getBookmarkColumnCount(waterfall)
-                );
+        if (singletonCollections.length > 0) {
+            const singletonSection = document.createElement('div');
+            singletonSection.className =
+                'bookmark-subgroup bookmark-subgroup-singleton';
 
-                collSection.appendChild(waterfall);
-                roomSection.appendChild(collSection);
-            });
+            const singletonTitle = document.createElement('h4');
+            singletonTitle.className = 'bookmark-subgroup-title';
+            singletonTitle.textContent = 'Collection sets';
+            singletonSection.appendChild(singletonTitle);
+
+            const singletonCards = singletonCollections.map(coll =>
+                createBookmarkCard(coll.anchor, {
+                    starred: true,
+                    linked: false,
+                    role: 'collection'
+                })
+            );
+            mountBookmarkWaterfall(singletonSection, singletonCards);
+            roomSection.appendChild(singletonSection);
+        }
 
         if (roomData.loose.length > 0) {
             const looseSection = document.createElement('div');
@@ -1827,11 +2186,8 @@ function renderBookmarkView() {
 
             const looseTitle = document.createElement('h4');
             looseTitle.className = 'bookmark-subgroup-title';
-            looseTitle.textContent = 'Loose Items';
+            looseTitle.textContent = 'Standalone Pieces';
             looseSection.appendChild(looseTitle);
-
-            const waterfall = document.createElement('div');
-            waterfall.className = 'bookmark-waterfall';
 
             const looseCards = roomData.loose.map(item =>
                 createBookmarkCard(item, {
@@ -1840,13 +2196,7 @@ function renderBookmarkView() {
                     role: 'loose'
                 })
             );
-            distributeMasonryCards(
-                waterfall,
-                looseCards,
-                getBookmarkColumnCount(waterfall)
-            );
-
-            looseSection.appendChild(waterfall);
+            mountBookmarkWaterfall(looseSection, looseCards);
             roomSection.appendChild(looseSection);
         }
 
@@ -1860,10 +2210,13 @@ function renderBookmarkView() {
 }
 
 function getBookmarkCardCaption(item, role) {
+    if (role === 'collection' && item.collection_id) {
+        return item.collection_id;
+    }
     if (role === 'collection_item' && item.img_product_type) {
         return item.img_product_type.replace(/_/g, ' ');
     }
-    if (item.style_cat) return capitalize(item.style_cat);
+    if (item.style_cat) return styleLabel(item.style_cat);
     return item.filename_raw || '';
 }
 
@@ -1897,6 +2250,9 @@ function createBookmarkCard(item, { starred, linked, role }) {
 
     const caption = document.createElement('div');
     caption.className = 'bookmark-card-caption';
+    if (role === 'collection') {
+        caption.classList.add('bookmark-card-caption--collection-id');
+    }
     caption.textContent = getBookmarkCardCaption(hero, role);
 
     el.appendChild(star);
@@ -1911,16 +2267,23 @@ function createBookmarkCard(item, { starred, linked, role }) {
 }
 
 function formatCollectionName(collId) {
-    if (!collId) return 'Loose Items';
+    if (!collId) return 'Collection';
     return `COLLECTION: ${collId}`;
 }
 
 // Close bookmark view on background click
 bookmarkView.addEventListener('click', (e) => {
     if (e.target === bookmarkView) {
-        bookmarkView.style.display = 'none';
+        closeBookmarkView();
     }
 });
+
+if (accessoriesEntryBtn) {
+    accessoriesEntryBtn.addEventListener('click', openAccessoriesView);
+}
+if (accessoriesBackBtn) {
+    accessoriesBackBtn.addEventListener('click', closeAccessoriesView);
+}
 
 /* ═══════════════════════════════════════════
    INIT
@@ -1948,11 +2311,22 @@ function refreshBookmarkLayoutIfColumnsChanged() {
     renderBookmarkView();
 }
 
+function refreshAccessoriesLayoutIfColumnsChanged() {
+    if (!isAccessoriesViewOpen()) {
+        lastAccessoriesLayoutColumns = null;
+        return;
+    }
+    const cols = getGalleryColumnCount();
+    if (cols === lastAccessoriesLayoutColumns) return;
+    renderAccessoriesView();
+}
+
 function handleMasonryResize() {
     // Mobile Safari/Chrome fire resize when the URL bar shows/hides on scroll.
     // Only rebuild masonry when column breakpoints change, not on height-only resizes.
     refreshGalleryLayoutIfColumnsChanged();
     refreshBookmarkLayoutIfColumnsChanged();
+    refreshAccessoriesLayoutIfColumnsChanged();
 }
 
 window.addEventListener('resize', () => {

@@ -6,7 +6,7 @@ Frontend-only MVP (`index.html`, `waterfall.js`, `waterfall.css`, `furniture_dat
 
 ## Waterfall gallery — what appears
 
-- **Tiles:** `img_category` `collection` or `loose_item` only, and only **hero** images (`*_A.jpg` via `isHeroImage()`).
+- **Tiles:** `anchor_item === "yes"` only, and only **hero** images (`*_A.jpg` via `isHeroImage()`). In practice: all staged **`collection`** heroes plus manually tagged **anchor** `loose_item` heroes (accessory loose shots stay `anchor_item: ""` and are excluded).
 - **`collection_item` rows never appear** in the browse waterfall (exception: **keyword search** shows all matching rows, including `collection_item` and variant photos).
 - **SET badge:** Shown on `collection` heroes only when that `collection_id` has at least one `collection_item` in the DB (`collectionIdsWithItems`).
 - **Layout:** Flex-column masonry (`mountMasonryColumns` / `distributeMasonryCards`), not CSS `column-count` (avoids paint bugs). Gallery columns: 2 / 2 / 3 / 4 by viewport width. Column entrance uses shuffled stagger delays (`GALLERY_COLUMN_STAGGER_MS`).
@@ -21,10 +21,9 @@ All mix ratios target the **share of visible tiles**, not the raw pool size (`mi
 
 | Constant | Default | Used in |
 |----------|---------|---------|
-| `EXPLORE_COLL_RATIO` | 0.70 | Explore cycle 1 |
-| `DESIGN_COLL_RATIO` | 0.70 | Design cycle 1 |
-| `CYCLE2_EXPLORE_COLL_RATIO` | 0.80 | Explore cycle 2 |
-| `CYCLE2_DESIGN_COLL_RATIO` | 0.80 | Design cycle 2 |
+| `EXPLORE_COLL_RATIO` | 0.70 | Explore cycles 1–3 (hero + B/repeat passes) |
+| `DESIGN_COLL_RATIO` | 0.70 | Design cycles 1–3 |
+| `FEED_CYCLE_COUNT` | 3 | Browse scroll depth |
 
 `mixWeighted()` picks how many collection vs loose heroes to show, then **interleaves** loose items evenly between collection tiles so loose doesn’t cluster at the end.
 
@@ -39,41 +38,40 @@ All mix ratios target the **share of visible tiles**, not the raw pool size (`mi
 - Filtered by selected room, styles, price, optional product search.
 - Single pool: `mixWeighted()` (no room interleave).
 
-### Two-cycle browse feed (`FEED_CYCLE_COUNT = 2`)
+### Three-cycle browse feed (`FEED_CYCLE_COUNT = 3`)
 
-Concatenated scroll (not infinite scroll):
+Concatenated scroll (not infinite scroll). Cycles 1–2 use the same **70/30** collection vs anchor-loose target as `DESIGN_COLL_RATIO` / `EXPLORE_COLL_RATIO`.
 
-1. **Cycle 1:** Hero `_A` images only, with ratios above.
-2. **Cycle 2:** For pieces shown in cycle 1 — prefer variant photos `_B` / `_C`; extra loose heroes; collection hero repeats only if no variants exist. Re-uses explore room interleave or design `mixWeighted` with cycle-2 ratios.
+1. **Cycle 1:** Anchor hero `_A` images (`anchor_item === "yes"`), mixed 70/30.
+2. **Cycle 2:** **Remaining** anchor `_A` heroes not in cycle 1 — same 70/30 (breadth before detail).
+3. **Cycle 3:** Any anchor `_A` still unshown (same mix); if **all** anchor heroes were shown, then at most one **`_B.jpg`** per piece already in the feed, else **repeat** that hero `_A`. `_C+` lightbox only.
+4. **Tail (guaranteed):** Any anchor `_A` still missing after cycles 1–3 — append **all** of them (`mixWeighted(..., exhaustPool: true)`), 70/30 interleave without cap.
 
-Keyword search skips two-cycle logic and shuffles the filtered list (see **Keyword search** below).
+Keyword search skips multi-cycle logic and shuffles the filtered list (see **Keyword search** below).
+
+### Accessories view (design room only)
+
+- Link under price filters: **Add room accessories →** (slides in from the right).
+- **Accessory heroes** only (`loose_item`, `*_A.jpg`, `anchor_item` not `yes`) for the current `room_type`, respecting style + price filters. Same star bookmarks as the anchor gallery.
+- Tap thumbnail → lightbox **overview** of all variants (`A`/`B`/`C`…) when multiple photos exist, else detail.
+- Back: **‹** returns to anchor waterfall. Disclaimer notes factory-dependent availability.
 
 ---
 
-## Thumbnail aspect — extreme landscape only (locked)
+## Thumbnail aspect — landscape crop (gallery/bookmarks)
 
-**Scope:** Gallery + bookmark waterfall thumbs only. **Lightbox / collection grid:** full natural aspect (`object-fit: contain`).
+**Scope:** Gallery + bookmark waterfall thumbs only. **Lightbox:** full natural aspect (`object-fit: contain`).
 
-**No crop** unless natural `width ÷ height ≥ EXTREME_LANDSCAPE_THRESHOLD` (default **2.0**).
+**No crop** unless natural `width ÷ height ≥ EXTREME_LANDSCAPE_THRESHOLD` (currently **1.55** — moderate landscape included).
 
 When cropped (`createThumbMedia` → `pickExtremeLandscapeDisplayRatio`):
 
 | Case | Display frame (center crop, `object-fit: cover`) |
 |------|--------------------------------------------------|
-| **~2/3** of extreme wides (stable hash per `thumbnail_url`) | **Texture zoom:** `1`, `5/6`, or `4/5` — square / slight portrait detail shots |
-| **~1/3** (remainder) | **Landscape preserve:** interpolate **5:4 → 3:2** as source gets wider; cap at **3:2** when ratio ≥ `EXTREME_LANDSCAPE_FULL` (2.75) |
+| **~45%** of cropped wides (hash per `thumbnail_url`) | **Texture zoom:** `1`, `5/6`, or `4/5` |
+| **~55%** (remainder) | Interpolate **1.38 → 1.68** as source gets wider; cap at **1.68** when ratio ≥ `EXTREME_LANDSCAPE_FULL` (**2.15**) |
 
-**Tunables** (top of `waterfall.js`):
-
-```js
-EXTREME_LANDSCAPE_THRESHOLD      // when any thumb crop starts
-EXTREME_LANDSCAPE_FULL           // full 3:2 frame
-EXTREME_LANDSCAPE_TEXTURE_RATE   // e.g. 1/3 → texture zoom tiles
-EXTREME_LANDSCAPE_TEXTURE_ASPECTS
-THUMB_FRAME_5_4, THUMB_FRAME_3_2
-```
-
-Rationale: wide high-end sofas stay readable in most thumbs; occasional texture crops break up landscape clusters without overriding the whole feed.
+**Tunables** (top of `waterfall.js`): `EXTREME_LANDSCAPE_THRESHOLD`, `EXTREME_LANDSCAPE_FULL`, `THUMB_FRAME_5_4`, `THUMB_FRAME_3_2`, `EXTREME_LANDSCAPE_TEXTURE_RATE`, `EXTREME_LANDSCAPE_TEXTURE_ASPECTS`.
 
 ---
 
@@ -106,7 +104,7 @@ Detail (end layer) — single enlarged image + star (no variant carousel; pick p
 
 **Board UI (`renderBookmarkView`):**
 
-- Grouped by **room** → **collections** (SET anchor + nested `collection_item` rows as linked, smaller cards) + **loose** heroes.
+- Grouped by **room**, in order: **multi-piece collections** (per `COLLECTION:` header, SET anchor + nested `collection_item` cards) → **single-piece collection sets** (one shared “Collection sets” masonry; anchor card captions show `collection_id`) → **Standalone Pieces** (loose heroes).
 - Nested pieces from a starred SET appear under the collection even if not individually starred (`linked: true`). Individually starred nested pieces also exist in data but are **deduped** from the loose list when the parent collection is starred.
 - Same masonry column layout; same extreme-landscape thumb rules as gallery.
 
@@ -139,8 +137,8 @@ Images: `filename_raw` → `img_db_final/{file}` (see `THUMBNAIL_BASE_URL`). Dep
 
 | Mode | Entry | Filters |
 |------|-------|---------|
-| **Explore Styles** | Home → random style | Style pills; all rooms |
-| **Design a Room** | Room → style(s) → results | Room, multi-style, premium/luxury, optional keyword search (see below). |
+| **Explore Styles** | Start → “Explore styles →” → random style gallery | Style pills; all rooms |
+| **Design a Room** | Start → room → style(s) → results | Room, multi-style, premium/luxury, optional keyword search (see below). |
 
 ### Keyword search (Design mode only)
 
@@ -174,7 +172,7 @@ Images: `filename_raw` → `img_db_final/{file}` (see `THUMBNAIL_BASE_URL`). Dep
 
 **UI copy:** Caption under the active search tag (and note in the search modal) states that room filter is ignored, style/price still apply, and **collection sets are not included** in search results.
 
-**After clear search:** Room filter returns; browse feed returns to hero-only `_A` tiles + two-cycle mixing (`collection` / `loose_item` only, no `collection_item` in waterfall).
+**After clear search:** Room filter returns; browse feed returns to anchor `_A` heroes + three-cycle mixing (see **Three-cycle browse feed**; no `collection_item` in waterfall).
 
 **Implementation:** `render()` in `waterfall.js` — search block inside `currentMode === 'design'`; `productSearch` variable; `updateActiveSearchTag()` for caption.
 
@@ -184,7 +182,7 @@ Images: `filename_raw` → `img_db_final/{file}` (see `THUMBNAIL_BASE_URL`). Dep
 
 | Task | Where |
 |------|--------|
-| Feed mix / room bias / cycles | `waterfall.js` CONFIG + `buildExploreFeed`, `mixWeighted`, `buildTwoCycleBrowseFeed` |
+| Feed mix / room bias / cycles | `waterfall.js` CONFIG + `buildExploreFeed`, `mixWeighted`, `buildMultiCycleBrowseFeed` |
 | Thumb crop / texture rate | `waterfall.js` CONFIG + `pickExtremeLandscapeDisplayRatio` |
 | Lightbox | `openLightbox`, `openLightboxOverview`, `openLightboxDetail`, `closeLightbox`, `handleEscape` |
 | Bookmarks | `buildBookmarkGroups`, `toggleBookmark`, `renderBookmarkView` |

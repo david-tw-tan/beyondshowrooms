@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Furniture Moodboard</title>
+<title>Beyond Showrooms</title>
 
-<link rel="stylesheet" href="waterfall.css?v=combined-start">
-<script defer src="waterfall.js?v=bookmark-2col-mobile"></script>
+<link rel="stylesheet" href="waterfall.css?v=bookmark-captions">
+<script defer src="waterfall.js?v=bookmark-captions"></script>
 </head>
 
 <body>
@@ -16,10 +16,10 @@
      ═══════════════════════════════════════ -->
 <div id="homeView">
     <div class="home-content">
-        <h1 class="home-title">Furniture Moodboard</h1>
-        <p class="home-subtitle">Discover your style. Design your space.</p>
+        <h1 class="home-title">Beyond Showrooms</h1>
+        <p class="home-subtitle">Take your home furnishings next level</p>
 
-        <h2 class="home-room-heading">Which room are you designing?</h2>
+        <h2 class="home-room-heading">Select a room, start styling!</h2>
 
         <div class="step-cards home-room-cards">
             <div class="step-card" data-room="bedroom" role="button" tabindex="0">
@@ -41,8 +41,8 @@
         </div>
 
         <p class="home-explore-row">
-            Just browsing?
-            <button type="button" id="exploreStylesLink" class="home-explore-link">Explore styles →</button>
+            Seeking inspiration?
+            <button type="button" id="exploreStylesLink" class="home-explore-link">Explore our styles →</button>
         </p>
     </div>
 </div>
@@ -50,16 +50,16 @@
 <!-- ═══════════════════════════════════════
      SELECT STYLE (step 2)
      ═══════════════════════════════════════ -->
-<div id="stepStyleView" class="step-view" style="display:none;">
+<div id="stepStyleView" class="step-view step-view--style" style="display:none;">
+    <button type="button" class="nav-back-btn step-nav-back" id="backFromStyle" aria-label="Back">‹</button>
     <div class="step-content">
-        <button class="back-btn" id="backFromStyle">← Back</button>
-        <h2 class="step-title">Select Styles</h2>
+        <h2 class="step-title">What style?</h2>
         <p class="step-subtitle">Choose one or more styles for your <span id="selectedRoomLabel"></span></p>
 
         <div class="style-toggles" id="styleToggles"></div>
 
         <button type="button" class="show-results-btn" id="showResultsBtn" disabled>
-            Show Results <span class="show-results-arrow" aria-hidden="true">→</span>
+            Start Styling <span class="show-results-arrow" aria-hidden="true">→</span>
         </button>
     </div>
 </div>
@@ -69,16 +69,28 @@
      ═══════════════════════════════════════ -->
 <div id="galleryView" style="display:none;">
     <header>
-        <div id="homeBtn" title="Home">🏠</div>
-        <h1 id="galleryTitle">Furniture Moodboard</h1>
-        <div id="searchIcon" title="Search">🔍</div>
-        <div id="bookmarkBtn">★ <span id="bookmarkCount">0</span></div>
+        <div class="gallery-header-top">
+            <div class="gallery-header-toolbar">
+                <button type="button" id="homeBtn" class="nav-back-btn" aria-label="Back">‹</button>
+                <div class="gallery-header-actions">
+                    <button type="button" id="searchIcon" class="gallery-header-icon-btn" title="Search" aria-label="Search">🔍</button>
+                    <button type="button" id="bookmarkBtn" class="gallery-header-icon-btn gallery-header-bookmark" aria-label="Bookmarks"><span class="gallery-header-bookmark-star" aria-hidden="true">★</span><span id="bookmarkCount">0</span></button>
+                </div>
+            </div>
+            <h1 id="galleryTitle" class="gallery-header-title">Beyond Showrooms</h1>
+        </div>
 
-        <!-- Style filters -->
-        <div id="filterContainer" class="filters"></div>
+        <div id="filterContainer" class="filters gallery-header-filters gallery-header-style-filters"></div>
 
-        <!-- Price filters (design mode only) -->
-        <div id="priceFilterContainer" class="filters price-filters" style="display:none;"></div>
+        <p id="exploreStyleCaption" class="explore-style-caption" style="display:none;" aria-live="polite"></p>
+
+        <div id="priceFilterContainer" class="filters price-filters gallery-header-price-filters" style="display:none;"></div>
+
+        <p id="accessoriesEntryRow" class="accessories-entry-row" style="display:none;">
+            <button type="button" id="accessoriesEntryBtn" class="accessories-entry-btn">
+                Add room accessories <span class="accessories-entry-arrow" aria-hidden="true">→</span>
+            </button>
+        </p>
 
         <!-- Active search tag (design mode only) -->
         <div id="activeSearchRow" class="filters active-search-row" style="display:none;">
@@ -95,7 +107,7 @@
      LIGHTBOX  (overview scroll + detail view)
      ═══════════════════════════════════════ -->
 <div id="lightbox">
-    <button type="button" id="lightboxBackBtn" class="lightbox-back" style="display:none;" aria-label="Back">←</button>
+    <button type="button" id="lightboxBackBtn" class="lightbox-back" style="display:none;" aria-label="Back"></button>
     <button type="button" id="lightboxCloseBtn" class="lightbox-close" style="display:none;" aria-label="Close">✕</button>
     <div class="lightbox-content">
         <div id="lightboxOverview" class="lightbox-overview" style="display:none;">
@@ -117,6 +129,22 @@
      BOOKMARK PAGE
      ═══════════════════════════════════════ -->
 <div id="bookmarkView"></div>
+
+<!-- ═══════════════════════════════════════
+     ACCESSORIES (design room — browse only)
+     ═══════════════════════════════════════ -->
+<div id="accessoriesView" class="accessories-view" style="display:none;" aria-hidden="true">
+    <header class="accessories-header">
+        <div class="accessories-toolbar">
+            <button type="button" id="accessoriesBackBtn" class="nav-back-btn" aria-label="Back to anchor pieces">‹</button>
+        </div>
+        <h1 id="accessoriesTitle" class="accessories-title">Room accessories</h1>
+        <p id="accessoriesSubtitle" class="accessories-subtitle"></p>
+        <p class="accessories-disclaimer">Availability depends on which factories you buy anchor pieces from.</p>
+    </header>
+    <div id="accessoriesEmpty" class="accessories-empty" style="display:none;"></div>
+    <div id="accessoriesGallery" class="accessories-gallery"></div>
+</div>
 
 <!-- ═══════════════════════════════════════
      LOADING SPINNER
