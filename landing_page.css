@@ -756,8 +756,49 @@ a {
     letter-spacing: var(--tracking-wide);
 }
 
-.lp-footer__note + .lp-footer__note {
-    margin-top: 0.35rem;
+.lp-footer__partner {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-hairline);
+    max-width: 22rem;
+    margin-inline: auto;
+}
+
+.lp-footer__partner-label {
+    margin: 0 0 0.7rem;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+}
+
+.lp-footer__partner-logo-link {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 0.6rem;
+    transition: opacity var(--transition-fast);
+}
+
+.lp-footer__partner-logo-link:hover {
+    opacity: 0.72;
+}
+
+.lp-footer__partner-logo {
+    display: block;
+    height: 1rem;
+    width: auto;
+    max-width: min(8.5rem, 58vw);
+    filter: brightness(0);
+    opacity: 0.52;
+}
+
+.lp-footer__partner-desc {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--color-ink-muted);
+    letter-spacing: var(--tracking-wide);
+    line-height: 1.5;
 }
 
 /* ─── Contact modal ─── */
