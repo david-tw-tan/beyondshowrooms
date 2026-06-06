@@ -16,11 +16,17 @@ const SHOWROOM_CONFIG = {
     maxImages: 80,
     avgThumbHeight: 200,
     footerOverhead: 480,
+    // Counter DB skew (53% ultra) — bias toward refined + minimalist for landing preview.
+    styleWeights: {
+        'ultra luxury': 0.23,
+        'refined luxury': 0.33,
+        'minimalist luxury': 0.29,
+        'playful luxury': 0.15
+    },
     poolWeights: [
-        { key: 'collectionAnchor', share: 0.32 },
-        { key: 'collection', share: 0.22 },
-        { key: 'loose', share: 0.28 },
-        { key: 'item', share: 0.18 }
+        { key: 'collectionAnchor', share: 0.45 },
+        { key: 'loose', share: 0.33 },
+        { key: 'item', share: 0.22 }
     ]
 };
 
@@ -40,7 +46,6 @@ let furnitureCache = null;
 let currentShowroomImages = null;
 let showroomIsOpen = false;
 let showroomLoadPromise = null;
-let showroomPreparePromise = null;
 let lastShowroomLayoutColumns = null;
 let showroomResizeTimer = null;
 let showroomCloseTimer = null;
@@ -103,29 +108,47 @@ function shuffleArray(items) {
     return array;
 }
 
-function pickDiverse(items, count) {
+function pickStyleBalanced(items, count, usedKeys) {
     if (!items.length || count <= 0) return [];
-    if (items.length <= count) return shuffleArray(items);
 
-    const buckets = new Map();
+    const byStyle = new Map();
     items.forEach((item) => {
-        const key = `${item.room_type}|${item.style_cat}|${item.img_category}`;
-        if (!buckets.has(key)) buckets.set(key, []);
-        buckets.get(key).push(item);
+        const style = item.style_cat || 'unknown';
+        if (!byStyle.has(style)) byStyle.set(style, []);
+        byStyle.get(style).push(item);
     });
 
-    buckets.forEach((bucket) => shuffleArray(bucket));
-    const bucketList = shuffleArray([...buckets.values()]);
     const picked = [];
-    let round = 0;
 
-    while (picked.length < count && bucketList.some((bucket) => round < bucket.length)) {
-        bucketList.forEach((bucket) => {
-            if (round < bucket.length && picked.length < count) {
-                picked.push(bucket[round]);
-            }
-        });
-        round += 1;
+    shuffleArray(Object.entries(SHOWROOM_CONFIG.styleWeights)).forEach(([style, share]) => {
+        const stylePool = byStyle.get(style) || [];
+        if (!stylePool.length) return;
+
+        const styleQuota = Math.max(1, Math.round(count * share));
+        let styleAdded = 0;
+
+        for (const item of shuffleArray(stylePool)) {
+            if (styleAdded >= styleQuota || picked.length >= count) break;
+
+            const key = getShowroomImageKey(item);
+            if (!key || usedKeys.has(key)) continue;
+
+            usedKeys.add(key);
+            picked.push(item);
+            styleAdded += 1;
+        }
+    });
+
+    if (picked.length < count) {
+        for (const item of shuffleArray(items)) {
+            if (picked.length >= count) break;
+
+            const key = getShowroomImageKey(item);
+            if (!key || usedKeys.has(key)) continue;
+
+            usedKeys.add(key);
+            picked.push(item);
+        }
     }
 
     return picked;
@@ -133,12 +156,7 @@ function pickDiverse(items, count) {
 
 function splitShowroomPools(items) {
     return {
-        collectionAnchor: items.filter(
-            (item) => item.img_category === 'collection' && item.anchor_item === 'yes'
-        ),
-        collection: items.filter(
-            (item) => item.img_category === 'collection' && item.anchor_item !== 'yes'
-        ),
+        collectionAnchor: items.filter((item) => item.img_category === 'collection'),
         loose: items.filter((item) => item.img_category === 'loose_item'),
         item: items.filter((item) => item.img_category === 'collection_item')
     };
@@ -184,36 +202,25 @@ function getShowroomTargetCount() {
 function buildShowroomSelection(items, targetCount = getShowroomTargetCount()) {
     const validItems = items.filter((item) => getShowroomImageKey(item));
     const pools = splitShowroomPools(validItems);
-
     const selected = [];
     const usedKeys = new Set();
 
-    const addItems = (poolItems) => {
-        poolItems.forEach((item) => {
-            if (selected.length >= targetCount) return;
-
-            const key = getShowroomImageKey(item);
-            if (!key || usedKeys.has(key)) return;
-
-            usedKeys.add(key);
-            selected.push(item);
-        });
-    };
-
     SHOWROOM_CONFIG.poolWeights.forEach(({ key, share }) => {
+        const pool = pools[key] || [];
+        if (!pool.length) return;
+
         const quota = Math.max(1, Math.round(targetCount * share));
-        const picks = pickDiverse(pools[key] || [], quota);
-        addItems(picks);
+        const picks = pickStyleBalanced(pool, quota, usedKeys);
+        selected.push(...picks);
     });
 
     if (selected.length < targetCount) {
-        const remainder = shuffleArray(
-            validItems.filter((item) => !usedKeys.has(getShowroomImageKey(item)))
-        );
-        addItems(remainder);
+        const remainder = validItems.filter((item) => !usedKeys.has(getShowroomImageKey(item)));
+        const picks = pickStyleBalanced(remainder, targetCount - selected.length, usedKeys);
+        selected.push(...picks);
     }
 
-    return shuffleArray(selected);
+    return shuffleArray(selected.slice(0, targetCount));
 }
 
 async function loadFurnitureDatabase() {
@@ -418,35 +425,6 @@ function setShowroomLoading(message) {
     `;
 }
 
-async function prepareShowroomGallery() {
-    if (showroomPreparePromise) return showroomPreparePromise;
-
-    showroomPreparePromise = (async () => {
-        try {
-            const database = await loadFurnitureDatabase();
-            currentShowroomImages = buildShowroomSelection(database);
-
-            if (!currentShowroomImages.length) {
-                throw new Error('No showroom images available.');
-            }
-
-            await renderShowroomGallery(currentShowroomImages);
-        } catch (error) {
-            console.error('[showroom]', error);
-            const hint =
-                window.location.protocol === 'file:'
-                    ? 'Open this page through a local server (for example: python3 -m http.server).'
-                    : 'Unable to load showroom pieces. Please try again.';
-            setShowroomLoading(hint);
-            currentShowroomImages = null;
-        }
-    })().finally(() => {
-        showroomPreparePromise = null;
-    });
-
-    return showroomPreparePromise;
-}
-
 function showroomMotionEnabled() {
     return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
@@ -508,10 +486,23 @@ async function openShowroomModal(event) {
 
     if (showroomScroll) showroomScroll.scrollTop = 0;
 
-    if (!currentShowroomImages) {
-        await prepareShowroomGallery();
-    } else {
+    try {
+        const database = await loadFurnitureDatabase();
+        currentShowroomImages = buildShowroomSelection(database);
+
+        if (!currentShowroomImages.length) {
+            throw new Error('No showroom images available.');
+        }
+
         await renderShowroomGallery(currentShowroomImages);
+    } catch (error) {
+        console.error('[showroom]', error);
+        const hint =
+            window.location.protocol === 'file:'
+                ? 'Open this page through a local server (for example: python3 -m http.server).'
+                : 'Unable to load showroom pieces. Please try again.';
+        setShowroomLoading(hint);
+        currentShowroomImages = null;
     }
 }
 
