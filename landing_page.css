@@ -768,6 +768,10 @@ a {
 }
 
 /* ─── Field journal ─── */
+.lp-field--hidden {
+    display: none;
+}
+
 .lp-field .lp-intro-grid {
     align-items: center;
     gap: 2.75rem;
