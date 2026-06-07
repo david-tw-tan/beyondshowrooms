@@ -31,7 +31,7 @@ const SHOWROOM_CONFIG = {
 };
 
 const header = document.querySelector('.lp-header');
-const revealEls = document.querySelectorAll('.lp-reveal');
+const revealEls = document.querySelectorAll('.lp-reveal, .lp-reveal-group');
 const hero = document.querySelector('.lp-hero');
 const contactModal = document.getElementById('contactModal');
 const showroomModal = document.getElementById('showroomModal');

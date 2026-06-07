@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="landing_page.css?v=field-journal-5">
-    <script defer src="landing_page.js?v=showroom-selection-1"></script>
+    <link rel="stylesheet" href="landing_page.css?v=showroom-link-3">
+    <script defer src="landing_page.js?v=showroom-reveal-1"></script>
 </head>
 <body>
 
@@ -50,26 +50,33 @@
     <!-- Approach -->
     <section id="approach" class="lp-section" data-section="approach">
         <div class="lp-container">
-            <div class="lp-intro-grid lp-reveal">
+            <div class="lp-intro-grid lp-reveal-group">
                 <div class="lp-intro-copy">
-                    <h2 class="lp-section-title">A Smarter Way to Furnish</h2>
-                    <p class="lp-lead">
-                        Beyond Showrooms is an international concierge for designer-quality home furnishing. Through our factory partnerships, we help homeowners get more out of their furnishing budget — with access to designer styles rarely available locally.
-                    </p>
-                    <p class="lp-lead">
-                        Our designers help you find a style you'll love and create a bespoke plan for your home and budget.
-                    </p>
-                    <p class="lp-lead">
-                        We curate selected pieces from premium manufacturers in Foshan, China's furniture capital — trusted partner factories with decades of experience producing high-end designer furniture.
-                    </p>
-                    <a id="styleToolLink" href="#" class="lp-tool-link" data-open-showroom>
-                        Explore showroom pieces
-                        <span class="lp-tool-link__chevron" aria-hidden="true"></span>
-                    </a>
+                    <div class="lp-reveal-group__item lp-reveal-group__item--copy">
+                        <h2 class="lp-section-title">A Smarter Way to Furnish</h2>
+                        <p class="lp-lead">
+                            Beyond Showrooms is an international concierge for designer-quality home furnishing. Through our factory partnerships, we help homeowners get more out of their furnishing budget — with access to designer styles rarely available locally.
+                        </p>
+                        <p class="lp-lead">
+                            Our designers help you find a style you'll love and create a bespoke plan for your home and budget.
+                        </p>
+                        <p class="lp-lead">
+                            We curate selected pieces from premium manufacturers in Foshan, China's furniture capital — trusted partner factories with decades of experience producing high-end designer furniture.
+                        </p>
+                    </div>
+                    <div class="lp-tool-cta">
+                        <span class="lp-tool-cta__kicker lp-reveal-group__item lp-reveal-group__item--kicker">Inside our showrooms</span>
+                        <span class="lp-reveal-group__item lp-reveal-group__item--link">
+                            <a id="styleToolLink" href="#" class="lp-tool-link" data-open-showroom>
+                                Explore showroom pieces
+                                <span class="lp-tool-link__arrow" aria-hidden="true">→</span>
+                            </a>
+                        </span>
+                    </div>
                 </div>
                 <div class="lp-intro-visual" aria-hidden="true">
-                    <img class="lp-intro-visual__img" src="html_images/img_bedroom.jpg" alt="" width="400" height="500" loading="lazy">
-                    <img class="lp-intro-visual__img lp-intro-visual__img--offset" src="html_images/img_dining.jpg" alt="" width="400" height="500" loading="lazy">
+                    <img class="lp-reveal-group__item lp-reveal-group__item--img-a lp-intro-visual__img" src="html_images/img_bedroom.jpg" alt="" width="400" height="500" loading="lazy">
+                    <img class="lp-reveal-group__item lp-reveal-group__item--img-b lp-intro-visual__img lp-intro-visual__img--offset" src="html_images/img_dining.jpg" alt="" width="400" height="500" loading="lazy">
                 </div>
             </div>
         </div>
