@@ -7,6 +7,7 @@
     --font-body: 'Jost', system-ui, -apple-system, sans-serif;
 
     --color-ink: #1a1a18;
+    --color-ink-subtle: #3d3a36;
     --color-ink-muted: #5e5a54;
     --color-ink-faint: #8a847c;
     --color-surface: #f9f7f4;
@@ -363,11 +364,11 @@ a {
     margin: 0 0 1.35rem;
     max-width: clamp(22rem, 55vw, 36rem);
     font-family: var(--font-display);
-    font-size: clamp(1.05rem, 2.3vw, 1.32rem);
-    font-weight: 400;
+    font-size: clamp(1.12rem, 2.5vw, 1.32rem);
+    font-weight: 500;
     font-style: normal;
     line-height: 1.45;
-    color: var(--color-ink-muted);
+    color: var(--color-ink-subtle);
 }
 
 .lp-hero__pillars {
@@ -450,6 +451,14 @@ a {
         opacity: 0.085;
         pointer-events: none;
         user-select: none;
+    }
+}
+
+@media (min-width: 900px) {
+    .lp-hero__hook {
+        max-width: 34rem;
+        font-size: 1.5rem;
+        line-height: 1.42;
     }
 }
 
