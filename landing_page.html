@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="landing_page.css?v=field-hidden-1">
-    <script defer src="landing_page.js?v=showroom-reveal-1"></script>
+    <link rel="stylesheet" href="landing_page.css?v=spotlight-2">
+    <script defer src="landing_page.js?v=spotlight-4"></script>
 </head>
 <body>
 
@@ -70,9 +70,19 @@
                         </span>
                     </div>
                 </div>
-                <div class="lp-intro-visual" aria-hidden="true">
-                    <img class="lp-reveal-group__item lp-reveal-group__item--img-a lp-intro-visual__img" src="html_images/img_bedroom.jpg" alt="" width="400" height="500" loading="lazy">
-                    <img class="lp-reveal-group__item lp-reveal-group__item--img-b lp-intro-visual__img lp-intro-visual__img--offset" src="html_images/img_dining.jpg" alt="" width="400" height="500" loading="lazy">
+                <div class="lp-intro-visual">
+                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-reveal-group__item lp-reveal-group__item--img-a" data-spotlight="bedroom" aria-label="View bedroom showroom collection">
+                        <img class="lp-intro-visual__img" src="html_images/img_bedroom.jpg" alt="" width="400" height="500" loading="lazy">
+                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                        </span>
+                    </button>
+                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-reveal-group__item lp-reveal-group__item--img-b lp-intro-visual__trigger--offset" data-spotlight="dining" aria-label="View dining showroom collection">
+                        <img class="lp-intro-visual__img" src="html_images/img_dining.jpg" alt="" width="400" height="500" loading="lazy">
+                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -135,8 +145,13 @@
                         Whether you're drawn to minimalism, statement luxury, mid-century, or something more playful, our designers will help you find what fits your home.
                     </p>
                 </div>
-                <div class="lp-style-visual" aria-hidden="true">
-                    <img class="lp-style-visual__img" src="html_images/style_img.jpg" alt="" width="480" height="600" loading="lazy">
+                <div class="lp-style-visual">
+                    <button type="button" class="lp-spotlight-trigger lp-style-visual__trigger" data-spotlight="accent" aria-label="View accent chair">
+                        <img class="lp-style-visual__img" src="html_images/style_img.jpg" alt="" width="480" height="600" loading="lazy">
+                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -212,6 +227,26 @@
     </div>
 </footer>
 
+<!-- Showroom piece spotlight -->
+<div id="spotlightModal" class="lp-modal lp-modal--spotlight" hidden>
+    <div class="lp-modal__backdrop" data-close-spotlight></div>
+    <div
+        class="lp-modal__panel lp-modal__panel--spotlight"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="spotlightCaption"
+    >
+        <button type="button" class="lp-modal__close" data-close-spotlight aria-label="Close">&times;</button>
+        <figure class="lp-spotlight__figure">
+            <img id="spotlightImage" class="lp-spotlight__img" src="" alt="">
+            <figcaption id="spotlightCaption" class="lp-spotlight__caption"></figcaption>
+        </figure>
+        <div class="lp-spotlight__footer">
+            <button type="button" class="lp-tool-link" data-spotlight-explore>Explore More Pieces</button>
+        </div>
+    </div>
+</div>
+
 <!-- Showroom preview modal -->
 <div id="showroomModal" class="lp-modal lp-modal--showroom" hidden>
     <div class="lp-modal__backdrop" data-close-showroom></div>
@@ -223,7 +258,7 @@
     >
         <button type="button" class="lp-modal__close" data-close-showroom aria-label="Close">&times;</button>
         <header class="lp-showroom-header">
-            <h2 id="showroomModalTitle" class="lp-showroom-title">Inside Our Showrooms</h2>
+            <h2 id="showroomModalTitle" class="lp-showroom-title">Our Showroom Preview</h2>
             <p class="lp-showroom-subtitle">
                 Every image captured in actual factory showrooms.
             </p>

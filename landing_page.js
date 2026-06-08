@@ -30,15 +30,38 @@ const SHOWROOM_CONFIG = {
     ]
 };
 
+const SPOTLIGHT_ITEMS = {
+    bedroom: {
+        full: 'html_images/img_bedroom_full.jpg',
+        alt: 'Bedroom suite displayed in a Foshan showroom',
+        caption: 'Tufted headboard suite with tailored bedding — custom fabrics and sizing available.'
+    },
+    dining: {
+        full: 'html_images/img_dining_full.jpg',
+        alt: 'Dining collection displayed in a Foshan showroom',
+        caption: 'Lacquer dining table with upholstered seating — made to order in your size and finish.'
+    },
+    accent: {
+        full: 'html_images/style_img.jpg',
+        alt: 'Gaetano Pesce La Mamma inspired accent chair in a showroom setting',
+        caption: 'Gaetano Pesce "La Mamma" inspired accent chair — available in custom colors.'
+    }
+};
+
 const header = document.querySelector('.lp-header');
 const revealEls = document.querySelectorAll('.lp-reveal, .lp-reveal-group');
 const hero = document.querySelector('.lp-hero');
 const contactModal = document.getElementById('contactModal');
+const spotlightModal = document.getElementById('spotlightModal');
+const spotlightImage = document.getElementById('spotlightImage');
+const spotlightCaption = document.getElementById('spotlightCaption');
 const showroomModal = document.getElementById('showroomModal');
 const showroomGallery = document.getElementById('showroomGallery');
 const showroomScroll = document.getElementById('showroomScroll');
 const openContactBtns = document.querySelectorAll('[data-open-contact]');
 const closeContactEls = document.querySelectorAll('[data-close-contact]');
+const spotlightTriggers = document.querySelectorAll('[data-spotlight]');
+const closeSpotlightEls = document.querySelectorAll('[data-close-spotlight]');
 const openShowroomEls = document.querySelectorAll('[data-open-showroom]');
 const closeShowroomEls = document.querySelectorAll('[data-close-showroom]');
 
@@ -71,18 +94,61 @@ function updateHeader() {
     header.classList.toggle('is-scrolled', window.scrollY > 48);
 }
 
+function syncModalBodyLock() {
+    const anyOpen =
+        (contactModal && !contactModal.hidden) ||
+        (spotlightModal && !spotlightModal.hidden) ||
+        (showroomModal && !showroomModal.hidden);
+
+    document.body.classList.toggle('lp-modal-open', Boolean(anyOpen));
+}
+
 function openContactModal() {
     if (!contactModal) return;
     contactModal.hidden = false;
-    document.body.classList.add('lp-modal-open');
+    syncModalBodyLock();
 }
 
 function closeContactModal() {
     if (!contactModal) return;
     contactModal.hidden = true;
-    if (!showroomIsOpen) {
-        document.body.classList.remove('lp-modal-open');
-    }
+    syncModalBodyLock();
+}
+
+function openSpotlightModal(key) {
+    const item = SPOTLIGHT_ITEMS[key];
+    if (!spotlightModal || !spotlightImage || !spotlightCaption || !item) return;
+
+    spotlightImage.src = item.full;
+    spotlightImage.alt = item.alt;
+    spotlightCaption.textContent = item.caption;
+    spotlightModal.hidden = false;
+    syncModalBodyLock();
+    spotlightModal.querySelector('.lp-modal__close')?.focus();
+}
+
+function closeSpotlightModal() {
+    if (!spotlightModal || spotlightModal.hidden) return;
+
+    spotlightModal.hidden = true;
+    syncModalBodyLock();
+}
+
+function initSpotlightModal() {
+    spotlightTriggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+            openSpotlightModal(trigger.dataset.spotlight);
+        });
+    });
+
+    closeSpotlightEls.forEach((el) => {
+        el.addEventListener('click', closeSpotlightModal);
+    });
+
+    spotlightModal?.querySelector('[data-spotlight-explore]')?.addEventListener('click', async () => {
+        closeSpotlightModal();
+        await openShowroomModal();
+    });
 }
 
 function initContactModal() {
@@ -482,7 +548,7 @@ async function openShowroomModal(event) {
 
     showroomIsOpen = true;
     revealShowroomModal();
-    document.body.classList.add('lp-modal-open');
+    syncModalBodyLock();
 
     if (showroomScroll) showroomScroll.scrollTop = 0;
 
@@ -513,9 +579,7 @@ async function closeShowroomModal() {
     await hideShowroomModalShell();
     currentShowroomImages = null;
 
-    if (!contactModal || contactModal.hidden) {
-        document.body.classList.remove('lp-modal-open');
-    }
+    syncModalBodyLock();
 }
 
 function initShowroomModal() {
@@ -537,6 +601,11 @@ function initShowroomModal() {
 
         if (showroomModal && !showroomModal.hidden) {
             closeShowroomModal();
+            return;
+        }
+
+        if (spotlightModal && !spotlightModal.hidden) {
+            closeSpotlightModal();
             return;
         }
 
@@ -596,6 +665,7 @@ function initNavHighlight() {
 
 applyContactLinks();
 initContactModal();
+initSpotlightModal();
 initShowroomModal();
 updateHeader();
 initReveal();
