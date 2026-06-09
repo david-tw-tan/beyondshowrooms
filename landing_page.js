@@ -33,18 +33,23 @@ const SHOWROOM_CONFIG = {
 const SPOTLIGHT_ITEMS = {
     bedroom: {
         full: 'html_images/img_bedroom_full.jpg',
-        alt: 'Bedroom suite displayed in a Foshan showroom',
-        caption: 'Tufted headboard suite with tailored bedding — custom fabrics and sizing available.'
+        alt: 'Curated bedroom collection in a Foshan showroom',
+        caption: 'Curated bedroom collection — tufted headboard suite and tailored bedding, customized for your home.'
     },
     dining: {
         full: 'html_images/img_dining_full.jpg',
-        alt: 'Dining collection displayed in a Foshan showroom',
-        caption: 'Lacquer dining table with upholstered seating — made to order in your size and finish.'
+        alt: 'Fendi Casa–inspired dining collection in a Foshan showroom',
+        caption: 'Curated dining collection — Fendi Casa–inspired lacquer table and seating, tailored to your space and finish.'
     },
     accent: {
         full: 'html_images/style_img.jpg',
         alt: 'Gaetano Pesce La Mamma inspired accent chair in a showroom setting',
         caption: 'Gaetano Pesce "La Mamma" inspired accent chair — available in custom colors.'
+    },
+    living: {
+        full: 'html_images/img_trusted.jpg',
+        alt: 'Minotti-inspired living room collection in a Foshan showroom',
+        caption: 'Curated living room collection — Minotti-inspired modular seating, tailored to your space and finish.'
     }
 };
 
