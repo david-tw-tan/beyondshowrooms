@@ -744,6 +744,10 @@ a {
 }
 
 /* ─── Benefits list ─── */
+.lp-intro-copy .lp-benefits {
+    margin-top: 2rem;
+}
+
 .lp-benefits {
     display: grid;
     gap: 1rem;
@@ -857,7 +861,7 @@ a {
     }
 }
 
-/* ─── Trusted Execution ─── */
+/* ─── Why Us spotlight visual ─── */
 .lp-execution-visual {
     margin: 0;
 }
