@@ -24,19 +24,19 @@ const LANDING_COPY_DESIGNER = {
 
     'process.step1.title': 'Share Your Direction',
     'process.step1.body':
-        'Share your photos, floor plans, and inspirations. <span class="lp-step__assurance">Free discovery call to see if we\u2019re the right fit.</span>',
+        'Share your photos, floor plans, and inspirations. <span class="lp-step__assurance">Free discovery call. See if we\u2019re the right fit.</span>',
     'process.step2.body':
         'Explore curated interiors inspired by world-class designer homes. Tailor them to your taste and budget. <span class="lp-step__assurance">$250 styling consultation. No obligation to proceed.</span>',
 
     'whyUs.list':
         '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Curated whole-room designs</span> inspired by leading global interiors — a coordinated home, not a collection of expensive one-offs</span></li>' +
-        '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Customizable sizes, materials, and finish</span> — tailored to your space, not showroom stock</span></li>' +
-        '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Direct factory sourcing</span> — access more designer options, with no luxury markups</span></li>' +
+        '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Build to order</span> — custom sizes, materials, and finishes tailored to your space, not showroom stock</span></li>' +
+        '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Direct factory sourcing</span> — access more designer options, without the luxury markup</span></li>' +
         '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">We handle everything</span>, from concept to delivery</span></li>' +
         '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Trusted factory partner network</span> — thousands of large home projects completed worldwide</span></li>',
 
     'factory.caption':
-        'We work only with export-grade manufacturers in Foshan, to ensure designer quality without compromise.',
+        'We work only with export-grade furniture manufacturers, to ensure designer quality without compromise.',
 
     'final.title': 'Ready for Your Designer Home?',
     'final.lede': 'Get more designer look for your budget.',

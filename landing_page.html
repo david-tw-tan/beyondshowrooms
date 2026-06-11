@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="landing_page.css?v=persona-5">
     <script defer src="landing_image_captions.js?v=6"></script>
     <script defer src="landing_factory_partners.js?v=1"></script>
-    <script defer src="landing_copy_designer.js?v=25"></script>
-    <script defer src="landing_page.js?v=persona-3"></script>
+    <script defer src="landing_copy_designer.js?v=29"></script>
+    <script defer src="landing_page.js?v=persona-6"></script>
 </head>
 <body>
 
@@ -26,16 +26,6 @@
                 <a href="#process" data-nav="process">How It Works</a>
                 <a href="#why-us" data-nav="why-us">Why Us</a>
             </nav>
-            <!-- Dev only — remove before launch -->
-            <button
-                type="button"
-                class="lp-dev-reset"
-                data-dev-persona-reset
-                aria-label="Reset welcome selector (dev)"
-                title="Reset welcome selector (dev)"
-            >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
-            </button>
         </div>
     </div>
 </header>
@@ -230,8 +220,7 @@
         <p class="lp-footer__brand">Beyond Showrooms</p>
         <p class="lp-footer__note">Curated design directions · Factory-direct value · End-to-end service</p>
         <p class="lp-footer__persona">
-            <button type="button" class="lp-footer__persona-link" data-switch-persona="designer" hidden>Looking for designer look without luxury markups?</button>
-            <button type="button" class="lp-footer__persona-link" data-switch-persona="confidence" hidden>Furnishing a large home and want more guidance?</button>
+            <button type="button" class="lp-footer__persona-link" data-reset-persona>Reset preferences</button>
         </p>
         <div class="lp-footer__partner">
             <p class="lp-footer__partner-label">In partnership with</p>
@@ -320,7 +309,7 @@
         <button type="button" class="lp-modal__close" data-close-partners aria-label="Close">&times;</button>
         <span class="lp-eyebrow">Our network</span>
         <h2 id="partnersModalTitle" class="lp-modal__title">Factory partners</h2>
-        <p class="lp-modal__lead">A curated network of over 25 export-grade manufacturers in Foshan — vetted for quality, scale, and large-home project experience.</p>
+        <p class="lp-modal__lead">A curated network of <span class="lp-lead__emphasis">over 25 export-grade furniture manufacturers</span> — vetted for quality, scale, and large-home project experience.</p>
         <p class="lp-modal__lead">We've provided 3 representative partners below.</p>
         <div id="partnersList" class="lp-partners-list" aria-live="polite"></div>
     </div>
@@ -346,10 +335,10 @@
                 type="button"
                 class="lp-btn lp-welcome__choice"
                 data-welcome-persona="designer"
-                aria-label="More designer look for my house — without designer markups"
+                aria-label="Want a designer look for my house — without steep markups"
             >
-                <span class="lp-welcome__choice-label">More designer look for my house</span>
-                <span class="lp-welcome__choice-hint">(without designer markups)</span>
+                <span class="lp-welcome__choice-label">Want a designer look for my house</span>
+                <span class="lp-welcome__choice-hint">(without steep markups)</span>
             </button>
         </div>
     </div>

@@ -114,10 +114,6 @@ function syncPersonaVisibility() {
         el.hidden = el.dataset.personaShow !== activePersona;
     });
 
-    document.querySelectorAll('[data-switch-persona]').forEach((btn) => {
-        btn.hidden = btn.dataset.switchPersona === activePersona;
-    });
-
     document.body.dataset.persona = activePersona;
 }
 
@@ -172,13 +168,8 @@ function initWelcomeOverlay() {
     });
 }
 
-function initPersonaSwitcher() {
-    document.querySelectorAll('[data-switch-persona]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const persona = btn.dataset.switchPersona;
-            applyPersona(persona, { scrollToHero: true });
-        });
-    });
+function initPersonaReset() {
+    document.querySelector('[data-reset-persona]')?.addEventListener('click', resetWelcomeSelector);
 }
 
 /** Dev — clears persona storage and re-opens welcome overlay */
@@ -192,10 +183,6 @@ function resetWelcomeSelector() {
     syncPersonaVisibility();
     showWelcomeOverlay();
     window.scrollTo({ top: 0, behavior: 'auto' });
-}
-
-function initDevPersonaReset() {
-    document.querySelector('[data-dev-persona-reset]')?.addEventListener('click', resetWelcomeSelector);
 }
 
 function initPersona() {
@@ -215,8 +202,7 @@ function initPersona() {
     }
 
     initWelcomeOverlay();
-    initPersonaSwitcher();
-    initDevPersonaReset();
+    initPersonaReset();
 }
 
 /** Hand-picked collection heroes — captions in landing_image_captions.js */
@@ -241,7 +227,7 @@ const SHOWROOM_SECTIONS = [
     },
     {
         title: 'Accessories',
-        subtitle: 'Statement pieces to complete your direction.',
+        subtitle: 'Statement pieces to complete your room.',
         layout: 'collage',
         items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((n) =>
             buildShowroomItem(`html_images/accessory_${n}.jpg`)

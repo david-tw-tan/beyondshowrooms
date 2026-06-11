@@ -180,32 +180,6 @@ a {
     gap: 1rem;
 }
 
-/* Dev — remove before launch */
-.lp-dev-reset {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    padding: 0;
-    border: 1px solid var(--color-hairline-dark);
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.55);
-    color: var(--color-ink-muted);
-    cursor: pointer;
-    flex-shrink: 0;
-    transition:
-        color var(--transition-fast),
-        border-color var(--transition-fast),
-        background var(--transition-fast);
-}
-
-.lp-dev-reset:hover {
-    color: var(--color-ink);
-    border-color: var(--color-ink-muted);
-    background: var(--color-surface-elevated);
-}
-
 .lp-logo {
     font-family: var(--font-display);
     font-size: 1.15rem;
