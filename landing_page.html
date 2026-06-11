@@ -3,25 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Beyond Showrooms offers curated design directions for large homes. Find your style, furnish with confidence, and end-to-end delivery from custom furniture to your door.">
-    <title>Beyond Showrooms — Furnish Large Homes with Confidence</title>
+    <meta name="description" data-copy="meta.description" content="Beyond Showrooms offers curated design directions for large homes. Find your style, furnish with confidence, and end-to-end delivery from custom furniture to your door.">
+    <title data-copy="meta.title">Beyond Showrooms — Furnish Large Homes with Confidence</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="landing_page.css?v=hero-streamline-5">
-    <script defer src="landing_page.js?v=spotlight-7"></script>
+    <link rel="stylesheet" href="landing_page.css?v=persona-5">
+    <script defer src="landing_image_captions.js?v=6"></script>
+    <script defer src="landing_factory_partners.js?v=1"></script>
+    <script defer src="landing_copy_designer.js?v=17"></script>
+    <script defer src="landing_page.js?v=persona-3"></script>
 </head>
 <body>
 
 <header class="lp-header">
     <div class="lp-header__inner">
         <a href="#" class="lp-logo" aria-label="Beyond Showrooms home">Beyond Showrooms</a>
-        <nav class="lp-nav" aria-label="Page sections">
-            <a href="#approach" data-nav="approach">Our Approach</a>
-            <a href="#process" data-nav="process">How It Works</a>
-            <a href="#why-us" data-nav="why-us">Why Us</a>
-        </nav>
+        <div class="lp-header__actions">
+            <nav class="lp-nav" aria-label="Page sections">
+                <a href="#approach" data-nav="approach">Our Approach</a>
+                <a href="#process" data-nav="process">How It Works</a>
+                <a href="#why-us" data-nav="why-us">Why Us</a>
+            </nav>
+            <!-- Dev only — remove before launch -->
+            <button
+                type="button"
+                class="lp-dev-reset"
+                data-dev-persona-reset
+                aria-label="Reset welcome selector (dev)"
+                title="Reset welcome selector (dev)"
+            >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+            </button>
+        </div>
     </div>
 </header>
 
@@ -33,10 +48,10 @@
         <div class="lp-hero__copy">
             <span class="lp-hero__watermark" aria-hidden="true">BS</span>
             <div class="lp-container lp-hero__content lp-reveal">
-                <h1 id="hero-title" class="lp-hero__title">Furnish with Confidence</h1>
+                <h1 id="hero-title" class="lp-hero__title" data-copy="hero.title">Furnish with Confidence</h1>
                 <div class="lp-hero__lede">
-                    <p class="lp-hero__hook">Curated luxury concepts for large homes</p>
-                    <p class="lp-hero__scope">Choose your direction. We deliver on it.</p>
+                    <p class="lp-hero__hook" data-copy="hero.hook">Curated luxury concepts for large homes</p>
+                    <p class="lp-hero__scope" data-copy="hero.scope">Choose your direction. We deliver on it.</p>
                 </div>
                 <div class="lp-btn-row">
                     <button type="button" class="lp-btn lp-btn--primary" data-open-contact>Book a Free Call</button>
@@ -51,35 +66,41 @@
             <div class="lp-intro-grid lp-reveal-group">
                 <div class="lp-intro-copy">
                     <div class="lp-reveal-group__item lp-reveal-group__item--copy">
-                        <h2 class="lp-section-title">A Smarter Way to Furnish</h2>
-                        <p class="lp-lead">
-                            Whether it's trusting your taste, fearing costly mistakes, or not knowing where to start — we help you choose a direction before you commit.
+                        <h2 class="lp-section-title" data-copy="approach.title">A Smarter Way to Furnish</h2>
+                        <p class="lp-lead" data-copy-html="approach.p1">
+                            Whether it's trusting your taste, fearing costly mistakes, or not knowing where to start — we're here to make furnishing large homes easier.
                         </p>
-                        <p class="lp-lead">
+                        <p class="lp-lead" data-copy-html="approach.p2">
                             Beyond Showrooms starts you off with <span class="lp-lead__emphasis">curated design directions</span>, inspired by luxury brands and design-magazine interiors.
                         </p>
-                        <p class="lp-lead">
+                        <p class="lp-lead" data-copy-html="approach.p3">
                             You choose a direction. We tailor it to your needs and budget, then deliver it end-to-end through our network of premium manufacturers in Foshan, China's furniture capital.
                         </p>
-                        <p class="lp-lead">
+                        <p class="lp-lead" data-copy-html="approach.p4">
                             The result: <span class="lp-lead__emphasis">a home you'll love, not just tolerate</span> — done with confidence, and entirely stress-free.
                         </p>
                     </div>
                     <div class="lp-tool-cta">
                         <span class="lp-reveal-group__item lp-reveal-group__item--link">
-                            <a id="styleToolLink" href="#" class="lp-tool-link" data-open-showroom>Explore Design Directions</a>
+                            <a id="styleToolLink" href="#" class="lp-tool-link" data-open-showroom data-copy="approach.toolLink">Explore Design Directions</a>
                         </span>
                     </div>
                 </div>
                 <div class="lp-intro-visual">
-                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-reveal-group__item lp-reveal-group__item--img-a" data-spotlight="bedroom" aria-label="View bedroom showroom collection">
+                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-intro-visual__trigger--img-a lp-reveal-group__item lp-reveal-group__item--img-a" data-spotlight="bedroom" aria-label="View bedroom showroom collection">
                         <img class="lp-intro-visual__img" src="html_images/img_bedroom.jpg" alt="" width="400" height="500" loading="lazy">
                         <span class="lp-spotlight-trigger__hint" aria-hidden="true">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
                         </span>
                     </button>
-                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-reveal-group__item lp-reveal-group__item--img-b lp-intro-visual__trigger--offset" data-spotlight="dining" aria-label="View dining showroom collection">
+                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-intro-visual__trigger--img-b lp-reveal-group__item lp-reveal-group__item--img-b" data-spotlight="dining" aria-label="View dining showroom collection">
                         <img class="lp-intro-visual__img" src="html_images/img_dining.jpg" alt="" width="400" height="500" loading="lazy">
+                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                        </span>
+                    </button>
+                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-intro-visual__trigger--img-c lp-reveal-group__item lp-reveal-group__item--img-c" data-spotlight="living" aria-label="View living room showroom collection">
+                        <img class="lp-intro-visual__img" src="html_images/img_living_thumb.jpg" alt="" width="400" height="500" loading="lazy">
                         <span class="lp-spotlight-trigger__hint" aria-hidden="true">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
                         </span>
@@ -98,8 +119,8 @@
             <div class="lp-process__grid">
                 <article class="lp-step lp-reveal">
                     <span class="lp-step__num" aria-hidden="true">1</span>
-                    <h3 class="lp-step__title">Understand Your Home</h3>
-                    <p class="lp-step__body">
+                    <h3 class="lp-step__title" data-copy="process.step1.title">Understand Your Home</h3>
+                    <p class="lp-step__body" data-copy-html="process.step1.body">
                         Share your floor plans, photos, budget and concerns.
                         <span class="lp-step__assurance">Free discovery call. See if we're the right fit.</span>
                     </p>
@@ -107,7 +128,7 @@
                 <article class="lp-step lp-reveal">
                     <span class="lp-step__num" aria-hidden="true">2</span>
                     <h3 class="lp-step__title">Choose &amp; Refine Your Direction</h3>
-                    <p class="lp-step__body">
+                    <p class="lp-step__body" data-copy-html="process.step2.body">
                         Explore curated interiors inspired by world-class luxury homes. Tailor to your taste and budget.
                         <span class="lp-step__assurance">$250 styling consultation. No obligation to buy.</span>
                     </p>
@@ -130,7 +151,7 @@
             <div class="lp-intro-grid lp-reveal">
                 <div class="lp-intro-copy">
                     <h2 class="lp-section-title">Why Beyond Showrooms</h2>
-                    <ul class="lp-benefits">
+                    <ul class="lp-benefits" data-copy-html="whyUs.list">
                         <li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Whole-room style concepts</span>, inspired by luxury brands — less guesswork, clearer direction</span></li>
                         <li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Bespoke designer furniture</span> — custom sizes, materials, fabrics, and finishes</span></li>
                         <li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Direct factory sourcing</span> — access options rarely available locally, avoid luxury markups</span></li>
@@ -139,15 +160,23 @@
                     </ul>
                 </div>
                 <figure class="lp-execution-visual">
-                    <img
-                        class="lp-execution-visual__img"
-                        src="html_images/img_trusted.jpg"
-                        alt="Minotti-inspired modular seating in a factory showroom"
-                        width="1200"
-                        height="750"
-                        loading="lazy"
-                    >
-                    <figcaption class="lp-execution-visual__caption">Minotti-inspired modular seating. Actual factory showroom.</figcaption>
+                    <button type="button" class="lp-spotlight-trigger lp-execution-visual__trigger" data-open-partners aria-label="Explore our factory partners">
+                        <img
+                            class="lp-execution-visual__img"
+                            src="html_images/factory_3.jpg"
+                            alt="Modern partner manufacturing campus in Foshan"
+                            width="1200"
+                            height="750"
+                            loading="lazy"
+                        >
+                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                        </span>
+                    </button>
+                    <figcaption class="lp-execution-visual__footer">
+                        <p class="lp-execution-visual__caption" data-copy="factory.caption">Curated network of Foshan's leading premium furniture factories.</p>
+                        <button type="button" class="lp-tool-link lp-execution-visual__link" data-open-partners>Explore our factories</button>
+                    </figcaption>
                 </figure>
             </div>
         </div>
@@ -181,8 +210,8 @@
     <!-- Final CTA -->
     <section id="book-call" class="lp-section lp-section--inverse lp-final-cta" data-section="book-call">
         <div class="lp-container lp-container--narrow lp-reveal">
-            <h2 class="lp-section-title">Ready for Your Designer Home?</h2>
-            <p class="lp-lead">
+            <h2 class="lp-section-title" data-copy="final.title">Ready for Your Designer Home?</h2>
+            <p class="lp-lead" data-copy="final.lede">
                 We'll help you find your style, and deliver on it.
             </p>
             <div class="lp-btn-row">
@@ -200,6 +229,10 @@
     <div class="lp-container">
         <p class="lp-footer__brand">Beyond Showrooms</p>
         <p class="lp-footer__note">Curated design directions · Factory-direct value · End-to-end service</p>
+        <p class="lp-footer__persona">
+            <button type="button" class="lp-footer__persona-link" data-switch-persona="designer" hidden>Looking for designer look without luxury markups?</button>
+            <button type="button" class="lp-footer__persona-link" data-switch-persona="confidence" hidden>Furnishing a large home and want more guidance?</button>
+        </p>
         <div class="lp-footer__partner">
             <p class="lp-footer__partner-label">In partnership with</p>
             <a
@@ -238,7 +271,7 @@
             <figcaption id="spotlightCaption" class="lp-spotlight__caption"></figcaption>
         </figure>
         <div class="lp-spotlight__footer">
-            <button type="button" class="lp-tool-link" data-spotlight-explore>Explore Design Directions</button>
+            <button type="button" class="lp-tool-link" data-spotlight-explore data-copy="spotlight.explore">Explore More Directions</button>
         </div>
     </div>
 </div>
@@ -254,9 +287,9 @@
     >
         <button type="button" class="lp-modal__close" data-close-showroom aria-label="Close">&times;</button>
         <header class="lp-showroom-header">
-            <h2 id="showroomModalTitle" class="lp-showroom-title">Our Showroom Preview</h2>
+            <h2 id="showroomModalTitle" class="lp-showroom-title" data-copy="showroom.title">Design direction preview</h2>
             <p class="lp-showroom-subtitle">
-                Every image captured in actual factory showrooms.
+                Photographed in partner factory showrooms.
             </p>
         </header>
         <div class="lp-showroom-scroll" id="showroomScroll">
@@ -265,12 +298,59 @@
             </div>
             <div class="lp-showroom-cta">
                 <p class="lp-showroom-cta__kicker">All pieces shown are available for purchase.</p>
-                <h3 class="lp-showroom-cta__title">Ready to explore more?</h3>
+                <h3 class="lp-showroom-cta__title" data-copy="showroom.ctaTitle">Ready to explore further?</h3>
                 <button type="button" class="lp-btn lp-btn--primary" data-showroom-book>
                     <svg class="lp-btn__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                     Book a Free Call
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Factory partners modal -->
+<div id="partnersModal" class="lp-modal lp-modal--partners" hidden>
+    <div class="lp-modal__backdrop" data-close-partners></div>
+    <div
+        class="lp-modal__panel lp-modal__panel--partners"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="partnersModalTitle"
+    >
+        <button type="button" class="lp-modal__close" data-close-partners aria-label="Close">&times;</button>
+        <span class="lp-eyebrow">Our network</span>
+        <h2 id="partnersModalTitle" class="lp-modal__title">Factory partners</h2>
+        <p class="lp-modal__lead">A curated network of over 25 export-grade manufacturers in Foshan — vetted for quality, scale, and large-home project experience.</p>
+        <p class="lp-modal__lead">We've provided 3 representative partners below.</p>
+        <div id="partnersList" class="lp-partners-list" aria-live="polite"></div>
+    </div>
+</div>
+
+<!-- Persona welcome overlay (first visit) -->
+<div id="welcomeOverlay" class="lp-welcome" hidden>
+    <div class="lp-welcome__backdrop" aria-hidden="true"></div>
+    <div class="lp-welcome__panel" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+        <p class="lp-welcome__brand">Beyond Showrooms</p>
+        <h2 id="welcomeTitle" class="lp-welcome__title">What brings you here?</h2>
+        <div class="lp-welcome__choices">
+            <button
+                type="button"
+                class="lp-btn lp-welcome__choice"
+                data-welcome-persona="confidence"
+                aria-label="Furnishing a large home — want less anxiety"
+            >
+                <span class="lp-welcome__choice-label">Furnishing a large home</span>
+                <span class="lp-welcome__choice-hint">(want less anxiety)</span>
+            </button>
+            <button
+                type="button"
+                class="lp-btn lp-welcome__choice"
+                data-welcome-persona="designer"
+                aria-label="More designer look for my house — without designer markups"
+            >
+                <span class="lp-welcome__choice-label">More designer look for my house</span>
+                <span class="lp-welcome__choice-hint">(without designer markups)</span>
+            </button>
         </div>
     </div>
 </div>

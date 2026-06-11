@@ -5,52 +5,256 @@
 const LANDING_CONFIG = {
     discoveryCallUrl: '#book-call',
     whatsAppUrl: 'https://wa.me/',
-    emailUrl: 'mailto:hello@beyondshowrooms.com',
-    databaseUrl: 'furniture_database.json'
+    emailUrl: 'mailto:hello@beyondshowrooms.com'
 };
 
-const SHOWROOM_IMAGE_BASE = 'img_db_final/';
+const PERSONA_STORAGE_KEY = 'bs_persona';
+const PERSONA_PARAM = 'persona';
+const VALID_PERSONAS = ['confidence', 'designer'];
 
-const SHOWROOM_CONFIG = {
-    minImages: 36,
-    maxImages: 80,
-    avgThumbHeight: 200,
-    footerOverhead: 480,
-    // Counter DB skew (53% ultra) — bias toward refined + minimalist for landing preview.
-    styleWeights: {
-        'ultra luxury': 0.23,
-        'refined luxury': 0.33,
-        'minimalist luxury': 0.29,
-        'playful luxury': 0.15
-    },
-    poolWeights: [
-        { key: 'collectionAnchor', share: 0.45 },
-        { key: 'loose', share: 0.33 },
-        { key: 'item', share: 0.22 }
-    ]
-};
+const welcomeOverlay = document.getElementById('welcomeOverlay');
+const copySnapshot = new Map();
+let activePersona = 'confidence';
 
-const SPOTLIGHT_ITEMS = {
-    bedroom: {
-        full: 'html_images/img_bedroom_full.jpg',
-        alt: 'Curated bedroom collection in a Foshan showroom',
-        caption: 'Curated bedroom collection — tufted headboard suite and tailored bedding, customized for your home.'
-    },
-    dining: {
-        full: 'html_images/img_dining_full.jpg',
-        alt: 'Fendi Casa–inspired dining collection in a Foshan showroom',
-        caption: 'Curated dining collection — Fendi Casa–inspired lacquer table and seating, tailored to your space and finish.'
-    },
-    accent: {
-        full: 'html_images/style_img.jpg',
-        alt: 'Gaetano Pesce La Mamma inspired accent chair in a showroom setting',
-        caption: 'Gaetano Pesce "La Mamma" inspired accent chair — available in custom colors.'
-    },
-    living: {
-        full: 'html_images/img_trusted.jpg',
-        alt: 'Minotti-inspired living room collection in a Foshan showroom',
-        caption: 'Curated living room collection — Minotti-inspired modular seating, tailored to your space and finish.'
+function getPersonaFromUrl() {
+    const value = new URLSearchParams(window.location.search).get(PERSONA_PARAM);
+    return VALID_PERSONAS.includes(value) ? value : null;
+}
+
+function snapshotCopyDefaults() {
+    document.querySelectorAll('[data-copy], [data-copy-html]').forEach((el) => {
+        const key = el.dataset.copy || el.dataset.copyHtml;
+        if (!key) return;
+        copySnapshot.set(key, el.innerHTML);
+    });
+
+    const metaDesc = document.querySelector('meta[name="description"][data-copy]');
+    if (metaDesc) {
+        copySnapshot.set('meta.description', metaDesc.getAttribute('content') || '');
     }
+
+    const titleEl = document.querySelector('title[data-copy]');
+    if (titleEl) {
+        copySnapshot.set('meta.title', titleEl.textContent || '');
+    }
+}
+
+function applyCopyValue(el, key, value) {
+    if (value === undefined || value === null) return;
+
+    if (value === '') {
+        el.hidden = true;
+        return;
+    }
+
+    el.hidden = false;
+
+    if (el.dataset.copyHtml) {
+        el.innerHTML = value;
+        return;
+    }
+
+    if (el.tagName === 'META') {
+        el.setAttribute('content', value);
+        return;
+    }
+
+    if (el.tagName === 'TITLE') {
+        el.textContent = value;
+        document.title = value;
+        return;
+    }
+
+    el.textContent = value;
+}
+
+function applyDesignerOverrides() {
+    const copy = typeof LANDING_COPY_DESIGNER !== 'undefined' ? LANDING_COPY_DESIGNER : {};
+
+    document.querySelectorAll('[data-copy], [data-copy-html]').forEach((el) => {
+        const key = el.dataset.copy || el.dataset.copyHtml;
+        if (!key || !(key in copy)) return;
+        applyCopyValue(el, key, copy[key]);
+    });
+
+    if (copy['meta.description']) {
+        const metaDesc = document.querySelector('meta[name="description"][data-copy]');
+        if (metaDesc) metaDesc.setAttribute('content', copy['meta.description']);
+    }
+
+    if (copy['meta.title']) {
+        document.title = copy['meta.title'];
+        const titleEl = document.querySelector('title[data-copy]');
+        if (titleEl) titleEl.textContent = copy['meta.title'];
+    }
+}
+
+function restoreConfidenceCopy() {
+    document.querySelectorAll('[data-copy], [data-copy-html]').forEach((el) => {
+        const key = el.dataset.copy || el.dataset.copyHtml;
+        if (!key || !copySnapshot.has(key)) return;
+
+        const value = copySnapshot.get(key);
+        el.hidden = false;
+        if (el.dataset.copyHtml) {
+            el.innerHTML = value;
+        } else if (el.tagName === 'META') {
+            el.setAttribute('content', value);
+        } else if (el.tagName === 'TITLE') {
+            el.textContent = value;
+            document.title = value;
+        } else {
+            el.textContent = value;
+        }
+    });
+}
+
+function syncPersonaVisibility() {
+    document.querySelectorAll('[data-persona-show]').forEach((el) => {
+        el.hidden = el.dataset.personaShow !== activePersona;
+    });
+
+    document.querySelectorAll('[data-switch-persona]').forEach((btn) => {
+        btn.hidden = btn.dataset.switchPersona === activePersona;
+    });
+
+    document.body.dataset.persona = activePersona;
+}
+
+function updatePersonaUrl(persona) {
+    const url = new URL(window.location.href);
+    url.searchParams.set(PERSONA_PARAM, persona);
+    window.history.replaceState(null, '', url);
+}
+
+function applyPersona(persona, { scrollToHero = false } = {}) {
+    if (!VALID_PERSONAS.includes(persona)) return;
+
+    activePersona = persona;
+
+    if (persona === 'designer') {
+        applyDesignerOverrides();
+    } else {
+        restoreConfidenceCopy();
+    }
+
+    syncPersonaVisibility();
+    localStorage.setItem(PERSONA_STORAGE_KEY, persona);
+    updatePersonaUrl(persona);
+
+    if (scrollToHero) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function showWelcomeOverlay() {
+    if (!welcomeOverlay) return;
+    welcomeOverlay.hidden = false;
+    document.body.classList.add('lp-welcome-open');
+    syncModalBodyLock();
+}
+
+function hideWelcomeOverlay() {
+    if (!welcomeOverlay) return;
+    welcomeOverlay.hidden = true;
+    document.body.classList.remove('lp-welcome-open');
+    syncModalBodyLock();
+}
+
+function initWelcomeOverlay() {
+    welcomeOverlay?.querySelectorAll('[data-welcome-persona]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const persona = btn.dataset.welcomePersona;
+            if (!VALID_PERSONAS.includes(persona)) return;
+            applyPersona(persona);
+            hideWelcomeOverlay();
+        });
+    });
+}
+
+function initPersonaSwitcher() {
+    document.querySelectorAll('[data-switch-persona]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const persona = btn.dataset.switchPersona;
+            applyPersona(persona, { scrollToHero: true });
+        });
+    });
+}
+
+/** Dev — clears persona storage and re-opens welcome overlay */
+function resetWelcomeSelector() {
+    localStorage.removeItem(PERSONA_STORAGE_KEY);
+    const url = new URL(window.location.href);
+    url.searchParams.delete(PERSONA_PARAM);
+    window.history.replaceState(null, '', url);
+    restoreConfidenceCopy();
+    activePersona = 'confidence';
+    syncPersonaVisibility();
+    showWelcomeOverlay();
+    window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+function initDevPersonaReset() {
+    document.querySelector('[data-dev-persona-reset]')?.addEventListener('click', resetWelcomeSelector);
+}
+
+function initPersona() {
+    snapshotCopyDefaults();
+
+    const urlPersona = getPersonaFromUrl();
+    const storedPersona = localStorage.getItem(PERSONA_STORAGE_KEY);
+    const resolved = urlPersona || (VALID_PERSONAS.includes(storedPersona) ? storedPersona : null);
+
+    if (resolved) {
+        applyPersona(resolved);
+        hideWelcomeOverlay();
+    } else {
+        activePersona = 'confidence';
+        syncPersonaVisibility();
+        showWelcomeOverlay();
+    }
+
+    initWelcomeOverlay();
+    initPersonaSwitcher();
+    initDevPersonaReset();
+}
+
+/** Hand-picked collection heroes — captions in landing_image_captions.js */
+const SHOWROOM_SECTIONS = [
+    {
+        title: 'Living room',
+        items: [1, 2, 3, 4, 5].map((n) =>
+            buildShowroomItem(`html_images/collection_living_${n}.jpg`)
+        )
+    },
+    {
+        title: 'Bedroom',
+        items: [1, 2, 4, 5].map((n) =>
+            buildShowroomItem(`html_images/collection_bed_${n}.jpg`)
+        )
+    },
+    {
+        title: 'Dining room',
+        items: [1, 2, 3].map((n) =>
+            buildShowroomItem(`html_images/collection_dining_${n}.jpg`)
+        )
+    },
+    {
+        title: 'Accessories',
+        subtitle: 'Statement pieces to complete your direction.',
+        layout: 'collage',
+        items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((n) =>
+            buildShowroomItem(`html_images/accessory_${n}.jpg`)
+        )
+    }
+];
+
+/** Image paths only — caption/alt from landing_image_captions.js */
+const SPOTLIGHT_ITEMS = {
+    bedroom: { full: 'html_images/img_bedroom_full.jpg' },
+    dining: { full: 'html_images/img_dining_full.jpg' },
+    accent: { full: 'html_images/style_img.jpg' },
+    living: { full: 'html_images/img_living.jpg' }
 };
 
 const header = document.querySelector('.lp-header');
@@ -69,11 +273,12 @@ const spotlightTriggers = document.querySelectorAll('[data-spotlight]');
 const closeSpotlightEls = document.querySelectorAll('[data-close-spotlight]');
 const openShowroomEls = document.querySelectorAll('[data-open-showroom]');
 const closeShowroomEls = document.querySelectorAll('[data-close-showroom]');
+const partnersModal = document.getElementById('partnersModal');
+const partnersList = document.getElementById('partnersList');
+const openPartnersEls = document.querySelectorAll('[data-open-partners]');
+const closePartnersEls = document.querySelectorAll('[data-close-partners]');
 
-let furnitureCache = null;
-let currentShowroomImages = null;
 let showroomIsOpen = false;
-let showroomLoadPromise = null;
 let lastShowroomLayoutColumns = null;
 let showroomResizeTimer = null;
 let showroomCloseTimer = null;
@@ -100,10 +305,13 @@ function updateHeader() {
 }
 
 function syncModalBodyLock() {
+    const welcomeOpen = welcomeOverlay && !welcomeOverlay.hidden;
     const anyOpen =
+        welcomeOpen ||
         (contactModal && !contactModal.hidden) ||
         (spotlightModal && !spotlightModal.hidden) ||
-        (showroomModal && !showroomModal.hidden);
+        (showroomModal && !showroomModal.hidden) ||
+        (partnersModal && !partnersModal.hidden);
 
     document.body.classList.toggle('lp-modal-open', Boolean(anyOpen));
 }
@@ -124,9 +332,11 @@ function openSpotlightModal(key) {
     const item = SPOTLIGHT_ITEMS[key];
     if (!spotlightModal || !spotlightImage || !spotlightCaption || !item) return;
 
+    const meta = getLandingImageMeta(item.full);
+
     spotlightImage.src = item.full;
-    spotlightImage.alt = item.alt;
-    spotlightCaption.textContent = item.caption;
+    spotlightImage.alt = meta.alt || 'Showroom collection';
+    spotlightCaption.textContent = meta.caption;
     spotlightModal.hidden = false;
     syncModalBodyLock();
     spotlightModal.querySelector('.lp-modal__close')?.focus();
@@ -156,6 +366,109 @@ function initSpotlightModal() {
     });
 }
 
+function createPartnerStat(label, value) {
+    const row = document.createElement('div');
+    row.className = 'lp-partner-card__stat';
+
+    const dt = document.createElement('dt');
+    dt.textContent = label;
+
+    const dd = document.createElement('dd');
+    dd.textContent = value;
+
+    row.appendChild(dt);
+    row.appendChild(dd);
+    return row;
+}
+
+function createPartnerCard(partner) {
+    const card = document.createElement('article');
+    card.className = 'lp-partner-card';
+    card.id = `partner-${partner.id}`;
+
+    const img = document.createElement('img');
+    img.className = 'lp-partner-card__img';
+    img.src = partner.image;
+    img.alt = `Export-grade manufacturer in ${partner.location}`;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+
+    const location = document.createElement('h3');
+    location.className = 'lp-partner-card__name';
+    location.textContent = partner.location;
+
+    const stats = document.createElement('dl');
+    stats.className = 'lp-partner-card__stats';
+    stats.appendChild(createPartnerStat('Established', partner.established));
+    stats.appendChild(createPartnerStat('Production floor', partner.productionArea));
+    stats.appendChild(createPartnerStat('Showroom', partner.showroomArea));
+    stats.appendChild(createPartnerStat('Annual export volume', partner.turnover));
+    stats.appendChild(createPartnerStat('Large-home projects', partner.projects));
+    stats.appendChild(createPartnerStat('Export markets', partner.exportMarkets));
+
+    const specialty = document.createElement('p');
+    specialty.className = 'lp-partner-card__specialty';
+    specialty.textContent = partner.specialty;
+
+    card.appendChild(img);
+    card.appendChild(location);
+    card.appendChild(stats);
+    card.appendChild(specialty);
+
+    return card;
+}
+
+function renderPartnersList() {
+    if (!partnersList || !Array.isArray(FACTORY_PARTNERS)) return;
+
+    partnersList.innerHTML = '';
+    FACTORY_PARTNERS.forEach((partner) => {
+        partnersList.appendChild(createPartnerCard(partner));
+    });
+
+    const footer = document.createElement('div');
+    footer.className = 'lp-partners-list__footer';
+
+    const watermark = document.createElement('span');
+    watermark.className = 'lp-partners-list__footer-watermark';
+    watermark.setAttribute('aria-hidden', 'true');
+    watermark.textContent = 'BS';
+
+    const footerText = document.createElement('p');
+    footerText.className = 'lp-partners-list__footer-text';
+    footerText.textContent = '25+ partners in our network';
+
+    footer.appendChild(watermark);
+    footer.appendChild(footerText);
+    partnersList.appendChild(footer);
+}
+
+function openPartnersModal() {
+    if (!partnersModal) return;
+
+    renderPartnersList();
+    partnersModal.hidden = false;
+    syncModalBodyLock();
+    partnersModal.querySelector('.lp-modal__close')?.focus();
+}
+
+function closePartnersModal() {
+    if (!partnersModal || partnersModal.hidden) return;
+
+    partnersModal.hidden = true;
+    syncModalBodyLock();
+}
+
+function initPartnersModal() {
+    openPartnersEls.forEach((el) => {
+        el.addEventListener('click', openPartnersModal);
+    });
+
+    closePartnersEls.forEach((el) => {
+        el.addEventListener('click', closePartnersModal);
+    });
+}
+
 function initContactModal() {
     openContactBtns.forEach((btn) => {
         btn.addEventListener('click', openContactModal);
@@ -170,179 +483,27 @@ function initContactModal() {
     });
 }
 
-function shuffleArray(items) {
-    const array = [...items];
-    for (let i = array.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function pickStyleBalanced(items, count, usedKeys) {
-    if (!items.length || count <= 0) return [];
-
-    const byStyle = new Map();
-    items.forEach((item) => {
-        const style = item.style_cat || 'unknown';
-        if (!byStyle.has(style)) byStyle.set(style, []);
-        byStyle.get(style).push(item);
-    });
-
-    const picked = [];
-
-    shuffleArray(Object.entries(SHOWROOM_CONFIG.styleWeights)).forEach(([style, share]) => {
-        const stylePool = byStyle.get(style) || [];
-        if (!stylePool.length) return;
-
-        const styleQuota = Math.max(1, Math.round(count * share));
-        let styleAdded = 0;
-
-        for (const item of shuffleArray(stylePool)) {
-            if (styleAdded >= styleQuota || picked.length >= count) break;
-
-            const key = getShowroomImageKey(item);
-            if (!key || usedKeys.has(key)) continue;
-
-            usedKeys.add(key);
-            picked.push(item);
-            styleAdded += 1;
-        }
-    });
-
-    if (picked.length < count) {
-        for (const item of shuffleArray(items)) {
-            if (picked.length >= count) break;
-
-            const key = getShowroomImageKey(item);
-            if (!key || usedKeys.has(key)) continue;
-
-            usedKeys.add(key);
-            picked.push(item);
-        }
-    }
-
-    return picked;
-}
-
-function splitShowroomPools(items) {
-    return {
-        collectionAnchor: items.filter((item) => item.img_category === 'collection'),
-        loose: items.filter((item) => item.img_category === 'loose_item'),
-        item: items.filter((item) => item.img_category === 'collection_item')
-    };
-}
-
-function getDatabaseUrl() {
-    return new URL(LANDING_CONFIG.databaseUrl, window.location.href).href;
-}
-
 function getShowroomImageKey(item) {
-    return item.filename_raw || item.thumbnail_url || '';
+    return item.image || '';
 }
 
 function resolveShowroomImageUrl(item) {
-    const file =
-        item.filename_raw ||
-        (item.thumbnail_url && item.thumbnail_url.split('/').pop());
-
-    if (file) {
-        return new URL(`${SHOWROOM_IMAGE_BASE}${file}`, window.location.href).href;
-    }
-
-    return item.thumbnail_url || '';
-}
-
-function getShowroomTargetCount() {
-    const columnCount = getShowroomColumnCount();
-    const scrollHeight =
-        showroomScroll?.clientHeight || Math.round(window.innerHeight * 0.72);
-    const rowsNeeded =
-        Math.ceil(
-            (scrollHeight + SHOWROOM_CONFIG.footerOverhead) /
-                SHOWROOM_CONFIG.avgThumbHeight
-        ) + 4;
-    const dynamicTarget = rowsNeeded * columnCount;
-
-    return Math.min(
-        SHOWROOM_CONFIG.maxImages,
-        Math.max(SHOWROOM_CONFIG.minImages, dynamicTarget)
-    );
-}
-
-function buildShowroomSelection(items, targetCount = getShowroomTargetCount()) {
-    const validItems = items.filter((item) => getShowroomImageKey(item));
-    const pools = splitShowroomPools(validItems);
-    const selected = [];
-    const usedKeys = new Set();
-
-    SHOWROOM_CONFIG.poolWeights.forEach(({ key, share }) => {
-        const pool = pools[key] || [];
-        if (!pool.length) return;
-
-        const quota = Math.max(1, Math.round(targetCount * share));
-        const picks = pickStyleBalanced(pool, quota, usedKeys);
-        selected.push(...picks);
-    });
-
-    if (selected.length < targetCount) {
-        const remainder = validItems.filter((item) => !usedKeys.has(getShowroomImageKey(item)));
-        const picks = pickStyleBalanced(remainder, targetCount - selected.length, usedKeys);
-        selected.push(...picks);
-    }
-
-    return shuffleArray(selected.slice(0, targetCount));
-}
-
-async function loadFurnitureDatabase() {
-    if (furnitureCache) return furnitureCache;
-
-    if (window.location.protocol === 'file:') {
-        throw new Error(
-            'Showroom gallery requires a local server. Open landing_page.html via http://localhost, not file://.'
-        );
-    }
-
-    if (!showroomLoadPromise) {
-        showroomLoadPromise = (async () => {
-            const response = await fetch(getDatabaseUrl());
-
-            if (!response.ok) {
-                throw new Error(`Failed to load furniture database (${response.status})`);
-            }
-
-            const data = await response.json();
-
-            if (!Array.isArray(data)) {
-                throw new Error('Furniture database is not a valid image list.');
-            }
-
-            furnitureCache = data;
-            return furnitureCache;
-        })().catch((error) => {
-            showroomLoadPromise = null;
-            throw error;
-        });
-    }
-
-    return showroomLoadPromise;
+    if (!item.image) return '';
+    return new URL(item.image, window.location.href).href;
 }
 
 function getShowroomColumnCount() {
     const w = showroomGallery?.clientWidth || window.innerWidth;
-    if (w < 768) return 2;
-    if (w < 900) return 3;
-    if (w < 1100) return 4;
-    return 5;
+    return w < 768 ? 1 : 2;
 }
 
-function createShowroomMasonryColumns(columnCount) {
+function createShowroomMasonryColumns(parent, columnCount) {
     const columns = [];
 
     for (let i = 0; i < columnCount; i++) {
         const col = document.createElement('div');
         col.className = 'masonry-column';
-        showroomGallery.appendChild(col);
+        parent.appendChild(col);
         columns.push(col);
     }
 
@@ -354,20 +515,20 @@ function createShowroomGalleryItem(item, eager = false) {
     figure.className = 'lp-showroom-gallery__item';
 
     const img = document.createElement('img');
-    img.alt = '';
+    img.alt = item.alt || 'Curated whole-room collection';
     img.loading = eager ? 'eager' : 'lazy';
     img.decoding = 'async';
     img.src = resolveShowroomImageUrl(item);
 
-    if (item.thumbnail_url) {
-        img.addEventListener('error', () => {
-            if (img.dataset.fallbackApplied === 'true') return;
-            img.dataset.fallbackApplied = 'true';
-            img.src = item.thumbnail_url;
-        }, { once: true });
+    figure.appendChild(img);
+
+    if (item.caption) {
+        const caption = document.createElement('figcaption');
+        caption.className = 'lp-showroom-gallery__caption';
+        caption.textContent = item.caption;
+        figure.appendChild(caption);
     }
 
-    figure.appendChild(img);
     return figure;
 }
 
@@ -389,14 +550,12 @@ function pickShortestShowroomColumn(columns, heights) {
 }
 
 function getShowroomColumnGap(columnCount) {
-    if (columnCount >= 4) return 16;
-    if (columnCount >= 2) return 14;
-    return 10;
+    return columnCount >= 2 ? 14 : 10;
 }
 
-function getShowroomColumnWidth(columnCount) {
+function getShowroomColumnWidth(columnCount, gridEl) {
     const columnGap = getShowroomColumnGap(columnCount);
-    const galleryWidth = showroomGallery?.clientWidth || window.innerWidth;
+    const galleryWidth = gridEl?.clientWidth || showroomGallery?.clientWidth || window.innerWidth;
     return Math.max(120, (galleryWidth - columnGap * (columnCount - 1)) / columnCount);
 }
 
@@ -406,7 +565,7 @@ function loadShowroomImageAspect(item) {
         return Promise.resolve(showroomAspectCache.get(key));
     }
 
-    const probeUrl = item.thumbnail_url || resolveShowroomImageUrl(item);
+    const probeUrl = resolveShowroomImageUrl(item);
 
     return new Promise((resolve) => {
         if (!probeUrl) {
@@ -441,11 +600,11 @@ async function getShowroomImageAspects(images) {
     return Promise.all(images.map((item) => loadShowroomImageAspect(item)));
 }
 
-function distributeShowroomImages(columns, images, columnCount, aspects) {
+function distributeShowroomImages(columns, images, columnCount, aspects, gridEl) {
     const heights = new Array(columnCount).fill(0);
     const columnGap = getShowroomColumnGap(columnCount);
-    const columnWidth = getShowroomColumnWidth(columnCount);
-    const eagerCount = columnCount * 4;
+    const columnWidth = getShowroomColumnWidth(columnCount, gridEl);
+    const eagerCount = columnCount * 2;
 
     images.forEach((item, i) => {
         const target = pickShortestShowroomColumn(columns, heights);
@@ -455,30 +614,117 @@ function distributeShowroomImages(columns, images, columnCount, aspects) {
     });
 }
 
-async function renderShowroomGallery(images) {
-    if (!showroomGallery || !images.length) return;
+function mountShowroomSection(section) {
+    const sectionEl = document.createElement('section');
+    sectionEl.className = 'lp-showroom-section';
 
-    setShowroomLoading('Curating sample pieces…');
+    const title = document.createElement('h3');
+    title.className = 'lp-showroom-section-title';
+    title.textContent = section.title;
+    sectionEl.appendChild(title);
+
+    if (section.subtitle) {
+        const subtitle = document.createElement('p');
+        subtitle.className = 'lp-showroom-section-subtitle';
+        subtitle.textContent = section.subtitle;
+        sectionEl.appendChild(subtitle);
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'lp-showroom-section-grid masonry-layout';
+    sectionEl.appendChild(grid);
+
+    return { sectionEl, grid };
+}
+
+function createShowroomCollageItem(item, eager = false) {
+    const figure = document.createElement('figure');
+    figure.className = 'lp-showroom-accessories__item';
+
+    const img = document.createElement('img');
+    img.alt = item.alt || 'Showroom accessory piece';
+    img.loading = eager ? 'eager' : 'lazy';
+    img.decoding = 'async';
+    img.src = resolveShowroomImageUrl(item);
+
+    figure.appendChild(img);
+    return figure;
+}
+
+function mountShowroomCollageSection(section) {
+    const sectionEl = document.createElement('section');
+    sectionEl.className = 'lp-showroom-section lp-showroom-section--accessories';
+
+    const title = document.createElement('h3');
+    title.className = 'lp-showroom-section-title';
+    title.textContent = section.title;
+    sectionEl.appendChild(title);
+
+    if (section.subtitle) {
+        const subtitle = document.createElement('p');
+        subtitle.className = 'lp-showroom-section-subtitle';
+        subtitle.textContent = section.subtitle;
+        sectionEl.appendChild(subtitle);
+    }
+
+    const grid = document.createElement('div');
+    grid.className = 'lp-showroom-section-grid lp-showroom-section-grid--accessories';
+    section.items.forEach((item, index) => {
+        grid.appendChild(createShowroomCollageItem(item, index < 6));
+    });
+    sectionEl.appendChild(grid);
+
+    return sectionEl;
+}
+
+async function renderShowroomGallery(sections = SHOWROOM_SECTIONS) {
+    if (!showroomGallery || !sections.length) return;
+
+    const hasItems = sections.some((section) => section.items?.length);
+    if (!hasItems) return;
+
+    setShowroomLoading('Loading collections…');
 
     const columnCount = getShowroomColumnCount();
     lastShowroomLayoutColumns = columnCount;
-    const aspects = await getShowroomImageAspects(images);
+
+    const aspectGroups = await Promise.all(
+        sections.map((section) =>
+            section.layout === 'collage'
+                ? Promise.resolve(null)
+                : getShowroomImageAspects(section.items)
+        )
+    );
 
     showroomGallery.innerHTML = '';
     showroomGallery.classList.remove('is-loading');
-    showroomGallery.classList.add('masonry-layout');
+    showroomGallery.classList.add('lp-showroom-sections');
     showroomScroll?.classList.remove('is-gallery-loading');
 
-    const columns = createShowroomMasonryColumns(columnCount);
-    distributeShowroomImages(columns, images, columnCount, aspects);
+    sections.forEach((section, index) => {
+        if (section.layout === 'collage') {
+            showroomGallery.appendChild(mountShowroomCollageSection(section));
+            return;
+        }
+
+        const { sectionEl, grid } = mountShowroomSection(section);
+        const columns = createShowroomMasonryColumns(grid, columnCount);
+        distributeShowroomImages(
+            columns,
+            section.items,
+            columnCount,
+            aspectGroups[index],
+            grid
+        );
+        showroomGallery.appendChild(sectionEl);
+    });
 }
 
 async function refreshShowroomLayoutIfColumnsChanged() {
-    if (!showroomIsOpen || !furnitureCache) return;
+    if (!showroomIsOpen) return;
     const cols = getShowroomColumnCount();
     if (cols === lastShowroomLayoutColumns) return;
-    currentShowroomImages = buildShowroomSelection(furnitureCache);
-    await renderShowroomGallery(currentShowroomImages);
+    await renderShowroomGallery(SHOWROOM_SECTIONS);
 }
 
 function setShowroomLoading(message) {
@@ -486,7 +732,7 @@ function setShowroomLoading(message) {
 
     showroomScroll?.classList.add('is-gallery-loading');
     showroomGallery.classList.add('is-loading');
-    showroomGallery.classList.remove('masonry-layout');
+    showroomGallery.classList.remove('lp-showroom-sections');
     lastShowroomLayoutColumns = null;
     showroomGallery.innerHTML = `
         <div class="lp-showroom-loading" role="status" aria-live="polite">
@@ -558,22 +804,10 @@ async function openShowroomModal(event) {
     if (showroomScroll) showroomScroll.scrollTop = 0;
 
     try {
-        const database = await loadFurnitureDatabase();
-        currentShowroomImages = buildShowroomSelection(database);
-
-        if (!currentShowroomImages.length) {
-            throw new Error('No showroom images available.');
-        }
-
-        await renderShowroomGallery(currentShowroomImages);
+        await renderShowroomGallery(SHOWROOM_SECTIONS);
     } catch (error) {
         console.error('[showroom]', error);
-        const hint =
-            window.location.protocol === 'file:'
-                ? 'Open this page through a local server (for example: python3 -m http.server).'
-                : 'Unable to load showroom pieces. Please try again.';
-        setShowroomLoading(hint);
-        currentShowroomImages = null;
+        setShowroomLoading('Unable to load showroom collections. Please try again.');
     }
 }
 
@@ -582,7 +816,6 @@ async function closeShowroomModal() {
 
     showroomIsOpen = false;
     await hideShowroomModalShell();
-    currentShowroomImages = null;
 
     syncModalBodyLock();
 }
@@ -600,24 +833,29 @@ function initShowroomModal() {
         await closeShowroomModal();
         openContactModal();
     });
+}
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key !== 'Escape') return;
+function handleModalEscape(event) {
+    if (event.key !== 'Escape') return;
 
-        if (showroomModal && !showroomModal.hidden) {
-            closeShowroomModal();
-            return;
-        }
+    if (showroomModal && !showroomModal.hidden) {
+        closeShowroomModal();
+        return;
+    }
 
-        if (spotlightModal && !spotlightModal.hidden) {
-            closeSpotlightModal();
-            return;
-        }
+    if (partnersModal && !partnersModal.hidden) {
+        closePartnersModal();
+        return;
+    }
 
-        if (contactModal && !contactModal.hidden) {
-            closeContactModal();
-        }
-    });
+    if (spotlightModal && !spotlightModal.hidden) {
+        closeSpotlightModal();
+        return;
+    }
+
+    if (contactModal && !contactModal.hidden) {
+        closeContactModal();
+    }
 }
 
 function initReveal() {
@@ -641,7 +879,16 @@ function initReveal() {
         { root: null, rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
     );
 
-    revealEls.forEach((el) => observer.observe(el));
+    const mobileReveal = window.matchMedia('(max-width: 767px)');
+
+    revealEls.forEach((el) => {
+        if (mobileReveal.matches && el.closest('#approach')) {
+            el.classList.add('is-visible');
+            return;
+        }
+        observer.observe(el);
+    });
+
     if (hero) {
         requestAnimationFrame(() => hero.classList.add('is-visible'));
     }
@@ -668,17 +915,16 @@ function initNavHighlight() {
     sections.forEach((section) => observer.observe(section));
 }
 
+initPersona();
 applyContactLinks();
 initContactModal();
 initSpotlightModal();
+initPartnersModal();
 initShowroomModal();
+document.addEventListener('keydown', handleModalEscape);
 updateHeader();
 initReveal();
 initNavHighlight();
-
-loadFurnitureDatabase().catch((error) => {
-    console.warn('[showroom] Preload skipped:', error.message);
-});
 
 window.addEventListener('scroll', updateHeader, { passive: true });
 

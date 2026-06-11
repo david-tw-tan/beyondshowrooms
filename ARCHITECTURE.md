@@ -4,12 +4,22 @@ Frontend-only MVP (`index.html`, `waterfall.js`, `waterfall.css`, `furniture_dat
 
 ---
 
-## Waterfall gallery — what appears
+## Browse surfaces — what appears
 
 - **Tiles:** `anchor_item === "yes"` only, and only **hero** images (`*_A.jpg` via `isHeroImage()`). In practice: all staged **`collection`** heroes plus manually tagged **anchor** `loose_item` heroes (accessory loose shots stay `anchor_item: ""` and are excluded).
-- **`collection_item` rows never appear** in the browse waterfall (exception: **keyword search** shows all matching rows, including `collection_item` and variant photos).
+- **`collection_item` rows never appear** in default browse (exception: **keyword search** shows all matching rows, including `collection_item` and variant photos).
 - **SET badge:** Shown on `collection` heroes only when that `collection_id` has at least one `collection_item` in the DB (`collectionIdsWithItems`).
-- **Layout:** Flex-column masonry (`mountMasonryColumns` / `distributeMasonryCards`), not CSS `column-count` (avoids paint bugs). Gallery columns: 2 / 2 / 3 / 4 by viewport width. Column entrance uses shuffled stagger delays (`GALLERY_COLUMN_STAGGER_MS`).
+
+### Layout by surface
+
+| Surface | Layout | Notes |
+|---------|--------|--------|
+| **Collections tab** | Editorial CSS grid — 1 col (&lt;768px), 2 col desktop | `createCollectionBrowseCard`, 4:3 cover, title below image; `#collectionGroupSticky` fixed bar updates section + card index on scroll, e.g. `Featured collections (2 / 12)` (`updateCollectionGroupStickyLabel`) |
+| **Accessories tab** | Flex-column masonry | 2 / 2 / 3 / 4 columns by viewport |
+| **Keyword search** | Flex-column masonry | Same column breakpoints as accessories |
+| **Bookmarks** | Flex-column masonry | 2 / 3 columns |
+
+Masonry uses `mountMasonryColumns` / `distributeMasonryCards` (not CSS `column-count`). Column entrance uses shuffled stagger delays (`GALLERY_COLUMN_STAGGER_MS`).
 
 ---
 
@@ -34,12 +44,12 @@ All mix ratios target the **share of visible tiles**, not the raw pool size (`mi
 
 Home also offers **Style guide** modal (placeholder tutorial) — not a gallery browse path.
 
-### Accessories view (design room only)
+### Accessories tab (design room only)
 
-- Link under price filters: **Add room accessories →** (slides in from the right).
-- **Accessory heroes** only (`loose_item`, `*_A.jpg`, `anchor_item` not `yes`) for the current `room_type`. **Price** filters only (shared with anchor gallery — toggling either surface updates both). **Style** filters do not apply to accessories. Same star bookmarks as the anchor gallery.
+- **Tab** next to Collections: e.g. “Living room accessories” (`#designBrowseTabs`).
+- **`loose_item`** hero `_A` shots for the current `room_type`. Style and price filters apply (`buildAccessoriesBrowseList`).
+- Masonry layout (Pinterest-style density). Same star bookmarks as collections; starring happens in lightbox.
 - Tap thumbnail → lightbox **overview** of all variants (`A`/`B`/`C`…) when multiple photos exist, else detail.
-- Back: **‹** returns to anchor waterfall. Disclaimer notes factory-dependent availability.
 
 ---
 
@@ -49,9 +59,9 @@ Fixed **↑** control appears after ~520px scroll on **Design** gallery and **Ac
 
 ---
 
-## Thumbnail aspect — landscape crop (gallery/bookmarks)
+## Thumbnail aspect — landscape crop (masonry + bookmarks)
 
-**Scope:** Gallery + bookmark waterfall thumbs only. **Lightbox:** full natural aspect (`object-fit: contain`).
+**Scope:** Accessories tab, keyword-search masonry, and bookmark waterfall thumbs only. **Collections tab** uses fixed 4:3 cover on `.collection-card__media` (no `createThumbMedia`). **Lightbox:** full natural aspect (`object-fit: contain`).
 
 **No crop** unless natural `width ÷ height ≥ EXTREME_LANDSCAPE_THRESHOLD` (currently **1.55** — moderate landscape included).
 
@@ -69,7 +79,7 @@ When cropped (`createThumbMedia` → `pickExtremeLandscapeDisplayRatio`):
 ## Lightbox navigation (gallery path)
 
 ```
-Layer 1 — Waterfall grid
+Layer 1 — Browse grid (collections card or masonry tile)
     click tile
 Overview (middle layer) — only if multiple variants and/or collection items
     Single scrollable page; 1-column mobile, 2-column ≥640px
@@ -92,6 +102,7 @@ Detail (end layer) — single enlarged image + star (no variant carousel; pick p
 
 For **`img_category === 'collection'`** heroes only (not `collection_item` or `loose_item`), when **`orig_brand_tag`** is non-empty:
 
+- **Browse cards (collections tab):** `getCollectionBrowseTitle()` — branded title, else `[Style] Collection`, else “Curated Collection”.
 - **Overview (layer 2):** the collection hero section heading shows **`[Brand] Inspired Collection`** (from `orig_brand_tag`) instead of the generic **"Collection"**.
 - **Detail (layer 3):** the same title appears above the enlarged image when the opened row is a **collection** hero variant (`_A` / `_B` / `_C`…).
 
@@ -173,7 +184,7 @@ Images: `filename_raw` → `img_db_final/{file}` (see `THUMBNAIL_BASE_URL`). Dep
 
 **UI copy:** Caption under the active search tag (and note in the search modal) states that room filter is ignored, style/price still apply, and **collection sets are not included** in search results.
 
-**After clear search:** Room filter returns; browse feed returns to anchor `_A` heroes + three-cycle mixing (see **Three-cycle browse feed**; no `collection_item` in waterfall).
+**After clear search:** Room filter returns; **Collections tab** editorial grid resumes (or accessories masonry if on that tab). Search masonry uses single-pass `buildBrowseFeed()` (70/30 collection vs anchor loose); no `collection_item` in that feed.
 
 **Implementation:** `render()` in `waterfall.js` — search block inside `currentMode === 'design'`; `productSearch` variable; `updateActiveSearchTag()` for caption.
 
@@ -187,4 +198,5 @@ Images: `filename_raw` → `img_db_final/{file}` (see `THUMBNAIL_BASE_URL`). Dep
 | Thumb crop / texture rate | `waterfall.js` CONFIG + `pickExtremeLandscapeDisplayRatio` |
 | Lightbox | `openLightbox`, `openLightboxOverview`, `openLightboxDetail`, `closeLightbox`, `handleEscape` |
 | Bookmarks | `buildBookmarkGroups`, `toggleBookmark`, `renderBookmarkView` |
-| Masonry / card UI | `mountMasonryColumns`, `createGalleryCard`, `waterfall.css` |
+| Collections grid / cards | `createCollectionBrowseCard`, `createGalleryCollectionGroup`, `getCollectionsGridColumnCount`, `waterfall.css` |
+| Masonry / accessory cards | `mountMasonryColumns`, `createGalleryCard`, `waterfall.css` |
