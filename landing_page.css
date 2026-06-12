@@ -1561,12 +1561,26 @@ body.lp-modal-open {
     background: var(--color-surface);
 }
 
+.lp-spotlight__kicker {
+    margin: 0.85rem 0 0;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-brass);
+    text-align: center;
+}
+
 .lp-spotlight__caption {
     margin: 1rem 0 0;
     font-size: 0.92rem;
     line-height: 1.55;
     color: var(--color-ink-muted);
     text-align: center;
+}
+
+.lp-spotlight__kicker:not([hidden]) + .lp-spotlight__caption {
+    margin-top: 0.45rem;
 }
 
 .lp-spotlight__footer {

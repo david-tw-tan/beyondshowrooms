@@ -219,6 +219,7 @@ const contactModal = document.getElementById('contactModal');
 const spotlightModal = document.getElementById('spotlightModal');
 const spotlightImage = document.getElementById('spotlightImage');
 const spotlightCaption = document.getElementById('spotlightCaption');
+const spotlightKicker = document.getElementById('spotlightKicker');
 const showroomModal = document.getElementById('showroomModal');
 const showroomGallery = document.getElementById('showroomGallery');
 const showroomScroll = document.getElementById('showroomScroll');
@@ -293,6 +294,16 @@ function openSpotlightModal(key) {
     spotlightImage.src = item.full;
     spotlightImage.alt = meta.alt || 'Showroom collection';
     spotlightCaption.textContent = meta.caption;
+
+    if (spotlightKicker) {
+        if (meta.kicker) {
+            spotlightKicker.textContent = meta.kicker;
+            spotlightKicker.hidden = false;
+        } else {
+            spotlightKicker.textContent = '';
+            spotlightKicker.hidden = true;
+        }
+    }
     spotlightModal.hidden = false;
     syncModalBodyLock();
     spotlightModal.querySelector('.lp-modal__close')?.focus();
