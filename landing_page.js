@@ -263,6 +263,8 @@ function updateHeader() {
     header.classList.toggle('is-scrolled', window.scrollY > 48);
 }
 
+let modalScrollLockY = 0;
+
 function syncModalBodyLock() {
     const anyOpen =
         (contactModal && !contactModal.hidden) ||
@@ -270,7 +272,59 @@ function syncModalBodyLock() {
         (showroomModal && !showroomModal.hidden) ||
         (partnersModal && !partnersModal.hidden);
 
-    document.body.classList.toggle('lp-modal-open', Boolean(anyOpen));
+    const isLocked = document.body.classList.contains('lp-modal-open');
+
+    if (anyOpen && !isLocked) {
+        modalScrollLockY = window.scrollY;
+        document.documentElement.classList.add('lp-modal-open');
+        document.body.classList.add('lp-modal-open');
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${modalScrollLockY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+    } else if (!anyOpen && isLocked) {
+        document.documentElement.classList.remove('lp-modal-open');
+        document.body.classList.remove('lp-modal-open');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.width = '';
+        window.scrollTo(0, modalScrollLockY);
+    }
+}
+
+function isModalScrollableSurface(el) {
+    return Boolean(
+        el?.closest(
+            '.lp-showroom-scroll, .lp-partners-list, .lp-spotlight__figure, .lp-modal__panel'
+        )
+    );
+}
+
+function initModalScrollGuards() {
+    document.querySelectorAll('.lp-modal').forEach((modal) => {
+        modal.addEventListener(
+            'wheel',
+            (event) => {
+                if (modal.hidden) return;
+                if (isModalScrollableSurface(event.target)) return;
+                event.preventDefault();
+            },
+            { passive: false }
+        );
+
+        modal.addEventListener(
+            'touchmove',
+            (event) => {
+                if (modal.hidden) return;
+                if (isModalScrollableSurface(event.target)) return;
+                event.preventDefault();
+            },
+            { passive: false }
+        );
+    });
 }
 
 function openContactModal() {
@@ -991,6 +1045,7 @@ initContactModal();
 initSpotlightModal();
 initPartnersModal();
 initShowroomModal();
+initModalScrollGuards();
 document.addEventListener('keydown', handleModalEscape);
 updateHeader();
 initReveal();

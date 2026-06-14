@@ -154,10 +154,12 @@ const LANDING_IMAGE_CAPTIONS = {
 
     /* ─── Approach spotlight lightbox (full-size) ─── */
     'img_bedroom_full.jpg': {
+        kicker: 'Partner factory showroom',
         caption: 'Fendi Casa–inspired bedroom collection — customize headboard finish, fabrics, and bedding to your room.',
         alt: 'Fendi Casa–inspired bedroom collection in a partner factory showroom'
     },
     'img_dining_full.jpg': {
+        kicker: 'Partner factory showroom',
         caption: 'Fendi Casa–inspired dining collection — table size, lacquer color, and chair upholstery tailored to you.',
         alt: 'Fendi Casa–inspired dining collection in a partner factory showroom'
     },
@@ -166,6 +168,7 @@ const LANDING_IMAGE_CAPTIONS = {
         alt: 'Gaetano Pesce La Mamma inspired accent chair in a showroom setting'
     },
     'img_living.jpg': {
+        kicker: 'Partner factory showroom',
         caption: 'Minotti-inspired modular seating — configure layout, upholstery, and accent colors for your space.',
         alt: 'Minotti-inspired modular seating in a partner factory showroom'
     },
@@ -204,11 +207,12 @@ function getLandingImageMeta(path) {
     const key = landingImageKey(path);
     const entry = LANDING_IMAGE_CAPTIONS[key];
     if (!entry) {
-        return { caption: '', alt: '' };
+        return { caption: '', alt: '', kicker: '' };
     }
     return {
         caption: entry.caption || '',
-        alt: entry.alt || entry.caption || ''
+        alt: entry.alt || entry.caption || '',
+        kicker: entry.kicker || ''
     };
 }
 

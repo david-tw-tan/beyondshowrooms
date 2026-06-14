@@ -20,7 +20,7 @@ const LANDING_COPY_DESIGNER = {
     'approach.p3':
         'The result: <span class="lp-lead__emphasis">more of the designer look you want</span>, across your entire home, for the same budget.',
     'approach.p4': '',
-    'approach.toolLink': 'Browse Curated Interiors',
+    'approach.toolLink': 'Explore Interiors',
 
     'process.step1.title': 'Share Your Style',
     'process.step2.title': 'Choose & Refine an Interior',
@@ -30,7 +30,7 @@ const LANDING_COPY_DESIGNER = {
         'Explore curated interiors inspired by world-class designer homes. Tailor them to your taste and budget. <span class="lp-step__assurance">$250 styling consultation. No obligation to proceed.</span>',
 
     'whyUs.list':
-        '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Curated whole-room designs</span> inspired by leading global interiors — a coordinated home, not a collection of expensive one-offs</span></li>' +
+        '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Curated whole-room interiors</span> inspired by leading global interiors — a coordinated home, not a collection of expensive one-offs</span></li>' +
         '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Build to order furniture</span> — custom sizes and materials available, not showroom stock</span></li>' +
         '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Direct factory sourcing</span> — access more designer options, without the luxury markup</span></li>' +
         '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">We handle everything</span>, from concept to delivery</span></li>' +
@@ -42,7 +42,9 @@ const LANDING_COPY_DESIGNER = {
     'final.title': 'Ready for Your Designer Home?',
     'final.lede': 'Get more designer look for your budget.',
 
-    'spotlight.explore': 'See More Curated Interiors',
-    'showroom.title': 'Designer interiors preview',
-    'showroom.ctaTitle': 'Ready to make your designs a reality?'
+    'spotlight.explore': 'Explore Interiors',
+    'showroom.title': 'Our interior collections',
+    'showroom.subtitle':
+        'Whole-room collections, ready to order and tailor. Photographed in partner factory showrooms.',
+    'showroom.ctaTitle': 'Ready to explore further?'
 };
