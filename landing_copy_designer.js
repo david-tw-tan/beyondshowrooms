@@ -27,7 +27,7 @@ const LANDING_COPY_DESIGNER = {
     'process.step1.body':
         'Share your photos, floor plans, and inspirations. <span class="lp-step__assurance">Free discovery call. See if we\u2019re the right fit.</span>',
     'process.step2.body':
-        'Explore curated interiors inspired by world-class designer homes. Tailor them to your taste and budget. <span class="lp-step__assurance">$250 styling consultation. No obligation to proceed.</span>',
+        'Explore curated interiors inspired by world-class designer homes. Tailor them to your taste and budget. <span class="lp-step__assurance">$250 consultation fee. No obligation to buy.</span>',
 
     'whyUs.list':
         '<li><span class="lp-benefit-check" aria-hidden="true"></span><span class="lp-benefit-text"><span class="lp-lead__emphasis">Curated whole-room interiors</span> inspired by leading global interiors — a coordinated home, not a collection of expensive one-offs</span></li>' +

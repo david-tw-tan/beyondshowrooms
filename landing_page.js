@@ -946,35 +946,33 @@ function initNavHighlight() {
     sections.forEach((section) => observer.observe(section));
 }
 
-function initCaseStudyCarousel() {
-    const carousel = document.querySelector('[data-case-carousel]');
-    if (!carousel) return;
-
-    const track = carousel.querySelector('[data-case-track]');
-    const slides = [...carousel.querySelectorAll('[data-case-slide]')];
-    const captions = [...carousel.querySelectorAll('[data-case-caption]')];
-    const prevBtn = carousel.querySelector('[data-case-prev]');
-    const nextBtn = carousel.querySelector('[data-case-next]');
-    const dotsContainer = carousel.querySelector('[data-case-dots]');
-    const counter = carousel.querySelector('[data-case-counter]');
-    const viewport = carousel.querySelector('.lp-case-carousel__viewport');
+function initSlideCarousel(carousel, config) {
+    const track = carousel.querySelector(config.track);
+    const slides = [...carousel.querySelectorAll(config.slide)];
+    const captions = [...carousel.querySelectorAll(config.caption)];
+    const prevBtn = carousel.querySelector(config.prev);
+    const nextBtn = carousel.querySelector(config.next);
+    const dotsContainer = carousel.querySelector(config.dots);
+    const counter = carousel.querySelector(config.counter);
+    const viewport = carousel.querySelector(config.viewport);
 
     if (!track || slides.length === 0) return;
 
     let index = 0;
     let touchStartX = 0;
+    const dotLabel = config.dotLabel || 'Slide';
 
     slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.type = 'button';
-        dot.className = 'lp-case-carousel__dot';
+        dot.className = config.dotClass;
         dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', `Home ${i + 1}`);
+        dot.setAttribute('aria-label', `${dotLabel} ${i + 1}`);
         dot.addEventListener('click', () => goTo(i));
         dotsContainer?.appendChild(dot);
     });
 
-    const dots = [...dotsContainer?.querySelectorAll('.lp-case-carousel__dot') ?? []];
+    const dots = [...dotsContainer?.querySelectorAll(`.${config.dotClass}`) ?? []];
 
     function goTo(nextIndex) {
         index = (nextIndex + slides.length) % slides.length;
@@ -1038,8 +1036,45 @@ function initCaseStudyCarousel() {
     goTo(0);
 }
 
+function initCaseStudyCarousel() {
+    const carousel = document.querySelector('[data-case-carousel]');
+    if (!carousel) return;
+
+    initSlideCarousel(carousel, {
+        track: '[data-case-track]',
+        slide: '[data-case-slide]',
+        caption: '[data-case-caption]',
+        prev: '[data-case-prev]',
+        next: '[data-case-next]',
+        dots: '[data-case-dots]',
+        counter: '[data-case-counter]',
+        viewport: '.lp-case-carousel__viewport',
+        dotClass: 'lp-case-carousel__dot',
+        dotLabel: 'Home',
+    });
+}
+
+function initProcessCarousel() {
+    const carousel = document.querySelector('[data-process-carousel]');
+    if (!carousel) return;
+
+    initSlideCarousel(carousel, {
+        track: '[data-process-track]',
+        slide: '[data-process-slide]',
+        caption: '[data-process-caption]',
+        prev: '[data-process-prev]',
+        next: '[data-process-next]',
+        dots: '[data-process-dots]',
+        counter: '[data-process-counter]',
+        viewport: '.lp-process-carousel__viewport',
+        dotClass: 'lp-process-carousel__dot',
+        dotLabel: 'Step',
+    });
+}
+
 initPersona();
 initCaseStudyCarousel();
+initProcessCarousel();
 applyContactLinks();
 initContactModal();
 initSpotlightModal();
