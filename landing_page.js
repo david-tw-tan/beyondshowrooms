@@ -179,19 +179,19 @@ const SHOWROOM_SECTIONS = [
     {
         title: 'Living room',
         items: [1, 2, 3, 4, 5].map((n) =>
-            buildShowroomItem(`html_images/collection_living_${n}.jpg`)
+            buildShowroomItem(`images_lp/collection_living_${n}.jpg`)
         )
     },
     {
         title: 'Bedroom',
         items: [1, 2, 4, 5].map((n) =>
-            buildShowroomItem(`html_images/collection_bed_${n}.jpg`)
+            buildShowroomItem(`images_lp/collection_bed_${n}.jpg`)
         )
     },
     {
         title: 'Dining room',
         items: [1, 2, 3].map((n) =>
-            buildShowroomItem(`html_images/collection_dining_${n}.jpg`)
+            buildShowroomItem(`images_lp/collection_dining_${n}.jpg`)
         )
     },
     {
@@ -199,17 +199,17 @@ const SHOWROOM_SECTIONS = [
         subtitle: 'Statement pieces to complete your room.',
         layout: 'collage',
         items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((n) =>
-            buildShowroomItem(`html_images/accessory_${n}.jpg`)
+            buildShowroomItem(`images_lp/accessory_${n}.jpg`)
         )
     }
 ];
 
 /** Image paths only — caption/alt from landing_image_captions.js */
 const SPOTLIGHT_ITEMS = {
-    bedroom: { full: 'html_images/img_bedroom_full.jpg' },
-    dining: { full: 'html_images/img_dining_full.jpg' },
-    accent: { full: 'html_images/style_img.jpg' },
-    living: { full: 'html_images/img_living.jpg' }
+    bedroom: { full: 'images_lp/img_bedroom_full.jpg' },
+    dining: { full: 'images_lp/img_dining_full.jpg' },
+    accent: { full: 'images_lp/style_img.jpg' },
+    living: { full: 'images_lp/img_living.jpg' }
 };
 
 const header = document.querySelector('.lp-header');

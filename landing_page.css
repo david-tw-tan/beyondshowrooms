@@ -336,7 +336,7 @@ a {
     max-height: min(52vh, 32rem);
     min-height: clamp(11rem, 34vw, 16rem);
     overflow: hidden;
-    background: url('html_images/hero_img.jpg') center 42% / cover no-repeat;
+    background: url('images_lp/hero_img.jpg') center 42% / cover no-repeat;
     transform-origin: center center;
 }
 

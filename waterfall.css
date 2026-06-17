@@ -172,22 +172,22 @@ body {
 }
 
 #homeView .home-room-cards .step-card--bedroom .step-card-media {
-    background-image: url('html_images/img_bedroom.jpg');
+    background-image: url('images_lp/img_bedroom.jpg');
     background-position: center 42%;
 }
 
 #homeView .home-room-cards .step-card--living .step-card-media {
-    background-image: url('html_images/img_living.jpg');
+    background-image: url('images_lp/img_living.jpg');
     background-position: center 58%;
 }
 
 #homeView .home-room-cards .step-card--dining .step-card-media {
-    background-image: url('html_images/img_dining.jpg');
+    background-image: url('images_lp/img_dining.jpg');
     background-position: center 45%;
 }
 
 #homeView .home-room-cards .step-card--study .step-card-media {
-    background-image: url('html_images/img_study.jpg');
+    background-image: url('images_lp/img_study.jpg');
     background-position: center 52%;
 }
 

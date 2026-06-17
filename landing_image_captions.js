@@ -1,6 +1,6 @@
 /**
  * Landing page image captions & alt text — single source of truth.
- * Key = filename under html_images/ (e.g. collection_living_1.jpg).
+ * Key = filename under images_lp/ (e.g. collection_living_1.jpg).
  * Update caption / alt here; showroom modal, spotlight, and future sections read from this file.
  */
 const LANDING_IMAGE_CAPTIONS = {
