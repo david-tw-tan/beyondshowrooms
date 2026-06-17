@@ -344,7 +344,7 @@
         </p>
 
         <p class="bridge-cta bridge-reveal bridge-reveal--delay-4">
-            <a class="bridge-cta__link" id="bridge-cta" href="/">
+            <a class="bridge-cta__link" id="bridge-cta" href="https://www.beyondshowrooms.com/">
                 See what we built
                 <svg class="bridge-cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
@@ -358,7 +358,7 @@
 (function () {
     var cta = document.getElementById('bridge-cta');
     if (cta) {
-        var target = new URL('/', window.location.origin);
+        var target = new URL('https://www.beyondshowrooms.com/');
         var incoming = new URLSearchParams(window.location.search);
         incoming.forEach(function (value, key) {
             target.searchParams.set(key, value);
