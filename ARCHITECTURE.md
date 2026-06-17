@@ -1,16 +1,16 @@
 # Beyond Showrooms — Architecture Notes
 
-Frontend-only MVP. This doc focuses on the **showrooms viz tool** (`showrooms.html`, `waterfall.js`, `waterfall.css`, `furniture_database.json`, `img_db_final/`). Thumbnails use relative `img_db_final/` paths (`THUMBNAIL_BASE_URL` in `waterfall.js`). Bookmarks in `localStorage`.
+Frontend-only MVP. This doc focuses on the **showrooms viz tool** (`showrooms/index.html`, `showrooms/waterfall.js`, `showrooms/waterfall.css`, `showrooms/furniture_database.json`, `showrooms/img_db_final/`). Thumbnails use relative `img_db_final/` paths (`THUMBNAIL_BASE_URL` in `waterfall.js`). Bookmarks in `localStorage`.
 
 ## Site map
 
 | Public URL | File | Purpose | Key assets |
 |------------|------|---------|------------|
 | `/` | `index.html` | Marketing landing page | `landing_page.css`, `landing_page.js`, `landing_copy_designer.js`, … |
-| `/docuseries` | `docuseries.html` | Bridge page for documentary viewers → links to `/` | Inline styles only |
-| `/showrooms` | `showrooms.html` | Room styling / collection browse tool | `waterfall.css`, `waterfall.js`, `furniture_database.json`, `img_db_final/` |
+| `/docuseries/` | `docuseries/index.html` | Bridge page for documentary viewers → links to `/` | 3 collage images co-located in `docuseries/` |
+| `/showrooms/` | `showrooms/index.html` | Room styling / collection browse tool | `showrooms/waterfall.css`, `showrooms/waterfall.js`, `showrooms/furniture_database.json`, `showrooms/img_db_final/`, room-picker JPGs in `showrooms/` |
 
-Deploy all HTML/JS/CSS and `img_db_final/` together (e.g. GitHub Pages). Landing assets keep the `landing_page.*` filename prefix; only the HTML entry point was renamed to `index.html`.
+Deploy landing assets at repo root; deploy the full `showrooms/` and `docuseries/` folders. Landing images live in `images_lp/`; only the HTML entry point was renamed to `index.html`.
 
 ---
 
@@ -151,7 +151,7 @@ If `orig_brand_tag` is empty, the overview hero section stays **"Collection"** a
 | `loose_item` | Standalone hero |
 | `collection_item` | Piece inside a set; Layer 3 grid + 3b lightbox only |
 
-Images: `filename_raw` → `img_db_final/{file}` (see `THUMBNAIL_BASE_URL`). Deploy `img_db_final/` alongside `showrooms.html`, `waterfall.js`, and `waterfall.css`.
+Images: `filename_raw` → `img_db_final/{file}` (see `THUMBNAIL_BASE_URL`). Deploy `showrooms/img_db_final/` alongside `showrooms/index.html`, `showrooms/waterfall.js`, and `showrooms/waterfall.css`.
 
 ---
 

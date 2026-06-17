@@ -150,8 +150,9 @@ function initPersonaReset() {
     document.querySelector('[data-reset-persona]')?.addEventListener('click', resetPersona);
 }
 
-/** Footer — return to default V1 copy and strip campaign persona from URL */
+/** Footer tagline — return to default copy when designer persona is active */
 function resetPersona() {
+    if (activePersona !== 'designer') return;
     applyPersona('confidence', { scrollToHero: true });
 }
 
