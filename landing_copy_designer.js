@@ -1,6 +1,6 @@
 /**
  * V2 (designer) landing copy — overrides only.
- * V1 (confidence) copy lives in landing_page.html (source of truth).
+ * V1 (confidence) copy lives in index.html (source of truth).
  * Keys match data-copy attributes; missing keys fall back to HTML snapshot.
  */
 const LANDING_COPY_DESIGNER = {

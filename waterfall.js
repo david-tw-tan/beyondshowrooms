@@ -73,9 +73,9 @@ const EXTREME_LANDSCAPE_TEXTURE_RATE = 0.45;
 const EXTREME_LANDSCAPE_TEXTURE_ASPECTS = [1, 5 / 6, 4 / 5];
 
 /**
- * Thumbnail folder (relative to index.html).
+ * Thumbnail folder (relative to showrooms.html).
  * Local dev: keep img_db_final/ in this project.
- * GitHub Pages: upload img_db_final/ beside index.html, waterfall.js, waterfall.css.
+ * GitHub Pages: upload img_db_final/ beside showrooms.html, waterfall.js, waterfall.css.
  */
 const THUMBNAIL_BASE_URL = 'img_db_final/';
 

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Beyond Showrooms</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="waterfall.css?v=collection-sticky-7">
+<script defer src="waterfall.js?v=collection-sticky-7"></script>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════
+     START — room picker (step 1)
+     ═══════════════════════════════════════ -->
+<div id="homeView">
+    <div class="home-content">
+        <h1 class="home-title">Beyond Showrooms</h1>
+        <p class="home-subtitle">Take your home furnishings next level</p>
+
+        <h2 class="home-room-heading">Select a room, start styling.</h2>
+
+        <div class="step-cards home-room-cards">
+            <div class="step-card step-card--bedroom" data-room="bedroom" role="button" tabindex="0">
+                <div class="step-card-media" aria-hidden="true"></div>
+                <div class="step-card-label">
+                    <div class="step-card-visual" aria-hidden="true">I</div>
+                    <h3><span>Bedroom</span><span class="step-card-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </div>
+            <div class="step-card step-card--living" data-room="living" role="button" tabindex="0">
+                <div class="step-card-media" aria-hidden="true"></div>
+                <div class="step-card-label">
+                    <div class="step-card-visual" aria-hidden="true">II</div>
+                    <h3><span>Living Room</span><span class="step-card-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </div>
+            <div class="step-card step-card--dining" data-room="dining" role="button" tabindex="0">
+                <div class="step-card-media" aria-hidden="true"></div>
+                <div class="step-card-label">
+                    <div class="step-card-visual" aria-hidden="true">III</div>
+                    <h3><span>Dining Room</span><span class="step-card-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </div>
+            <div class="step-card step-card--study" data-room="study" role="button" tabindex="0">
+                <div class="step-card-media" aria-hidden="true"></div>
+                <div class="step-card-label">
+                    <div class="step-card-visual" aria-hidden="true">IV</div>
+                    <h3><span>Study Room</span><span class="step-card-arrow" aria-hidden="true">→</span></h3>
+                </div>
+            </div>
+        </div>
+
+        <p class="home-style-guide-row">
+            Unsure about styles?
+            <button type="button" id="stylesGuideLink" class="home-style-guide-link">Take the style guide →</button>
+        </p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SELECT STYLE (step 2)
+     ═══════════════════════════════════════ -->
+<div id="stepStyleView" class="step-view step-view--style" style="display:none;">
+    <button type="button" class="nav-back-btn step-nav-back" id="backFromStyle" aria-label="Back"></button>
+    <div class="step-content">
+        <h2 class="step-title">What style?</h2>
+        <p class="step-subtitle">Choose one or more styles for your <span id="selectedRoomLabel"></span></p>
+
+        <div class="style-toggles" id="styleToggles"></div>
+
+        <button type="button" class="show-results-btn" id="showResultsBtn" disabled>
+            Start Styling <span class="show-results-arrow" aria-hidden="true">→</span>
+        </button>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GALLERY VIEW
+     ═══════════════════════════════════════ -->
+<div id="galleryView" style="display:none;">
+    <header>
+        <div class="gallery-header-top">
+            <div class="gallery-header-toolbar">
+                <button type="button" id="homeBtn" class="nav-back-btn nav-home-btn" aria-label="Home"></button>
+                <div class="gallery-header-actions">
+                    <button type="button" id="searchIcon" class="gallery-header-icon-btn gallery-header-icon-btn--search" title="Search" aria-label="Search"></button>
+                    <button type="button" id="bookmarkBtn" class="gallery-header-icon-btn gallery-header-bookmark" aria-label="Bookmarks"><span class="gallery-header-bookmark-star" aria-hidden="true">★</span><span id="bookmarkCount">0</span></button>
+                </div>
+            </div>
+            <h1 id="galleryTitle" class="gallery-header-title">Beyond Showrooms</h1>
+        </div>
+
+        <div id="filterContainer" class="filters gallery-header-filters gallery-header-style-filters"></div>
+
+        <div id="priceFilterContainer" class="filters price-filters gallery-header-price-filters" style="display:none;"></div>
+
+        <nav id="designBrowseTabs" class="design-browse-tabs" role="tablist" style="display:none;" aria-label="Browse by type">
+            <button type="button" id="designTabCollections" class="design-browse-tab design-browse-tab--active" role="tab" aria-selected="true" aria-controls="gallery">Collections</button>
+            <button type="button" id="designTabAccessories" class="design-browse-tab" role="tab" aria-selected="false" aria-controls="accessoriesGallery">Living room accessories</button>
+        </nav>
+
+        <!-- Active search tag (design mode only) -->
+        <div id="activeSearchRow" class="filters active-search-row" style="display:none;">
+            <span class="active-search-tag" id="activeSearchTag"></span>
+            <p id="activeSearchHint" class="active-search-hint" style="display:none;"></p>
+        </div>
+    </header>
+
+    <div id="collectionGroupSticky" class="collection-group-sticky" hidden aria-live="polite"></div>
+
+    <div id="emptyState">Choose a style to get started.</div>
+    <div id="gallery"></div>
+    <div id="accessoriesEmpty" class="accessories-empty" style="display:none;"></div>
+    <div id="accessoriesGallery" class="accessories-gallery" style="display:none;"></div>
+    <footer id="galleryShowroomNote" class="waterfall-showroom-note" hidden aria-label="Photography source">
+        <p class="waterfall-showroom-note-kicker">Photographed on location</p>
+        <p class="waterfall-showroom-note-line">Every piece captured in our partner factory showrooms — available for your home.</p>
+    </footer>
+</div>
+
+<!-- ═══════════════════════════════════════
+     LIGHTBOX  (overview scroll + detail view)
+     ═══════════════════════════════════════ -->
+<div id="lightbox">
+    <button type="button" id="lightboxBackBtn" class="lightbox-back" style="display:none;" aria-label="Back"></button>
+    <button type="button" id="lightboxCloseBtn" class="lightbox-close" style="display:none;" aria-label="Close">✕</button>
+    <div class="lightbox-content">
+        <div id="lightboxOverview" class="lightbox-overview" style="display:none;">
+            <div id="lightboxOverviewScroll" class="lightbox-overview-scroll"></div>
+        </div>
+
+        <div id="lightboxDetail" class="lightbox-detail">
+            <h3 id="lightboxDetailTitle" class="lightbox-detail-title" hidden></h3>
+            <div class="lightbox-stage" id="lightboxStage">
+                <div class="lightbox-image-frame" id="lightboxImageWrap">
+                    <img id="lightboxImg" alt="" draggable="false" />
+                    <div id="starBtn">☆</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     BOOKMARK PAGE
+     ═══════════════════════════════════════ -->
+<div id="bookmarkView"></div>
+
+<!-- ═══════════════════════════════════════
+     LOADING SPINNER
+     ═══════════════════════════════════════ -->
+<div id="spinnerOverlay" class="spinner-overlay">
+    <div class="spinner"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     STYLE GUIDE MODAL  (placeholder tutorial)
+     ═══════════════════════════════════════ -->
+<div id="stylesGuideModal" class="styles-guide-modal" style="display:none;">
+    <div class="styles-guide-modal-backdrop"></div>
+    <div
+        class="styles-guide-modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="stylesGuideTitle"
+    >
+        <button type="button" id="stylesGuideClose" class="styles-guide-modal-close" aria-label="Close">✕</button>
+        <header class="styles-guide-header">
+            <p class="styles-guide-eyebrow">Self-guided</p>
+            <h2 id="stylesGuideTitle" class="styles-guide-title">Find Your Style</h2>
+            <p class="styles-guide-lead">
+                A quick introduction to the styles in our collections — so you can browse with confidence.
+            </p>
+        </header>
+        <div id="stylesGuideList" class="styles-guide-list" aria-live="polite"></div>
+        <footer class="styles-guide-footer">
+            <p class="styles-guide-footer-note">Full tutorial with room examples — coming soon.</p>
+            <p class="styles-guide-footer-hint">When you&apos;re ready, select a room above to explore curated collections.</p>
+        </footer>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SEARCH MODAL
+     ═══════════════════════════════════════ -->
+<div id="searchModal" class="search-modal" style="display:none;">
+    <div class="search-modal-backdrop"></div>
+    <div class="search-modal-content">
+        <button id="searchModalClose" class="search-modal-close">✕</button>
+        <div class="search-modal-box">
+            <input type="text" id="searchModalInput" placeholder="Search product type or category…" autocomplete="off" />
+            <button id="searchModalClear" class="search-clear" style="display:none;">✕</button>
+        </div>
+        <div id="searchModalSuggestions" class="search-suggestions"></div>
+        <p class="search-modal-hint">Try: chair, table, bed, collection, loose_item…</p>
+        <p id="searchModalRoomNote" class="search-modal-room-note" style="display:none;">
+            Keyword search looks across all rooms (room filter ignored). Style and price filters still apply.
+            Collection sets are not included — only loose items and collection pieces with a product type.
+        </p>
+    </div>
+</div>
+
+<button type="button" id="scrollToTopBtn" class="scroll-to-top" aria-label="Back to top" aria-hidden="true">
+    <span class="scroll-to-top-icon" aria-hidden="true">↑</span>
+</button>
+
+</body>
+</html>

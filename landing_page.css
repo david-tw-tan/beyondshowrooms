@@ -410,14 +410,16 @@ a {
 @media (max-width: 767px) {
     .lp-hero__btn-row {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
         gap: 0.65rem;
-        width: min(100%, 50vw);
-        max-width: 14rem;
+        width: 100%;
+        max-width: none;
     }
 
     .lp-hero__btn-row .lp-btn {
-        width: 100%;
+        width: auto;
+        max-width: 100%;
+        padding-inline: 1.5rem;
     }
 }
 
