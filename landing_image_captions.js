@@ -6,36 +6,36 @@
 const LANDING_IMAGE_CAPTIONS = {
     /* ─── Showroom modal: living room collections ─── */
     'collection_living_1.jpg': {
-        caption: 'Fendi Casa–inspired living room collection',
-        alt: 'Fendi Casa–inspired living room collection in a partner factory showroom'
+        caption: 'B&B Italia–inspired living — tufted modular seating, mustard and white, architectural backdrop.',
+        alt: 'B&B Italia–inspired living room with tufted modular seating in a partner factory showroom'
     },
     'collection_living_2.jpg': {
-        caption: 'Bentley-inspired living room collection',
-        alt: 'Bentley-inspired living room collection in a partner factory showroom'
+        caption: 'Minotti-inspired living — black leather modulars, marble coffee table, monochrome palette.',
+        alt: 'Minotti-inspired living room with black leather modular seating in a partner factory showroom'
     },
     'collection_living_3.jpg': {
-        caption: 'Versace-inspired living room collection',
-        alt: 'Versace-inspired living room collection in a partner factory showroom'
+        caption: 'Versace Home–inspired living — quilted leather seating, honeycomb texture, warm cognac tones.',
+        alt: 'Versace Home–inspired living room with quilted leather seating in a partner factory showroom'
     },
     'collection_living_4.jpg': {
-        caption: 'Minotti-inspired modular seating',
-        alt: 'Minotti-inspired modular living room seating in a partner factory showroom'
+        caption: 'Poliform-inspired living — gloss-wood frames, marble cluster tables, soft neutral palette.',
+        alt: 'Poliform-inspired living room with gloss-wood frame seating in a partner factory showroom'
     },
     'collection_living_5.jpg': {
-        caption: 'Roche Bobois–inspired living room collection',
-        alt: 'Roche Bobois–inspired living room collection in a partner factory showroom'
+        caption: 'Edra-inspired living — pebble modular seating, organic silhouettes, sculptural art wall.',
+        alt: 'Edra-inspired living room with pebble modular seating in a partner factory showroom'
     },
     'collection_living_6.jpg': {
-        caption: 'Poliform-inspired living room collection',
-        alt: 'Poliform-inspired living room collection in a partner factory showroom'
+        caption: 'Roche Bobois–inspired living — bubble seating, rounded forms, bold cobalt blue.',
+        alt: 'Roche Bobois–inspired living room with bubble seating in a partner factory showroom'
     },
     'collection_living_7.jpg': {
-        caption: 'Curated living room collection — sculptural seating and mixed textures',
-        alt: 'Curated living room collection with sculptural seating in a partner factory showroom'
+        caption: 'Ligne Roset–inspired living — Togo seating, graphic rug, gallery-calm layout.',
+        alt: 'Ligne Roset–inspired living room with Togo seating in a partner factory showroom'
     },
     'collection_living_8.jpg': {
-        caption: 'Minotti-inspired living room collection',
-        alt: 'Minotti-inspired living room collection in a partner factory showroom'
+        caption: 'Minotti-inspired living — navy modular sofa, mustard ottoman, white marble table.',
+        alt: 'Minotti-inspired living room with navy modular sofa in a partner factory showroom'
     },
 
     /* ─── Showroom modal: bedroom collections ─── */

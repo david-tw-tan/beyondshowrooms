@@ -24,7 +24,10 @@ const LANDING_COPY_DESIGNER = {
         'You can furnish with more of the designer look you want, across your entire home, for the same budget.',
     'approach.bridgeHandoff': 'With us beside you every step of the way.',
     'approach.carouselCta': 'Explore More Interiors',
+    'approach.carouselNote': 'Real factory showrooms — not AI or catalogs.',
 
+    'process.eyebrow': 'Simple 3-step process',
+    'process.title': 'How It Works',
     'process.step1.title': 'Share Your Style',
     'process.step2.title': 'Choose & Refine an Interior',
     'process.step1.body':

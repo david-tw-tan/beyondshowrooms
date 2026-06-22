@@ -178,7 +178,7 @@ function initPersona() {
 const SHOWROOM_SECTIONS = [
     {
         title: 'Living room',
-        items: [1, 2, 3, 4, 5].map((n) =>
+        items: [1, 2, 3, 4, 5, 6, 7, 8].map((n) =>
             buildShowroomItem(`images_lp/collection_living_${n}.jpg`)
         )
     },
