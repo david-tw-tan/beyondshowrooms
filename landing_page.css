@@ -676,6 +676,16 @@ a {
     margin-top: 1.15rem;
 }
 
+@media (min-width: 900px) {
+    .lp-approach__copy {
+        margin-inline: auto;
+    }
+
+    .lp-approach__copy .lp-section-title {
+        text-align: center;
+    }
+}
+
 .lp-approach__carousel {
     --showroom-caption-band: 26%;
     margin-top: clamp(2.25rem, 5vw, 3rem);
@@ -772,8 +782,8 @@ a {
         left: auto;
         right: auto;
         transform: none;
-        align-self: start;
-        margin-top: calc((100% - var(--showroom-caption-band)) / 2 - 1.625rem);
+        align-self: center;
+        margin-top: 0;
     }
 
     .lp-approach__carousel .lp-carousel-stage > .lp-case-carousel__nav:hover {
@@ -806,10 +816,11 @@ a {
 
 .lp-approach__bridge-label {
     display: block;
-    margin: 0 0 0.85rem;
-    font-size: clamp(0.72rem, 1.9vw, 0.8rem);
+    margin: 0 0 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.8vw, 1.4rem);
     font-weight: 600;
-    letter-spacing: var(--tracking-caps);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-brass);
 }
@@ -982,6 +993,21 @@ a {
     }
 }
 
+.lp-process-cta {
+    margin-top: clamp(2.75rem, 6vw, 3.25rem);
+    text-align: center;
+}
+
+@media (min-width: 900px) {
+    .lp-process-cta {
+        margin-top: 2.25rem;
+    }
+}
+
+.lp-process-cta .lp-btn-row {
+    justify-content: center;
+}
+
 /* ─── Process reel carousel ─── */
 .lp-process-reel {
     margin-top: clamp(3rem, 7vw, 4rem);
@@ -1018,10 +1044,12 @@ a {
 
 .lp-process-carousel__viewport {
     overflow: hidden;
+    aspect-ratio: 4 / 5;
 }
 
 .lp-process-carousel__track {
     display: flex;
+    height: 100%;
     transition: transform var(--transition-smooth);
     will-change: transform;
 }
@@ -1029,18 +1057,27 @@ a {
 .lp-process-carousel__slide {
     flex: 0 0 100%;
     min-width: 0;
+    height: 100%;
 }
 
 .lp-process-carousel__figure {
     margin: 0;
     line-height: 0;
+    height: 100%;
 }
 
 .lp-process-carousel__img {
+    display: block;
     width: 100%;
-    aspect-ratio: 16 / 10;
+    height: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+@media (min-width: 640px) {
+    .lp-process-carousel__viewport {
+        aspect-ratio: 16 / 10;
+    }
 }
 
 .lp-process-carousel__caption-panel {
@@ -1464,7 +1501,7 @@ a {
 }
 
 .lp-doc-teaser__title {
-    margin: 0.4rem 0 0;
+    margin: 0;
     font-family: var(--font-display);
     font-size: clamp(1.05rem, 2.6vw, 1.22rem);
     font-weight: 600;
@@ -1555,6 +1592,13 @@ a {
 
 .lp-case-studies__intro {
     margin-top: 0.25rem;
+}
+
+@media (min-width: 900px) {
+    .lp-case-studies__header {
+        margin-inline: auto;
+        text-align: center;
+    }
 }
 
 /* Shared carousel body — caption aligns with image column on desktop */
@@ -1832,6 +1876,13 @@ a {
         width: 100%;
     }
 
+    .lp-carousel-body > .lp-case-carousel__footer,
+    .lp-carousel-body > .lp-process-carousel__footer {
+        grid-column: 2;
+        min-width: 0;
+        width: 100%;
+    }
+
     .lp-carousel-stage > .lp-case-carousel__frame,
     .lp-carousel-stage > .lp-process-carousel__frame {
         grid-column: 2;
@@ -1938,7 +1989,7 @@ body[data-persona="designer"] .lp-footer__note[data-reset-persona]:hover {
     margin-top: 1.75rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--color-hairline);
-    max-width: 22rem;
+    max-width: 28rem;
     margin-inline: auto;
 }
 

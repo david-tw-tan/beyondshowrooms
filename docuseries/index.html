@@ -8,7 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -86,7 +86,7 @@
             line-height: 0.82;
             letter-spacing: -0.14em;
             color: var(--color-brass);
-            opacity: 0.09;
+            opacity: 0.085;
             pointer-events: none;
             user-select: none;
         }
@@ -143,7 +143,7 @@
             align-items: flex-start;
             justify-content: space-between;
             gap: 1rem 1.25rem;
-            margin-bottom: 1.35rem;
+            margin-bottom: clamp(2rem, 4.5vw, 2.75rem);
         }
 
         .bridge-eyebrow {
@@ -153,7 +153,7 @@
             font-weight: 400;
             font-style: italic;
             line-height: 1.4;
-            color: var(--color-ink-muted);
+            color: var(--color-brass);
         }
 
         .bridge-title {
@@ -161,9 +161,9 @@
             flex: 1;
             min-width: 0;
             font-family: var(--font-display);
-            font-size: clamp(2rem, 5vw, 2.65rem);
+            font-size: clamp(1.65rem, 3.8vw, 2.15rem);
             font-weight: 500;
-            line-height: 1.1;
+            line-height: 1.15;
             letter-spacing: 0.01em;
             text-wrap: balance;
         }
@@ -259,10 +259,16 @@
                 padding-bottom: clamp(8.5rem, 11vw, 10.5rem);
             }
 
+            .bridge-collage {
+                width: clamp(8.5rem, 15rem - 5vw, 11.5rem);
+                height: clamp(8.5rem, 15rem - 5vw, 11.5rem);
+            }
+
             .bridge-watermark {
                 font-size: clamp(9rem, 20vw, 13.5rem);
                 right: clamp(-0.5rem, -2vw, 0.5rem);
                 bottom: 0;
+                opacity: 0.09;
             }
         }
 
@@ -270,6 +276,26 @@
             .bridge-letter {
                 align-items: flex-start;
                 padding-top: clamp(2.75rem, 12vw, 4rem);
+            }
+
+            .bridge-letter__inner {
+                padding-bottom: clamp(8.5rem, 30vw, 10.5rem);
+            }
+
+            .bridge-watermark {
+                font-size: clamp(6.5rem, 38vw, 8rem);
+                right: clamp(0.75rem, 4vw, 1.5rem);
+                bottom: clamp(-2.75rem, -11vw, -2rem);
+                opacity: 0.07;
+            }
+
+            .bridge-intro {
+                gap: 0.85rem 0.9rem;
+            }
+
+            .bridge-collage {
+                width: clamp(5.25rem, 15vw, 6.25rem);
+                height: clamp(5.25rem, 15vw, 6.25rem);
             }
         }
 
@@ -316,7 +342,7 @@
         <p class="bridge-eyebrow bridge-reveal">From the docuseries</p>
 
         <div class="bridge-intro bridge-reveal bridge-reveal--delay-1">
-            <h1 class="bridge-title">Welcome.</h1>
+            <h1 class="bridge-title">A Smarter Way to Furnish</h1>
 
             <div class="bridge-collage" aria-hidden="true">
                 <div class="bridge-collage__item bridge-collage__item--a">
@@ -332,15 +358,11 @@
         </div>
 
         <p class="bridge-body bridge-reveal bridge-reveal--delay-2">
-            We spent weeks inside Foshan&rsquo;s showrooms, factories, and supply chains, and it changed how we think about furnishing a home.
-        </p>
-
-        <p class="bridge-body bridge-reveal bridge-reveal--delay-2">
-            <span class="bridge-emphasis">Beyond Showrooms grew from that journey.</span> We now offer curated whole-room luxury interiors, factory-direct and ready to order. Our partners include the factories we filmed and others we&rsquo;ve added since.
+            We spent weeks inside Foshan&rsquo;s showrooms, factories, and supply chains. <span class="bridge-emphasis">Beyond Showrooms is what came next</span> &mdash; curated whole-room luxury interiors, factory-direct, ready to order.
         </p>
 
         <p class="bridge-body bridge-reveal bridge-reveal--delay-3">
-            Our goal: to make furnishing your home much easier.
+            Manufacturing partners include the factories we filmed and others we&rsquo;ve added since.
         </p>
 
         <p class="bridge-cta bridge-reveal bridge-reveal--delay-4">
