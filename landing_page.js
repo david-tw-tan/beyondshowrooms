@@ -3,8 +3,7 @@
  * Update contact URLs before going live.
  */
 const LANDING_CONFIG = {
-    discoveryCallUrl: '#book-call',
-    whatsAppUrl: 'https://wa.me/',
+    whatsAppUrl: 'https://wa.me/8618500507084',
     emailUrl: 'mailto:hello@beyondshowrooms.com',
     /** YouTube playlist or channel — update when the series is published */
     youtubeSeriesUrl: '#youtube-series'
@@ -207,10 +206,10 @@ const SHOWROOM_SECTIONS = [
 
 /** Image paths only — caption/alt from landing_image_captions.js */
 const SPOTLIGHT_ITEMS = {
-    bedroom: { full: 'images_lp/img_bedroom_full.jpg' },
-    dining: { full: 'images_lp/img_dining_full.jpg' },
+    bedroom: { full: 'images_lp/interior_3.jpg' },
+    dining: { full: 'images_lp/interior_2.jpg' },
     accent: { full: 'images_lp/style_img.jpg' },
-    living: { full: 'images_lp/img_living.jpg' }
+    living: { full: 'images_lp/interior_1.jpg' }
 };
 
 const header = document.querySelector('.lp-header');
@@ -243,11 +242,9 @@ const showroomAspectCache = new Map();
 const SHOWROOM_MODAL_ANIM_MS = 500;
 
 function applyContactLinks() {
-    const discovery = document.querySelector('[data-contact="discovery"]');
     const whatsapp = document.querySelector('[data-contact="whatsapp"]');
     const email = document.querySelector('[data-contact="email"]');
 
-    if (discovery) discovery.setAttribute('href', LANDING_CONFIG.discoveryCallUrl);
     if (whatsapp) {
         whatsapp.setAttribute('href', LANDING_CONFIG.whatsAppUrl);
         whatsapp.setAttribute('target', '_blank');
@@ -1055,6 +1052,24 @@ function initCaseStudyCarousel() {
     });
 }
 
+function initShowroomCarousel() {
+    const carousel = document.querySelector('[data-showroom-carousel]');
+    if (!carousel) return;
+
+    initSlideCarousel(carousel, {
+        track: '[data-showroom-track]',
+        slide: '[data-showroom-slide]',
+        caption: '[data-showroom-caption]',
+        prev: '[data-showroom-prev]',
+        next: '[data-showroom-next]',
+        dots: '[data-showroom-dots]',
+        counter: '[data-showroom-counter]',
+        viewport: '.lp-case-carousel__viewport',
+        dotClass: 'lp-case-carousel__dot',
+        dotLabel: 'Collection',
+    });
+}
+
 function initProcessCarousel() {
     const carousel = document.querySelector('[data-process-carousel]');
     if (!carousel) return;
@@ -1075,6 +1090,7 @@ function initProcessCarousel() {
 
 initPersona();
 initCaseStudyCarousel();
+initShowroomCarousel();
 initProcessCarousel();
 applyContactLinks();
 initContactModal();

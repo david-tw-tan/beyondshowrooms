@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="image" href="images_lp/hero_img.jpg" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="landing_page.css?v=gutters-25">
-    <script defer src="landing_image_captions.js?v=7"></script>
+    <link rel="stylesheet" href="landing_page.css?v=docuseries-play-contrast">
+    <script defer src="landing_image_captions.js?v=8"></script>
     <script defer src="landing_factory_partners.js?v=2"></script>
     <script defer src="landing_copy_designer.js?v=32"></script>
-    <script defer src="landing_page.js?v=persona-14"></script>
+    <script defer src="landing_page.js?v=interior-carousel-5"></script>
 </head>
 <body>
 
@@ -47,7 +47,6 @@
                 </div>
                 <div class="lp-btn-row lp-hero__btn-row">
                     <button type="button" class="lp-btn lp-btn--primary" data-open-contact>Book a Free Call</button>
-                    <button type="button" class="lp-btn lp-btn--brass" data-open-showroom data-copy="approach.toolLink">Explore Interiors</button>
                 </div>
             </div>
         </div>
@@ -56,44 +55,152 @@
     <!-- Approach -->
     <section id="approach" class="lp-section" data-section="approach">
         <div class="lp-container">
-            <div class="lp-intro-grid lp-reveal-group">
-                <div class="lp-intro-copy">
-                    <div class="lp-reveal-group__item lp-reveal-group__item--copy">
-                        <h2 class="lp-section-title" data-copy="approach.title">A Smarter Way to Furnish</h2>
-                        <p class="lp-lead" data-copy-html="approach.p1">
-                            Whether it's trusting your taste, fearing costly mistakes, or not knowing where to start, we're here to make furnishing large homes easier.
-                        </p>
-                        <p class="lp-lead" data-copy-html="approach.p2">
-                            We start you with a portfolio of <span class="lp-lead__emphasis">curated whole-room interiors</span>, luxury-brand and design-magazine looks already pulled together and ready to order.
-                        </p>
-                        <p class="lp-lead" data-copy-html="approach.p3">
-                            You choose a direction. We tailor it to your taste and budget. Then we <span class="lp-lead__emphasis">deliver it end-to-end</span> to your home, factory-direct from our network of premium manufacturers in Foshan, China's furniture capital.
-                        </p>
-                        <p class="lp-lead" data-copy-html="approach.p4">
-                            The result: <span class="lp-lead__emphasis">more confidence, less stress, and a finished home you'll love</span>.
-                            With us beside you every step of the way.
-                        </p>
+            <div class="lp-approach">
+                <div class="lp-approach__copy lp-reveal">
+                    <h2 class="lp-section-title" data-copy="approach.title">A Smarter Way to Furnish</h2>
+                    <p class="lp-lead" data-copy-html="approach.p1">
+                        Whether it's trusting your taste, fearing costly mistakes, or not knowing where to start, we're here to make furnishing large homes easier.
+                    </p>
+                    <p class="lp-lead" data-copy-html="approach.p2">
+                        We start you with a portfolio of <span class="lp-lead__emphasis">curated whole-room interiors</span>, luxury-brand and design-magazine looks already pulled together and ready to order.
+                    </p>
+                    <p class="lp-lead" data-copy-html="approach.p3">
+                        You choose a direction. We tailor it to your taste and budget. Then we <span class="lp-lead__emphasis">deliver it end-to-end</span> to your home, factory-direct from our network of premium manufacturers in Foshan, China's furniture capital.
+                    </p>
+                </div>
+
+                <div class="lp-case-carousel lp-approach__carousel lp-reveal" data-showroom-carousel aria-roledescription="carousel" tabindex="0">
+                    <div class="lp-carousel-body">
+                        <div class="lp-carousel-stage">
+                            <button
+                                type="button"
+                                class="lp-case-carousel__nav lp-case-carousel__nav--prev"
+                                data-showroom-prev
+                                aria-label="Previous collection"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                            </button>
+
+                            <div class="lp-case-carousel__frame">
+                                <div class="lp-case-carousel__media">
+                                    <div class="lp-case-carousel__viewport">
+                                        <div class="lp-case-carousel__track" data-showroom-track>
+                                            <article class="lp-case-carousel__slide" data-showroom-slide aria-roledescription="slide">
+                                                <figure class="lp-case-carousel__figure">
+                                                    <img
+                                                        class="lp-case-carousel__img"
+                                                        src="images_lp/interior_3.jpg"
+                                                        alt="Fendi Casa–inspired bedroom collection in a partner factory showroom"
+                                                        width="1500"
+                                                        height="1325"
+                                                        loading="eager"
+                                                        decoding="async"
+                                                    >
+                                                </figure>
+                                            </article>
+                                            <article class="lp-case-carousel__slide" data-showroom-slide aria-roledescription="slide">
+                                                <figure class="lp-case-carousel__figure">
+                                                    <img
+                                                        class="lp-case-carousel__img"
+                                                        src="images_lp/interior_2.jpg"
+                                                        alt="Fendi Casa–inspired dining collection with orange lacquer table"
+                                                        width="1500"
+                                                        height="1629"
+                                                        loading="lazy"
+                                                    >
+                                                </figure>
+                                            </article>
+                                            <article class="lp-case-carousel__slide" data-showroom-slide aria-roledescription="slide">
+                                                <figure class="lp-case-carousel__figure">
+                                                    <img
+                                                        class="lp-case-carousel__img"
+                                                        src="images_lp/interior_1.jpg"
+                                                        alt="Fendi Casa–inspired living room collection in a partner factory showroom"
+                                                        width="1500"
+                                                        height="860"
+                                                        loading="lazy"
+                                                    >
+                                                </figure>
+                                            </article>
+                                            <article class="lp-case-carousel__slide" data-showroom-slide aria-roledescription="slide">
+                                                <figure class="lp-case-carousel__figure">
+                                                    <img
+                                                        class="lp-case-carousel__img"
+                                                        src="images_lp/interior_4.jpg"
+                                                        alt="Fendi Casa–inspired dining collection with marble table and chandelier"
+                                                        width="1250"
+                                                        height="1261"
+                                                        loading="lazy"
+                                                    >
+                                                </figure>
+                                            </article>
+                                            <article class="lp-case-carousel__slide" data-showroom-slide aria-roledescription="slide">
+                                                <figure class="lp-case-carousel__figure">
+                                                    <img
+                                                        class="lp-case-carousel__img"
+                                                        src="images_lp/interior_5.jpg"
+                                                        alt="Minotti-inspired modular living room collection in a partner factory showroom"
+                                                        width="1500"
+                                                        height="2000"
+                                                        loading="lazy"
+                                                    >
+                                                </figure>
+                                            </article>
+                                        </div>
+                                    </div>
+
+                                    <div class="lp-showroom-caption-overlay" aria-live="polite">
+                                        <article class="lp-case-carousel__caption" data-showroom-caption>
+                                            <span class="lp-case-carousel__label">Bedroom</span>
+                                            <p class="lp-showroom-caption__note">Fendi Casa–inspired bedroom — chevron headboard, layered textiles, tailored to your room.</p>
+                                        </article>
+                                        <article class="lp-case-carousel__caption" data-showroom-caption hidden>
+                                            <span class="lp-case-carousel__label">Dining</span>
+                                            <p class="lp-showroom-caption__note">Fendi Casa–inspired dining — orange lacquer table, matching chairs.</p>
+                                        </article>
+                                        <article class="lp-case-carousel__caption" data-showroom-caption hidden>
+                                            <span class="lp-case-carousel__label">Living room</span>
+                                            <p class="lp-showroom-caption__note">Fendi Casa–inspired living — sectional seating, marble tables, coordinated palette.</p>
+                                        </article>
+                                        <article class="lp-case-carousel__caption" data-showroom-caption hidden>
+                                            <span class="lp-case-carousel__label">Dining</span>
+                                            <p class="lp-showroom-caption__note">Fendi Casa–inspired dining — marble table, statement chandelier.</p>
+                                        </article>
+                                        <article class="lp-case-carousel__caption" data-showroom-caption hidden>
+                                            <span class="lp-case-carousel__label">Living room</span>
+                                            <p class="lp-showroom-caption__note">Minotti-inspired living — modular sectional, bouclé upholstery, stone accents.</p>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="lp-case-carousel__nav lp-case-carousel__nav--next"
+                                data-showroom-next
+                                aria-label="Next collection"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="lp-case-carousel__footer">
+                        <div class="lp-case-carousel__dots" data-showroom-dots role="tablist" aria-label="Select collection"></div>
+                        <p class="lp-case-carousel__counter" data-showroom-counter aria-live="polite">1 of 5</p>
                     </div>
                 </div>
-                <div class="lp-intro-visual">
-                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-intro-visual__trigger--img-a lp-reveal-group__item lp-reveal-group__item--img-a" data-spotlight="bedroom" aria-label="View bedroom showroom collection">
-                        <img class="lp-intro-visual__img" src="images_lp/img_bedroom.jpg" alt="" width="400" height="500" loading="eager" decoding="async">
-                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-                        </span>
-                    </button>
-                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-intro-visual__trigger--img-b lp-reveal-group__item lp-reveal-group__item--img-b" data-spotlight="dining" aria-label="View dining showroom collection">
-                        <img class="lp-intro-visual__img" src="images_lp/img_dining.jpg" alt="" width="400" height="500" loading="eager" decoding="async">
-                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-                        </span>
-                    </button>
-                    <button type="button" class="lp-spotlight-trigger lp-intro-visual__trigger lp-intro-visual__trigger--img-c lp-reveal-group__item lp-reveal-group__item--img-c" data-spotlight="living" aria-label="View living room showroom collection">
-                        <img class="lp-intro-visual__img" src="images_lp/img_living_thumb.jpg" alt="" width="400" height="500" loading="eager" decoding="async">
-                        <span class="lp-spotlight-trigger__hint" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-                        </span>
-                    </button>
+
+                <div class="lp-approach__cta lp-reveal">
+                    <button type="button" class="lp-btn lp-btn--brass" data-open-showroom data-copy="approach.carouselCta">Explore More Interiors</button>
+                </div>
+
+                <div class="lp-approach__bridge lp-reveal">
+                    <span class="lp-approach__bridge-label" data-copy="approach.bridgeLabel">The result</span>
+                    <p class="lp-approach__bridge-text" data-copy-html="approach.bridge">
+                        You can furnish with more confidence, less stress, and with <span class="lp-lead__emphasis">a final outcome you'll love</span>.
+                    </p>
+                    <p class="lp-approach__bridge-handoff" data-copy="approach.bridgeHandoff">With us beside you every step of the way.</p>
                 </div>
             </div>
         </div>
@@ -111,7 +218,7 @@
                     <h3 class="lp-step__title" data-copy="process.step1.title">Understand Your Home</h3>
                     <p class="lp-step__body" data-copy-html="process.step1.body">
                         Share your floor plans, photos, budget and concerns.
-                        <span class="lp-step__assurance">Free discovery call. See if we're the right fit.</span>
+                        <span class="lp-step__assurance">Free discovery call once we confirm we&rsquo;re a good fit.</span>
                     </p>
                 </article>
                 <article class="lp-step lp-reveal">
@@ -289,30 +396,39 @@
                         </figcaption>
                     </figure>
 
-                    <div class="lp-doc-teaser">
+                    <figure class="lp-doc-teaser">
                         <a
                             id="documentaryLink"
-                            class="lp-doc-teaser__link"
+                            class="lp-doc-teaser__media"
                             href="#youtube-series"
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label="Watch our 3-part Foshan docuseries on YouTube (opens in new tab)"
+                            aria-label="Watch our Foshan docuseries on YouTube (opens in new tab)"
                         >
                             <img
                                 class="lp-doc-teaser__thumb"
                                 src="images_lp/img_journal_doc.jpeg"
                                 alt="Hand-cutting leather on a partner factory floor in Foshan"
-                                width="360"
-                                height="202"
+                                width="960"
+                                height="540"
                                 loading="lazy"
                             >
-                            <span class="lp-doc-teaser__copy">
-                                <span class="lp-doc-teaser__label">Where it all started</span>
-                                <span class="lp-doc-teaser__text">Watch our 3-part Foshan docuseries on YouTube</span>
-                            </span>
-                            <svg class="lp-doc-teaser__icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                            <span class="lp-doc-teaser__scrim" aria-hidden="true"></span>
+                            <img
+                                class="lp-doc-teaser__play"
+                                src="images_lp/icon_play.png"
+                                alt=""
+                                width="80"
+                                height="80"
+                                aria-hidden="true"
+                            >
                         </a>
-                    </div>
+                        <figcaption class="lp-doc-teaser__footer">
+                            <span class="lp-doc-teaser__label" data-copy="docuseries.label">Where it all started</span>
+                            <p class="lp-doc-teaser__title" data-copy="docuseries.title">We filmed 10 days inside Foshan's furniture capital</p>
+                            <p class="lp-doc-teaser__desc" data-copy="docuseries.desc">3-part series (~90 min) — from luxury showrooms to factory floors (and one unforgettable sofa test).</p>
+                        </figcaption>
+                    </figure>
                 </div>
             </div>
         </div>
@@ -594,24 +710,38 @@
 <!-- Contact options modal -->
 <div id="contactModal" class="lp-modal" hidden>
     <div class="lp-modal__backdrop" data-close-contact></div>
-    <div class="lp-modal__panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+    <div class="lp-modal__panel lp-modal__panel--contact" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
         <button type="button" class="lp-modal__close" data-close-contact aria-label="Close">&times;</button>
-        <span class="lp-eyebrow">Get in Touch</span>
-        <h2 id="contactModalTitle" class="lp-modal__title">How would you like to connect?</h2>
-        <p class="lp-modal__lead">Choose the option that works best for you. Every conversation starts with a free, no-obligation discovery call.</p>
+        <h2 id="contactModalTitle" class="lp-modal__title">Get in Touch</h2>
+        <div class="lp-modal__lead-group">
+            <p>If you&rsquo;re looking to furnish a large home with built-to-order, designer-quality furniture, we can help.</p>
+            <p>Contact us with questions or to book a free chat.</p>
+        </div>
         <div class="lp-contact-options">
             <a href="#" class="lp-contact-option" data-contact="whatsapp">
-                <span class="lp-contact-option__label">WhatsApp Us</span>
-                <span class="lp-contact-option__hint">Quick questions welcome</span>
+                <span class="lp-contact-option__icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </span>
+                <span class="lp-contact-option__body">
+                    <span class="lp-contact-option__label">WhatsApp Us</span>
+                    <span class="lp-contact-option__hint">+86 185 0050 7084</span>
+                    <span class="lp-contact-option__hint">Quick questions welcome</span>
+                </span>
             </a>
             <a href="#" class="lp-contact-option" data-contact="email">
-                <span class="lp-contact-option__label">Send Us an Email</span>
-                <span class="lp-contact-option__hint">hello@beyondshowrooms.com</span>
+                <span class="lp-contact-option__icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </span>
+                <span class="lp-contact-option__body">
+                    <span class="lp-contact-option__label">Email Us</span>
+                    <span class="lp-contact-option__hint">hello@beyondshowrooms.com</span>
+                    <span class="lp-contact-option__hint">Book a free discovery call. Share your project.</span>
+                </span>
             </a>
-            <a href="#" class="lp-contact-option" data-contact="discovery">
-                <span class="lp-contact-option__label">Request a Discovery Call</span>
-                <span class="lp-contact-option__hint">We'll arrange a suitable time to speak</span>
-            </a>
+        </div>
+        <div class="lp-contact-note">
+            <p>We usually reply within one business day.</p>
+            <p>Based in Beijing (GMT+8).</p>
         </div>
     </div>
 </div>

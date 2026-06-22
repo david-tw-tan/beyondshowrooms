@@ -152,31 +152,31 @@ const LANDING_IMAGE_CAPTIONS = {
         alt: 'Black-and-white woven accent chair in a partner factory showroom'
     },
 
-    /* ─── Approach spotlight lightbox (full-size) ─── */
-    'img_bedroom_full.jpg': {
-        kicker: 'Partner factory showroom',
-        caption: 'Fendi Casa–inspired bedroom collection — customize headboard finish, fabrics, and bedding to your room.',
+    /* ─── Approach carousel ─── */
+    'interior_1.jpg': {
+        caption: 'Fendi Casa–inspired living — sectional seating, marble tables, coordinated palette.',
+        alt: 'Fendi Casa–inspired living room collection in a partner factory showroom'
+    },
+    'interior_2.jpg': {
+        caption: 'Fendi Casa–inspired dining — orange lacquer table, matching chairs.',
+        alt: 'Fendi Casa–inspired dining collection with orange lacquer table'
+    },
+    'interior_3.jpg': {
+        caption: 'Fendi Casa–inspired bedroom — chevron headboard, layered textiles, tailored to your room.',
         alt: 'Fendi Casa–inspired bedroom collection in a partner factory showroom'
     },
-    'img_dining_full.jpg': {
-        kicker: 'Partner factory showroom',
-        caption: 'Fendi Casa–inspired dining collection — table size, lacquer color, and chair upholstery tailored to you.',
-        alt: 'Fendi Casa–inspired dining collection in a partner factory showroom'
+    'interior_4.jpg': {
+        caption: 'Fendi Casa–inspired dining — marble table, statement chandelier.',
+        alt: 'Fendi Casa–inspired dining collection with marble table and chandelier'
+    },
+    'interior_5.jpg': {
+        caption: 'Minotti-inspired living — modular sectional, bouclé upholstery, stone accents.',
+        alt: 'Minotti-inspired modular living room collection in a partner factory showroom'
     },
     'style_img.jpg': {
         caption: 'Gaetano Pesce "La Mamma" inspired accent chair — available in custom colors.',
         alt: 'Gaetano Pesce La Mamma inspired accent chair in a showroom setting'
     },
-    'img_living.jpg': {
-        kicker: 'Partner factory showroom',
-        caption: 'Minotti-inspired modular seating — configure layout, upholstery, and accent colors for your space.',
-        alt: 'Minotti-inspired modular seating in a partner factory showroom'
-    },
-    'img_living_thumb.jpg': {
-        caption: '',
-        alt: 'Living room collection preview'
-    },
-
     /* ─── Why Us factory hero ─── */
     'factory_3.jpg': {
         caption: "Curated network of Foshan's leading premium furniture factories.",
@@ -184,14 +184,6 @@ const LANDING_IMAGE_CAPTIONS = {
     },
 
     /* ─── Inline page images (optional alt / captions) ─── */
-    'img_bedroom.jpg': {
-        caption: '',
-        alt: 'Bedroom collection preview'
-    },
-    'img_dining.jpg': {
-        caption: '',
-        alt: 'Dining collection preview'
-    },
     'img_journal.jpg': {
         caption: '',
         alt: 'Showroom floor during a visit in Foshan'
