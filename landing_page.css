@@ -231,6 +231,7 @@ a {
 
 /* Narrow desktop: 2 nav items; full set at 900px+ */
 @media (min-width: 640px) and (max-width: 899px) {
+    .lp-nav a[data-nav="docuseries"],
     .lp-nav a[data-nav="why-us"],
     .lp-nav a[data-nav="homes"] {
         display: none;
@@ -789,6 +790,10 @@ a {
     .lp-approach__carousel .lp-carousel-stage > .lp-case-carousel__nav:hover {
         transform: translateY(-1px);
     }
+
+    .lp-approach__carousel .lp-case-carousel__img {
+        aspect-ratio: 4 / 3;
+    }
 }
 
 .lp-approach__carousel-note {
@@ -994,13 +999,13 @@ a {
 }
 
 .lp-process-cta {
-    margin-top: clamp(2.75rem, 6vw, 3.25rem);
+    margin-top: clamp(3.5rem, 8vw, 4.25rem);
     text-align: center;
 }
 
 @media (min-width: 900px) {
     .lp-process-cta {
-        margin-top: 2.25rem;
+        margin-top: clamp(4rem, 5vw, 4.75rem);
     }
 }
 
@@ -1104,6 +1109,15 @@ a {
     letter-spacing: 0.01em;
 }
 
+.lp-process-carousel__count {
+    margin-left: 0.45em;
+    font-family: var(--font-body);
+    font-size: 0.72em;
+    font-weight: 400;
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-inverse-faint);
+}
+
 .lp-process-carousel__desc {
     margin: 0;
     max-width: 40rem;
@@ -1158,7 +1172,7 @@ a {
 .lp-process-carousel__footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 1rem;
     margin-top: 1.1rem;
     padding-inline: 0.15rem;
@@ -1195,14 +1209,6 @@ a {
 .lp-process-carousel__dot:focus-visible {
     outline: 2px solid var(--color-brass-light);
     outline-offset: 2px;
-}
-
-.lp-process-carousel__counter {
-    margin: 0;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: var(--tracking-wide);
-    color: var(--color-inverse-faint);
 }
 
 @media (max-width: 639px) {
@@ -1360,7 +1366,13 @@ a {
 
 .lp-execution-visual__footer {
     margin: 1.25rem 0 0;
-    text-align: center;
+    text-align: left;
+}
+
+@media (min-width: 900px) {
+    .lp-execution-visual__footer {
+        text-align: center;
+    }
 }
 
 .lp-execution-visual__caption {
@@ -1395,38 +1407,61 @@ a {
     flex-direction: column;
 }
 
-.lp-doc-teaser {
-    margin: 1.75rem 0 0;
+/* ─── Docuseries section ─── */
+.lp-docuseries__header {
+    max-width: 38rem;
+    margin-inline: auto;
+    margin-bottom: clamp(2rem, 5vw, 2.75rem);
+    text-align: center;
 }
 
-.lp-doc-teaser__media {
+.lp-docuseries__intro {
+    margin-top: 0.25rem;
+    max-width: 32rem;
+    margin-inline: auto;
+}
+
+.lp-docuseries__player {
+    max-width: 48rem;
+    margin-inline: auto;
+}
+
+.lp-docuseries__embed {
     position: relative;
     display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
     border-radius: var(--radius-sm);
     overflow: hidden;
     box-shadow: var(--shadow-lift);
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.lp-doc-teaser__media:hover {
+@media (min-width: 768px) {
+    .lp-docuseries__embed {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.lp-docuseries__embed:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 28px rgba(20, 19, 18, 0.14);
 }
 
-.lp-doc-teaser__media:focus-visible {
+.lp-docuseries__embed:focus-visible {
     outline: 2px solid var(--color-brass);
     outline-offset: 3px;
 }
 
-.lp-doc-teaser__thumb {
+.lp-docuseries__placeholder {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     object-fit: cover;
     object-position: center;
 }
 
-.lp-doc-teaser__scrim {
+.lp-docuseries__scrim {
     position: absolute;
     inset: 0;
     background:
@@ -1446,7 +1481,7 @@ a {
     transition: background var(--transition-fast);
 }
 
-.lp-doc-teaser__media:hover .lp-doc-teaser__scrim {
+.lp-docuseries__embed:hover .lp-docuseries__scrim {
     background:
         radial-gradient(
             circle at 50% 50%,
@@ -1462,12 +1497,12 @@ a {
         );
 }
 
-.lp-doc-teaser__play {
+.lp-docuseries__play {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: clamp(3.35rem, 13vw, 4.5rem);
+    width: clamp(3.75rem, 14vw, 5.25rem);
     height: auto;
     filter:
         brightness(0) invert(1)
@@ -1477,7 +1512,7 @@ a {
     pointer-events: none;
 }
 
-.lp-doc-teaser__media:hover .lp-doc-teaser__play {
+.lp-docuseries__embed:hover .lp-docuseries__play {
     transform: translate(-50%, -50%) scale(1.05);
     filter:
         brightness(0) invert(1)
@@ -1485,42 +1520,12 @@ a {
         drop-shadow(0 4px 18px rgba(20, 19, 18, 0.5));
 }
 
-.lp-doc-teaser__footer {
-    margin: 1rem 0 0;
-    text-align: center;
-}
-
-.lp-doc-teaser__label {
+/* When Ep 1 is live: use .lp-docuseries__embed on a wrapper div and nest the iframe */
+.lp-docuseries__embed iframe {
     display: block;
-    font-family: var(--font-display);
-    font-size: 0.88rem;
-    font-weight: 500;
-    font-style: italic;
-    letter-spacing: 0.01em;
-    color: var(--color-brass);
-}
-
-.lp-doc-teaser__title {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(1.05rem, 2.6vw, 1.22rem);
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--color-ink);
-    transition: color var(--transition-fast);
-}
-
-.lp-doc-teaser:has(.lp-doc-teaser__media:hover) .lp-doc-teaser__title,
-.lp-doc-teaser:has(.lp-doc-teaser__media:focus-visible) .lp-doc-teaser__title {
-    color: var(--color-brass);
-}
-
-.lp-doc-teaser__desc {
-    margin: 0.5rem auto 0;
-    max-width: 28rem;
-    font-size: 0.82rem;
-    line-height: 1.55;
-    color: var(--color-ink-faint);
+    width: 100%;
+    height: 100%;
+    border: 0;
 }
 
 /* ─── Field journal ─── */
@@ -1587,17 +1592,25 @@ a {
 /* ─── Case studies carousel ─── */
 .lp-case-studies__header {
     max-width: 38rem;
+    margin-inline: 0;
     margin-bottom: clamp(2rem, 5vw, 2.75rem);
+    text-align: left;
 }
 
 .lp-case-studies__intro {
     margin-top: 0.25rem;
+    max-width: 32rem;
+    margin-inline: 0;
 }
 
 @media (min-width: 900px) {
     .lp-case-studies__header {
         margin-inline: auto;
         text-align: center;
+    }
+
+    .lp-case-studies__intro {
+        margin-inline: auto;
     }
 }
 
@@ -1793,7 +1806,7 @@ a {
 .lp-case-carousel__footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 1rem;
     margin-top: 1.15rem;
     padding-inline: 0.15rem;
@@ -1830,14 +1843,6 @@ a {
 .lp-case-carousel__dot:focus-visible {
     outline: 2px solid var(--color-brass);
     outline-offset: 2px;
-}
-
-.lp-case-carousel__counter {
-    margin: 0;
-    font-size: 0.72rem;
-    letter-spacing: var(--tracking-wide);
-    color: var(--color-ink-faint);
-    white-space: nowrap;
 }
 
 @media (max-width: 639px) {

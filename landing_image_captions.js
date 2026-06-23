@@ -6,8 +6,8 @@
 const LANDING_IMAGE_CAPTIONS = {
     /* ─── Showroom modal: living room collections ─── */
     'collection_living_1.jpg': {
-        caption: 'B&B Italia–inspired living — tufted modular seating, mustard and white, architectural backdrop.',
-        alt: 'B&B Italia–inspired living room with tufted modular seating in a partner factory showroom'
+        caption: 'Fendi Casa–inspired living — tufted modular seating, mustard and white, architectural backdrop.',
+        alt: 'Fendi Casa–inspired living room with tufted modular seating in a partner factory showroom'
     },
     'collection_living_2.jpg': {
         caption: 'Minotti-inspired living — black leather modulars, marble coffee table, monochrome palette.',
@@ -18,8 +18,8 @@ const LANDING_IMAGE_CAPTIONS = {
         alt: 'Versace Home–inspired living room with quilted leather seating in a partner factory showroom'
     },
     'collection_living_4.jpg': {
-        caption: 'Poliform-inspired living — gloss-wood frames, marble cluster tables, soft neutral palette.',
-        alt: 'Poliform-inspired living room with gloss-wood frame seating in a partner factory showroom'
+        caption: 'Bentley Home–inspired living — gloss-wood frames, marble cluster tables, soft neutral palette.',
+        alt: 'Bentley Home–inspired living room with gloss-wood frame seating in a partner factory showroom'
     },
     'collection_living_5.jpg': {
         caption: 'Edra-inspired living — pebble modular seating, organic silhouettes, sculptural art wall.',
@@ -154,24 +154,24 @@ const LANDING_IMAGE_CAPTIONS = {
 
     /* ─── Approach carousel ─── */
     'interior_1.jpg': {
+        caption: 'Minotti-inspired living — modular sectional, bouclé upholstery, stone accents.',
+        alt: 'Minotti-inspired modular living room collection in a partner factory showroom'
+    },
+    'interior_2.jpg': {
         caption: 'Fendi Casa–inspired living — sectional seating, marble tables, coordinated palette.',
         alt: 'Fendi Casa–inspired living room collection in a partner factory showroom'
     },
-    'interior_2.jpg': {
-        caption: 'Fendi Casa–inspired dining — orange lacquer table, matching chairs.',
-        alt: 'Fendi Casa–inspired dining collection with orange lacquer table'
-    },
     'interior_3.jpg': {
+        caption: 'Modern dining — orange lacquer table, matching chairs.',
+        alt: 'Modern dining collection with orange lacquer table in a partner factory showroom'
+    },
+    'interior_4.jpg': {
         caption: 'Fendi Casa–inspired bedroom — chevron headboard, layered textiles, tailored to your room.',
         alt: 'Fendi Casa–inspired bedroom collection in a partner factory showroom'
     },
-    'interior_4.jpg': {
-        caption: 'Fendi Casa–inspired dining — marble table, statement chandelier.',
-        alt: 'Fendi Casa–inspired dining collection with marble table and chandelier'
-    },
     'interior_5.jpg': {
-        caption: 'Minotti-inspired living — modular sectional, bouclé upholstery, stone accents.',
-        alt: 'Minotti-inspired modular living room collection in a partner factory showroom'
+        caption: 'Refined dining — marble table, statement chandelier.',
+        alt: 'Refined dining collection with marble table and chandelier in a partner factory showroom'
     },
     'style_img.jpg': {
         caption: 'Gaetano Pesce "La Mamma" inspired accent chair — available in custom colors.',

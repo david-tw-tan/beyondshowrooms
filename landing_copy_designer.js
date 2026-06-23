@@ -45,9 +45,10 @@ const LANDING_COPY_DESIGNER = {
     'factory.caption':
         'We work only with export-grade furniture manufacturers, to ensure designer quality without compromise.',
 
-    'docuseries.title': 'We filmed 10 days inside Foshan\u2019s furniture capital',
+    'docuseries.eyebrow': 'New to Foshan?',
+    'docuseries.title': 'Inside China\u2019s furniture capital',
     'docuseries.desc':
-        '3-part docuseries \u00b7 From luxury showrooms to factory floors \u00b7 Watch free on YouTube',
+        'We filmed 10 days on the ground. From the Louvre mall to factory floors. Watch all 3 episodes on YouTube.',
 
     'final.title': 'Ready to furnish with confidence?',
     'final.lede': 'We\u2019ll make styling your home easier.',

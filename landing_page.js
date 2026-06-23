@@ -190,7 +190,7 @@ const SHOWROOM_SECTIONS = [
     },
     {
         title: 'Dining room',
-        items: [1, 2, 3].map((n) =>
+        items: [1, 2, 3, 4].map((n) =>
             buildShowroomItem(`images_lp/collection_dining_${n}.jpg`)
         )
     },
@@ -206,10 +206,10 @@ const SHOWROOM_SECTIONS = [
 
 /** Image paths only — caption/alt from landing_image_captions.js */
 const SPOTLIGHT_ITEMS = {
-    bedroom: { full: 'images_lp/interior_3.jpg' },
-    dining: { full: 'images_lp/interior_2.jpg' },
+    bedroom: { full: 'images_lp/interior_4.jpg' },
+    dining: { full: 'images_lp/interior_3.jpg' },
     accent: { full: 'images_lp/style_img.jpg' },
-    living: { full: 'images_lp/interior_1.jpg' }
+    living: { full: 'images_lp/interior_2.jpg' }
 };
 
 const header = document.querySelector('.lp-header');
@@ -951,7 +951,6 @@ function initSlideCarousel(carousel, config) {
     const prevBtn = carousel.querySelector(config.prev);
     const nextBtn = carousel.querySelector(config.next);
     const dotsContainer = carousel.querySelector(config.dots);
-    const counter = carousel.querySelector(config.counter);
     const viewport = carousel.querySelector(config.viewport);
 
     if (!track || slides.length === 0) return;
@@ -990,10 +989,6 @@ function initSlideCarousel(carousel, config) {
             dot.classList.toggle('is-active', isActive);
             dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
-
-        if (counter) {
-            counter.textContent = `${index + 1} of ${slides.length}`;
-        }
     }
 
     prevBtn?.addEventListener('click', () => goTo(index - 1));
@@ -1045,7 +1040,6 @@ function initCaseStudyCarousel() {
         prev: '[data-case-prev]',
         next: '[data-case-next]',
         dots: '[data-case-dots]',
-        counter: '[data-case-counter]',
         viewport: '.lp-case-carousel__viewport',
         dotClass: 'lp-case-carousel__dot',
         dotLabel: 'Home',
@@ -1063,7 +1057,6 @@ function initShowroomCarousel() {
         prev: '[data-showroom-prev]',
         next: '[data-showroom-next]',
         dots: '[data-showroom-dots]',
-        counter: '[data-showroom-counter]',
         viewport: '.lp-case-carousel__viewport',
         dotClass: 'lp-case-carousel__dot',
         dotLabel: 'Collection',
@@ -1081,7 +1074,6 @@ function initProcessCarousel() {
         prev: '[data-process-prev]',
         next: '[data-process-next]',
         dots: '[data-process-dots]',
-        counter: '[data-process-counter]',
         viewport: '.lp-process-carousel__viewport',
         dotClass: 'lp-process-carousel__dot',
         dotLabel: 'Step',
