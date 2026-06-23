@@ -21,7 +21,7 @@ const LANDING_COPY_DESIGNER = {
     'approach.p4': '',
     'approach.bridgeLabel': 'The result',
     'approach.bridge':
-        'You can furnish with more confidence, less stress, and <span class="lp-lead__emphasis">a final outcome you\u2019ll love</span> &mdash; with us beside you every step of the way.',
+        'You can now furnish with confidence, less stress, and <span class="lp-lead__emphasis">a final outcome you\u2019ll love</span> &mdash; with us beside you every step of the way.',
     'approach.bridgeHandoff': '',
     'approach.carouselCta': 'Explore Interiors',
     'approach.carouselNote': 'Real factory showrooms. Not AI renders or catalogs.',
@@ -48,10 +48,10 @@ const LANDING_COPY_DESIGNER = {
     'docuseries.eyebrow': 'New to Foshan?',
     'docuseries.title': 'Inside China\u2019s furniture capital',
     'docuseries.desc':
-        'We filmed 10 days on the ground. From the Louvre mall to factory floors. Watch all 3 episodes on YouTube.',
+        'We filmed 10 days on the ground. From the Louvre mall to factory floors. Watch our docuseries on YouTube.',
 
     'final.title': 'Ready to furnish with confidence?',
-    'final.lede': 'We\u2019ll make styling your home easier.',
+    'final.lede': 'Let\u2019s make styling your home easier.',
 
     'spotlight.explore': 'Explore Interiors',
     'showroom.title': 'Our interior collections',
