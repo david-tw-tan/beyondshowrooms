@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Showrooms — YouTube Assets</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+            --color-inverse-surface: #1e1d1b;
+            --color-surface: #f9f7f4;
+            --color-ink: #1a1a18;
+            --color-ink-muted: #5e5a54;
+            --logo-tracking: 0.18em;
+            --logo-tracking-loud: 0.22em;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--color-surface);
+            color: var(--color-ink);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2.5rem) 4rem;
+        }
+
+        .page-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e8e2d9;
+        }
+
+        .page-header h1 {
+            margin: 0 0 0.5rem;
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .page-header p {
+            margin: 0;
+            max-width: 46rem;
+            line-height: 1.65;
+            color: var(--color-ink-muted);
+        }
+
+        .asset-section {
+            margin-bottom: 3.5rem;
+        }
+
+        .asset-section h2 {
+            margin: 0 0 0.35rem;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .asset-meta {
+            margin: 0 0 1.25rem;
+            font-size: 0.875rem;
+            color: var(--color-ink-muted);
+        }
+
+        .asset-frame {
+            display: block;
+            max-width: 100%;
+            border: 1px solid #e8e2d9;
+            box-shadow: 0 12px 40px rgba(26, 26, 24, 0.08);
+            background: #fff;
+        }
+
+        .variant-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .variant {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .variant__label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-ink-muted);
+        }
+
+        .variant__label--pick {
+            color: var(--color-ink);
+        }
+
+        .variant__label--pick::after {
+            content: ' · recommended';
+            color: #967a4f;
+            font-weight: 600;
+        }
+
+        /* ─── Icons ─── */
+        .icon-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-end;
+        }
+
+        .yt-icon {
+            width: 280px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-inverse-surface);
+            border-radius: 50%;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .yt-icon--export {
+            width: 800px;
+            height: 800px;
+        }
+
+        .yt-icon__word {
+            font-family: var(--font-display);
+            font-size: 2.35rem;
+            font-weight: 600;
+            letter-spacing: var(--logo-tracking);
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1;
+            white-space: nowrap;
+            padding-left: var(--logo-tracking);
+        }
+
+        .yt-icon--export .yt-icon__word {
+            font-size: 5.75rem;
+        }
+
+        .yt-icon__stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.08em;
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: var(--logo-tracking);
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 0.92;
+        }
+
+        .yt-icon__stack span {
+            display: block;
+            padding-left: var(--logo-tracking);
+        }
+
+        .yt-icon .yt-icon__stack {
+            font-size: 2rem;
+        }
+
+        .yt-icon--export .yt-icon__stack {
+            font-size: 4.85rem;
+        }
+
+        /* ─── Banner (2048×1152 — YouTube upload canvas) ─── */
+        .yt-banner-wrap {
+            width: 100%;
+        }
+
+        .yt-banner {
+            position: relative;
+            width: 100%;
+            max-width: 2048px;
+            aspect-ratio: 2048 / 1152;
+            container-type: size;
+            overflow: hidden;
+            background: #1e1d1b;
+        }
+
+        .yt-banner__photo-layer {
+            position: absolute;
+            inset: 0;
+        }
+
+        .yt-banner__photo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+        /* Bokeh variant — blurred photo, sharp type */
+        .yt-banner--bokeh .yt-banner__photo-layer {
+            overflow: hidden;
+        }
+
+        .yt-banner--bokeh .yt-banner__photo {
+            filter: blur(5px) saturate(1.05);
+            transform: scale(1.06);
+        }
+
+        .yt-banner--bokeh .yt-banner__bokeh {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            background:
+                radial-gradient(circle at 18% 55%, rgba(255, 255, 255, 0.22) 0%, transparent 14%),
+                radial-gradient(circle at 72% 38%, rgba(255, 255, 255, 0.16) 0%, transparent 10%),
+                radial-gradient(circle at 88% 62%, rgba(255, 255, 255, 0.12) 0%, transparent 8%),
+                radial-gradient(circle at 42% 72%, rgba(255, 255, 255, 0.1) 0%, transparent 7%);
+        }
+
+        /* Loud wordmark — no gradient, no shadow, raw white type */
+        .yt-banner__type {
+            position: absolute;
+            z-index: 2;
+            margin: 0;
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: var(--logo-tracking-loud);
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 0.88;
+            text-shadow:
+                0 1px 2px rgba(20, 19, 18, 0.32),
+                0 2px 10px rgba(20, 19, 18, 0.22),
+                0 0 28px rgba(20, 19, 18, 0.2);
+        }
+
+        /* A — two lines, centered on full canvas */
+        .yt-banner--stacked-center .yt-banner__type {
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .yt-banner--stacked-center .yt-banner__line--top {
+            font-size: 11.05cqh;
+            padding-left: var(--logo-tracking-loud);
+        }
+
+        .yt-banner--stacked-center .yt-banner__line--bottom {
+            font-size: 6.53cqh;
+            padding-left: var(--logo-tracking-loud);
+            margin-top: -0.04em;
+        }
+
+        .notes {
+            margin-top: 1.25rem;
+            padding: 1rem 1.15rem;
+            background: #f3efe8;
+            border-left: 3px solid #a68b5b;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--color-ink-muted);
+        }
+
+        .notes strong {
+            color: var(--color-ink);
+            font-weight: 600;
+        }
+
+        .notes + .notes {
+            margin-top: 0.75rem;
+        }
+
+        @media (max-width: 860px) {
+            .yt-icon--export {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <h1>YouTube Channel Assets</h1>
+            <p>
+                Same Cormorant Garamond DNA as the website — but louder placement and weight for the docuseries tone.
+                No gradients, no polish. Compare variants below and pick what feels right.
+            </p>
+        </header>
+
+        <!-- ─── Icons ─── -->
+        <section class="asset-section" aria-labelledby="icon-heading">
+            <h2 id="icon-heading">Channel Icon — compare</h2>
+            <p class="asset-meta">800 × 800 px export · dark inverse surface (#1e1d1b) · white type</p>
+
+            <div class="icon-row">
+                <div class="variant">
+                    <span class="variant__label">A · “BEYOND” only</span>
+                    <div class="asset-frame">
+                        <div class="yt-icon" role="img" aria-label="Icon variant A — BEYOND">
+                            <span class="yt-icon__word">Beyond</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="variant">
+                    <span class="variant__label variant__label--pick">B · “BEYOND / SHOW”</span>
+                    <div class="asset-frame">
+                        <div class="yt-icon" role="img" aria-label="Icon variant B — BEYOND SHOW">
+                            <div class="yt-icon__stack">
+                                <span>Beyond</span>
+                                <span>Show</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="variant" style="margin-top: 2rem;">
+                <span class="variant__label">Export size (variant B) — 800 × 800 px</span>
+                <div class="asset-frame" style="overflow-x: auto;">
+                    <div class="yt-icon yt-icon--export" role="img" aria-label="Icon export — BEYOND SHOW">
+                        <div class="yt-icon__stack">
+                            <span>Beyond</span>
+                            <span>Show</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes">
+                <strong>Icon take:</strong> “BEYOND” alone is cleaner at tiny sizes (comments, mobile nav).
+                “BEYOND / SHOW” is more distinctive and ties to the docuseries without cramming in “SHOWROOMS.”
+                At icon scale, two short lines beat one long word.
+            </div>
+        </section>
+
+        <!-- ─── Banners ─── -->
+        <section class="asset-section" aria-labelledby="banner-heading">
+            <h2 id="banner-heading">Channel Banner</h2>
+            <p class="asset-meta">2048 × 1152 px container · photo cover-fill, centered · BEYOND / SHOWROOMS centered</p>
+
+            <div class="variant-grid">
+
+                <div class="variant">
+                    <span class="variant__label">A · sharp photo</span>
+                    <div class="yt-banner-wrap">
+                        <div class="asset-frame">
+                            <div class="yt-banner yt-banner--stacked-center" role="img" aria-label="Banner — centered stacked, sharp photo">
+                                <div class="yt-banner__photo-layer">
+                                    <img class="yt-banner__photo" src="youtube_banner.jpg" alt="" width="4685" height="3750">
+                                </div>
+                                <div class="yt-banner__type">
+                                    <span class="yt-banner__line yt-banner__line--top">Beyond</span>
+                                    <span class="yt-banner__line yt-banner__line--bottom">Showrooms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="variant">
+                    <span class="variant__label">A · bokeh blur</span>
+                    <div class="yt-banner-wrap">
+                        <div class="asset-frame">
+                            <div class="yt-banner yt-banner--stacked-center yt-banner--bokeh" role="img" aria-label="Banner — centered stacked, bokeh blur">
+                                <div class="yt-banner__photo-layer">
+                                    <img class="yt-banner__photo" src="youtube_banner.jpg" alt="" width="4685" height="3750">
+                                </div>
+                                <div class="yt-banner__bokeh" aria-hidden="true"></div>
+                                <div class="yt-banner__type">
+                                    <span class="yt-banner__line yt-banner__line--top">Beyond</span>
+                                    <span class="yt-banner__line yt-banner__line--bottom">Showrooms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="notes">
+                <strong>Photo fill:</strong> Image uses <code>object-fit: cover</code> to fill the 2048×1152 canvas edge-to-edge — no letterboxing.
+                Sides or top/bottom of the source photo are cropped as needed, centered.
+            </div>
+            <div class="notes">
+                <strong>Bokeh variant:</strong> Background is softly blurred with light bokeh orbs; type stays sharp.
+                Pushes the photo back so the wordmark reads more clearly without adding a corporate gradient.
+            </div>
+        </section>
+    </div>
+</body>
+</html>
