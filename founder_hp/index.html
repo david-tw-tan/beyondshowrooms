@@ -120,8 +120,8 @@
         .eyebrow {
             margin: 0 0 0.85rem;
             font-family: var(--font-display);
-            font-size: 1.05rem;
-            font-weight: 400;
+            font-size: 1.08rem;
+            font-weight: 600;
             font-style: italic;
             line-height: 1.4;
             color: var(--color-brass);
@@ -170,6 +170,14 @@
             text-wrap: balance;
         }
 
+        .section-bridge {
+            margin: -0.35rem 0 1.75rem;
+            font-size: clamp(1.02rem, 2.2vw, 1.12rem);
+            line-height: 1.65;
+            color: var(--color-ink-muted);
+            text-wrap: balance;
+        }
+
         .doc-visual {
             margin: 0 0 2rem;
             border-radius: 2px;
@@ -183,16 +191,6 @@
             aspect-ratio: 16 / 9;
             object-fit: cover;
             object-position: center 42%;
-        }
-
-        .doc-visual__caption {
-            margin: 0;
-            padding: 0.65rem 0.85rem;
-            font-size: 0.8rem;
-            line-height: 1.45;
-            color: var(--color-ink-faint);
-            background: var(--color-surface);
-            border-top: 1px solid var(--color-hairline);
         }
 
         .btn {
@@ -346,7 +344,7 @@
             margin: 0 0 0.5rem;
             font-family: var(--font-display);
             font-size: clamp(1.15rem, 2.5vw, 1.3rem);
-            font-weight: 500;
+            font-weight: 600;
             line-height: 1.25;
             color: var(--color-ink);
         }
@@ -505,10 +503,6 @@
             color: var(--color-ink-muted);
         }
 
-        .founder-note p + p {
-            margin-top: 0.85rem;
-        }
-
         .founder-sign {
             display: flex;
             align-items: center;
@@ -541,32 +535,34 @@
         }
 
         .founder-closing {
-            margin-top: clamp(1.75rem, 4vw, 2.25rem);
+            margin-top: clamp(2rem, 5vw, 2.75rem);
             padding-top: 0;
             text-align: center;
         }
 
         .founder-closing__lede {
             margin: 0 auto;
-            padding: 0 clamp(1.25rem, 6vw, 2.5rem);
-            max-width: 22rem;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+            max-width: 28rem;
             font-family: var(--font-display);
-            font-size: clamp(1.1rem, 2.4vw, 1.22rem);
+            font-size: clamp(1.35rem, 3.4vw, 1.75rem);
             font-weight: 600;
             font-style: normal;
-            line-height: 1.5;
-            letter-spacing: 0.01em;
+            line-height: 1.35;
+            letter-spacing: 0.015em;
             color: var(--color-ink);
             text-wrap: balance;
         }
 
         .founder-closing__btn {
-            margin-top: 1.35rem;
+            margin-top: 1.65rem;
             text-align: center;
         }
 
         .founder-closing__btn .btn {
-            min-width: min(100%, 18rem);
+            min-width: min(100%, 22rem);
+            font-size: clamp(0.98rem, 2.1vw, 1.1rem);
+            padding-inline: 1.5rem;
         }
 
         @media (max-width: 559px) {
@@ -778,7 +774,6 @@
                     fetchpriority="high"
                     decoding="async"
                 >
-                <figcaption class="doc-visual__caption">Ten days on the ground in Foshan &mdash; the malls, the factories, the tests.</figcaption>
             </figure>
 
             <h1 id="hero-title" class="hero-title reveal reveal--d2">You&rsquo;ve seen Foshan.<br>Now let&rsquo;s talk about your home.</h1>
@@ -847,6 +842,7 @@
         <div class="container">
             <p class="eyebrow reveal">Simple, honestly</p>
             <h2 id="process-title" class="section-title reveal reveal--d1">How it works</h2>
+            <p class="section-bridge reveal reveal--d1">I&rsquo;d like to help with your home renovation in three easy steps.</p>
 
             <ol class="steps">
                 <li class="step reveal reveal--d1">
@@ -867,7 +863,7 @@
                     <span class="step__num" aria-hidden="true">3</span>
                     <h3 class="step__title">We make it happen</h3>
                     <p class="step__body">
-                        Tailoring, production, QC, shipping, delivery. We stay involved until it&rsquo;s in your home.
+                        Tailoring, production, order consolidation, QC, shipping, delivery. We stay involved until it&rsquo;s in your home.
                     </p>
                 </li>
             </ol>
@@ -880,7 +876,7 @@
             <p class="eyebrow reveal">Not generic claims</p>
             <h2 id="trust-title" class="section-title reveal reveal--d1">We didn&rsquo;t just visit these factories.<br>We filmed inside them.</h2>
             <p class="body-text reveal reveal--d2">
-                Most sourcing services talk about &ldquo;factory partners&rdquo; in the abstract. You watched us walk the floors, pull apart sofas, and run head-to-head tests. That footage is the proof.
+                Most sourcing services talk about &ldquo;factory partners&rdquo; in the abstract. You watched us walk the floors, pull apart sofas, and run head-to-head tests.
             </p>
 
             <div class="proof-grid reveal reveal--d3">
@@ -918,7 +914,7 @@
 
             <div class="collections-block reveal">
                 <div class="collections-block__header">
-                    <p class="eyebrow">Step 1 in action</p>
+                    <p class="eyebrow">Preview of Step 1</p>
                     <h3 class="section-title" style="margin-bottom: 0;">Whole-room collections, ready to browse</h3>
                 </div>
 
@@ -1000,7 +996,7 @@
                 </div>
 
                 <div class="collections-block__cta">
-                    <button type="button" class="lp-btn--brass" data-open-showroom>Browse all collections</button>
+                    <button type="button" class="lp-btn--brass" data-open-showroom>Browse more collections</button>
                 </div>
             </div>
         </div>
@@ -1036,7 +1032,6 @@
 
             <div class="founder-note reveal reveal--d3">
                 <p>If it&rsquo;s not the right fit, I&rsquo;ll say so. No hard sell, no follow-up spam. Just an honest conversation about your home.</p>
-                <p>That&rsquo;s the deal at this stage. I think it&rsquo;s a fair one.</p>
             </div>
 
             <p class="founder-sign reveal">
@@ -1048,7 +1043,7 @@
             <div class="founder-closing reveal">
                 <p class="founder-closing__lede">Ready when you are &mdash; tap below and tell me what&rsquo;s on your mind.</p>
                 <div class="btn-row founder-closing__btn">
-                    <button type="button" class="btn" data-open-contact>Tell me about your home</button>
+                    <button type="button" class="btn" data-open-contact>Contact me, tell me what you need</button>
                 </div>
             </div>
         </div>
