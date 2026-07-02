@@ -5,8 +5,7 @@
 const LANDING_CONFIG = {
     whatsAppUrl: 'https://wa.me/8618500507084',
     emailUrl: 'mailto:hello@beyondshowrooms.com',
-    /** YouTube playlist or channel — update when the series is published */
-    youtubeSeriesUrl: '#youtube-series'
+    youtubeSeriesUrl: 'https://www.youtube.com/@beyondshowrooms'
 };
 
 const PERSONA_PARAM = 'persona';
