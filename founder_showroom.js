@@ -798,6 +798,32 @@ function initShowroomCarousel() {
     });
 }
 
+function initDocVideo() {
+    const playBtn = document.querySelector('[data-doc-video-play]');
+    const embedHost = document.querySelector('[data-doc-video-embed]');
+    if (!playBtn || !embedHost) return;
+
+    const videoId = 'IIxz0ih0inw';
+    const startSeconds = 11;
+
+    playBtn.addEventListener('click', () => {
+        if (embedHost.querySelector('iframe')) return;
+
+        const iframe = document.createElement('iframe');
+        iframe.className = 'doc-visual__iframe';
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?start=${startSeconds}&autoplay=1&rel=0`;
+        iframe.title = 'Beyond Showrooms docuseries — Episode 1';
+        iframe.allow =
+            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        iframe.loading = 'lazy';
+
+        embedHost.appendChild(iframe);
+        embedHost.hidden = false;
+        playBtn.hidden = true;
+    });
+}
+
 document.addEventListener('keydown', handleFounderModalEscape);
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -806,6 +832,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initCaseStudyCarousel();
     initShowroomModal();
     initPartnersModal();
+    initDocVideo();
     window.syncFounderModalBodyLock = syncFounderModalBodyLock;
 });
 
