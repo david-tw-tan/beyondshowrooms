@@ -489,6 +489,23 @@ function initSlideCarousel(carousel, config) {
     goTo(0);
 }
 
+function initCaseStudyCarousel() {
+    const carousel = document.querySelector('[data-case-carousel]');
+    if (!carousel) return;
+
+    initSlideCarousel(carousel, {
+        track: '[data-case-track]',
+        slide: '[data-case-slide]',
+        caption: '[data-case-caption]',
+        prev: '[data-case-prev]',
+        next: '[data-case-next]',
+        dots: '[data-case-dots]',
+        viewport: '.lp-case-carousel__viewport',
+        dotClass: 'lp-case-carousel__dot',
+        dotLabel: 'Home'
+    });
+}
+
 function initShowroomCarousel() {
     const carousel = document.querySelector('[data-showroom-carousel]');
     if (!carousel) return;
@@ -514,6 +531,7 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('DOMContentLoaded', function () {
     initShowroomCarousel();
+    initCaseStudyCarousel();
     initShowroomModal();
 });
 
