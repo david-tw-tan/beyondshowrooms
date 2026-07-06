@@ -31,6 +31,8 @@ const SHOWROOM_SECTIONS = [
 ];
 
 const showroomModal = document.getElementById('showroomModal');
+const partnersModal = document.getElementById('partnersModal');
+const partnersList = document.getElementById('partnersList');
 const showroomGallery = document.getElementById('showroomGallery');
 const showroomScroll = document.getElementById('showroomScroll');
 const openShowroomEls = document.querySelectorAll('[data-open-showroom]');
@@ -305,13 +307,18 @@ function showroomMotionEnabled() {
     return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-function syncShowroomModalBodyLock() {
+function syncFounderModalBodyLock() {
     const contactModal = document.getElementById('contactModal');
     const anyOpen =
         (showroomModal && !showroomModal.hidden) ||
-        (contactModal && !contactModal.hidden);
+        (contactModal && !contactModal.hidden) ||
+        (partnersModal && !partnersModal.hidden);
 
     document.body.style.overflow = anyOpen ? 'hidden' : '';
+}
+
+function syncShowroomModalBodyLock() {
+    syncFounderModalBodyLock();
 }
 
 function revealShowroomModal() {
@@ -404,6 +411,140 @@ function initShowroomModal() {
     });
 }
 
+function createPartnerStat(label, value) {
+    const row = document.createElement('div');
+    row.className = 'lp-partner-card__stat';
+
+    const dt = document.createElement('dt');
+    dt.textContent = label;
+
+    const dd = document.createElement('dd');
+    dd.textContent = value;
+
+    row.appendChild(dt);
+    row.appendChild(dd);
+    return row;
+}
+
+function createPartnerCard(partner) {
+    const card = document.createElement('article');
+    card.className = 'lp-partner-card';
+    card.id = `partner-${partner.id}`;
+
+    const img = document.createElement('img');
+    img.className = 'lp-partner-card__img';
+    img.src = partner.image;
+    img.alt = `${partner.companyName}, ${partner.location}`;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+
+    const header = document.createElement('div');
+    header.className = 'lp-partner-card__header';
+
+    const companyName = document.createElement('h3');
+    companyName.className = 'lp-partner-card__name';
+    companyName.textContent = partner.companyName;
+
+    const location = document.createElement('p');
+    location.className = 'lp-partner-card__location';
+    location.textContent = partner.location;
+
+    header.appendChild(companyName);
+    header.appendChild(location);
+
+    const stats = document.createElement('dl');
+    stats.className = 'lp-partner-card__stats';
+    stats.appendChild(createPartnerStat('Established', partner.established));
+    stats.appendChild(createPartnerStat('Production floor', partner.productionArea));
+    stats.appendChild(createPartnerStat('Showroom', partner.showroomArea));
+    stats.appendChild(createPartnerStat('Annual export volume', partner.turnover));
+    stats.appendChild(createPartnerStat('Large-home projects', partner.projects));
+    stats.appendChild(createPartnerStat('Export markets', partner.exportMarkets));
+
+    const specialty = document.createElement('p');
+    specialty.className = 'lp-partner-card__specialty';
+    specialty.textContent = partner.specialty;
+
+    card.appendChild(img);
+    card.appendChild(header);
+    card.appendChild(stats);
+    card.appendChild(specialty);
+
+    return card;
+}
+
+function renderPartnersList() {
+    if (!partnersList || !Array.isArray(FACTORY_PARTNERS)) return;
+
+    partnersList.innerHTML = '';
+    FACTORY_PARTNERS.forEach((partner) => {
+        partnersList.appendChild(createPartnerCard(partner));
+    });
+
+    const footer = document.createElement('div');
+    footer.className = 'lp-partners-list__footer';
+
+    const watermark = document.createElement('span');
+    watermark.className = 'lp-partners-list__footer-watermark';
+    watermark.setAttribute('aria-hidden', 'true');
+    watermark.textContent = 'BS';
+
+    const footerText = document.createElement('p');
+    footerText.className = 'lp-partners-list__footer-text';
+    footerText.textContent = '25+ premium factories in my network';
+
+    footer.appendChild(watermark);
+    footer.appendChild(footerText);
+    partnersList.appendChild(footer);
+}
+
+let partnersLastFocus = null;
+
+function openPartnersModal() {
+    if (!partnersModal) return;
+
+    partnersLastFocus = document.activeElement;
+    renderPartnersList();
+    partnersModal.hidden = false;
+    syncFounderModalBodyLock();
+    partnersModal.querySelector('.lp-modal__close')?.focus();
+}
+
+function closePartnersModal() {
+    if (!partnersModal || partnersModal.hidden) return;
+
+    partnersModal.hidden = true;
+    syncFounderModalBodyLock();
+    if (partnersLastFocus && partnersLastFocus.focus) {
+        partnersLastFocus.focus();
+    }
+}
+
+function initPartnersModal() {
+    document.querySelectorAll('[data-open-partners]').forEach((el) => {
+        el.addEventListener('click', openPartnersModal);
+    });
+
+    document.querySelectorAll('[data-close-partners]').forEach((el) => {
+        el.addEventListener('click', closePartnersModal);
+    });
+}
+
+function handleFounderModalEscape(event) {
+    if (event.key !== 'Escape') return;
+
+    if (partnersModal && !partnersModal.hidden) {
+        event.preventDefault();
+        closePartnersModal();
+        return;
+    }
+
+    if (showroomModal && !showroomModal.hidden) {
+        event.preventDefault();
+        closeShowroomModal();
+    }
+}
+
 function initSlideCarousel(carousel, config) {
     const track = carousel.querySelector(config.track);
     const slides = [...carousel.querySelectorAll(config.slide)];
@@ -417,7 +558,11 @@ function initSlideCarousel(carousel, config) {
 
     let index = 0;
     let touchStartX = 0;
+    let autoTimer = null;
     const dotLabel = config.dotLabel || 'Slide';
+    const autoRotateMs = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? (config.autoRotateMs || 0)
+        : 0;
 
     slides.forEach((_, i) => {
         const dot = document.createElement('button');
@@ -431,7 +576,20 @@ function initSlideCarousel(carousel, config) {
 
     const dots = [...dotsContainer?.querySelectorAll(`.${config.dotClass}`) ?? []];
 
-    function goTo(nextIndex) {
+    function stopAuto() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+    }
+
+    function startAuto() {
+        if (!autoRotateMs) return;
+        stopAuto();
+        autoTimer = setInterval(() => goTo(index + 1, { fromAuto: true }), autoRotateMs);
+    }
+
+    function goTo(nextIndex, options = {}) {
         index = (nextIndex + slides.length) % slides.length;
 
         track.style.transform = `translate3d(-${index * 100}%, 0, 0)`;
@@ -449,6 +607,10 @@ function initSlideCarousel(carousel, config) {
             dot.classList.toggle('is-active', isActive);
             dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
+
+        if (!options.fromAuto) {
+            startAuto();
+        }
     }
 
     prevBtn?.addEventListener('click', () => goTo(index - 1));
@@ -463,6 +625,17 @@ function initSlideCarousel(carousel, config) {
             goTo(index + 1);
         }
     });
+
+    if (autoRotateMs) {
+        carousel.addEventListener('mouseenter', stopAuto);
+        carousel.addEventListener('mouseleave', startAuto);
+        carousel.addEventListener('focusin', stopAuto);
+        carousel.addEventListener('focusout', (event) => {
+            if (!carousel.contains(event.relatedTarget)) {
+                startAuto();
+            }
+        });
+    }
 
     viewport?.addEventListener(
         'touchstart',
@@ -485,6 +658,108 @@ function initSlideCarousel(carousel, config) {
         },
         { passive: true }
     );
+
+    goTo(0);
+    startAuto();
+}
+
+function initAfterOrderGrid() {
+    const root = document.querySelector('[data-after-order-grid]');
+    if (!root) return;
+
+    const cells = [...root.querySelectorAll('[data-after-order-cell]')];
+    const captions = [...root.querySelectorAll('[data-after-order-caption]')];
+    const dotsContainer = root.querySelector('[data-after-order-dots]');
+    const progress = root.querySelector('[data-after-order-progress]');
+    const progressFill = root.querySelector('[data-after-order-progress-fill]');
+    if (!cells.length) return;
+
+    let index = 0;
+    const autoRotateMs = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 5500;
+
+    cells.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'after-order-grid__dot';
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', `Step ${i + 1}`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer?.appendChild(dot);
+    });
+
+    const dots = [...dotsContainer?.querySelectorAll('.after-order-grid__dot') ?? []];
+
+    function restartProgress() {
+        if (!autoRotateMs || !progressFill) return;
+        progressFill.style.animation = 'none';
+        progressFill.offsetHeight;
+        progressFill.style.animation = '';
+    }
+
+    function pauseProgress() {
+        progress?.classList.add('is-paused');
+    }
+
+    function resumeProgress() {
+        progress?.classList.remove('is-paused');
+    }
+
+    function goTo(nextIndex) {
+        index = (nextIndex + cells.length) % cells.length;
+
+        cells.forEach((cell, i) => {
+            const isActive = i === index;
+            cell.classList.toggle('is-active', isActive);
+            cell.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        captions.forEach((caption, i) => {
+            caption.hidden = i !== index;
+        });
+
+        dots.forEach((dot, i) => {
+            const isActive = i === index;
+            dot.classList.toggle('is-active', isActive);
+            dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        restartProgress();
+    }
+
+    if (autoRotateMs) {
+        progressFill?.style.setProperty('--progress-duration', `${autoRotateMs}ms`);
+        progressFill?.addEventListener('animationend', (event) => {
+            if (event.animationName !== 'after-order-progress') return;
+            goTo(index + 1);
+        });
+    } else {
+        progress?.classList.add('is-hidden');
+    }
+
+    cells.forEach((cell, i) => {
+        cell.addEventListener('click', () => goTo(i));
+    });
+
+    root.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            goTo(index - 1);
+        } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            goTo(index + 1);
+        }
+    });
+
+    if (autoRotateMs) {
+        root.addEventListener('mouseenter', pauseProgress);
+        root.addEventListener('mouseleave', resumeProgress);
+        root.addEventListener('focusin', pauseProgress);
+        root.addEventListener('focusout', (event) => {
+            if (!root.contains(event.relatedTarget)) {
+                resumeProgress();
+            }
+        });
+    }
 
     goTo(0);
 }
@@ -523,16 +798,15 @@ function initShowroomCarousel() {
     });
 }
 
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && showroomModal && !showroomModal.hidden) {
-        closeShowroomModal();
-    }
-});
+document.addEventListener('keydown', handleFounderModalEscape);
 
 document.addEventListener('DOMContentLoaded', function () {
+    initAfterOrderGrid();
     initShowroomCarousel();
     initCaseStudyCarousel();
     initShowroomModal();
+    initPartnersModal();
+    window.syncFounderModalBodyLock = syncFounderModalBodyLock;
 });
 
 window.addEventListener('resize', () => {

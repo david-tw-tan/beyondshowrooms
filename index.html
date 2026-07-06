@@ -105,7 +105,7 @@
         }
 
         .section--closing {
-            padding-bottom: clamp(4rem, 10vw, 6rem);
+            padding-bottom: clamp(5.5rem, 14vw, 8.5rem);
         }
 
         .container {
@@ -289,6 +289,10 @@
             gap: 0.4rem;
         }
 
+        .bridge-collage + .body-text {
+            margin-top: 1.75rem;
+        }
+
         .bridge-collage__item {
             min-width: 0;
             overflow: hidden;
@@ -400,6 +404,306 @@
             font-size: 0.92rem;
             line-height: 1.65;
             color: var(--color-ink-muted);
+        }
+
+        .after-order {
+            margin-top: clamp(2rem, 5vw, 2.75rem);
+        }
+
+        .after-order .eyebrow {
+            margin-bottom: 0.65rem;
+        }
+
+        .after-order__intro {
+            margin: 0 0 1.25rem;
+            font-size: clamp(1rem, 2vw, 1.08rem);
+            line-height: 1.75;
+            color: var(--color-ink-muted);
+        }
+
+        .after-order-grid__cells {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4rem;
+        }
+
+        @media (min-width: 640px) {
+            .after-order-grid__cells {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .after-order-grid__cell {
+            display: block;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border: 2px solid var(--color-hairline);
+            border-radius: 2px;
+            overflow: hidden;
+            cursor: pointer;
+            background: none;
+            opacity: 0.5;
+            box-shadow: none;
+            transition:
+                opacity var(--transition-fast),
+                border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+        }
+
+        @media (min-width: 640px) {
+            .after-order-grid__cell {
+                aspect-ratio: 3 / 2;
+            }
+        }
+
+        .after-order-grid__cell.is-active {
+            opacity: 1;
+            border-color: var(--color-brass);
+            box-shadow: 0 4px 14px rgba(166, 139, 91, 0.22);
+        }
+
+        .after-order-grid__cell:focus-visible {
+            outline: 2px solid var(--color-brass-light);
+            outline-offset: 2px;
+        }
+
+        .after-order-grid__img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .after-order-grid__progress {
+            margin-top: 0.5rem;
+            height: 2px;
+            background: #d8cfc2;
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .after-order-grid__progress.is-hidden {
+            display: none;
+        }
+
+        .after-order-grid__progress-fill {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: var(--color-brass);
+            border-radius: 1px;
+            animation: after-order-progress linear forwards;
+            animation-duration: var(--progress-duration, 5500ms);
+        }
+
+        .after-order-grid__progress.is-paused .after-order-grid__progress-fill {
+            animation-play-state: paused;
+        }
+
+        @keyframes after-order-progress {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .after-order-grid__caption-panel {
+            margin-top: 0.85rem;
+            min-height: 3.5rem;
+        }
+
+        .after-order-grid__caption {
+            margin: 0;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: var(--color-ink-muted);
+        }
+
+        .after-order-grid__caption[hidden] {
+            display: none;
+        }
+
+        .after-order-grid__num {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--color-brass);
+            margin-right: 0.2rem;
+        }
+
+        .after-order-grid__label {
+            font-weight: 500;
+            color: var(--color-ink);
+        }
+
+        .after-order-grid__dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.45rem;
+            margin-top: 0.85rem;
+        }
+
+        .after-order-grid__dot {
+            width: 0.45rem;
+            height: 0.45rem;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: #c4b8a8;
+            cursor: pointer;
+            transition: background var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .after-order-grid__dot.is-active {
+            background: var(--color-brass);
+            transform: scale(1.15);
+        }
+
+        .after-order-grid__dot:focus-visible {
+            outline: 2px solid var(--color-brass-light);
+            outline-offset: 2px;
+        }
+
+        .factory-direct {
+            margin-top: clamp(1.75rem, 4vw, 2.25rem);
+        }
+
+        .factory-direct .eyebrow {
+            margin-bottom: 1rem;
+        }
+
+        .factory-direct__list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 0.85rem;
+        }
+
+        .factory-direct__item {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: var(--color-ink-muted);
+        }
+
+        .factory-direct__label {
+            font-weight: 500;
+            color: var(--color-ink);
+        }
+
+        .process-result {
+            margin: clamp(2rem, 5vw, 2.75rem) auto 0;
+            padding-top: clamp(1.5rem, 3.5vw, 2rem);
+            border-top: 1px solid var(--color-hairline);
+            max-width: 34rem;
+            text-align: center;
+        }
+
+        .process-result__label {
+            display: block;
+            margin: 0 0 1rem;
+            font-family: var(--font-display);
+            font-size: clamp(1.15rem, 2.8vw, 1.4rem);
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--color-brass);
+        }
+
+        .process-result__text {
+            margin: 0;
+            font-size: clamp(1rem, 2vw, 1.08rem);
+            line-height: 1.75;
+            color: var(--color-ink-muted);
+            text-wrap: balance;
+        }
+
+        .trust-visual {
+            margin-top: 1.75rem;
+            max-width: var(--content-wide);
+        }
+
+        .trust-visual__trigger {
+            position: relative;
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-align: left;
+            border-radius: 2px;
+            overflow: hidden;
+            border: 1px solid var(--color-hairline);
+            box-shadow: 0 4px 18px rgba(26, 26, 24, 0.1);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .trust-visual__trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(26, 26, 24, 0.14);
+        }
+
+        .trust-visual__trigger:focus-visible {
+            outline: 2px solid var(--color-brass-light);
+            outline-offset: 3px;
+        }
+
+        .trust-visual__hint {
+            position: absolute;
+            right: 0.55rem;
+            bottom: 0.55rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.65rem;
+            height: 1.65rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--color-ink-muted);
+            box-shadow: 0 2px 8px rgba(20, 19, 18, 0.12);
+            pointer-events: none;
+        }
+
+        .trust-visual__img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+        }
+
+        .trust-visual__footer {
+            margin: 0.85rem 0 0;
+            text-align: center;
+        }
+
+        .trust-visual__link {
+            margin: 0;
+            padding: 0;
+            border: none;
+            background: none;
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--color-brass);
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 0.15em;
+            transition: color var(--transition-fast);
+        }
+
+        .trust-visual__link:hover {
+            color: var(--color-ink);
+        }
+
+        .trust-visual__link:focus-visible {
+            outline: 2px solid var(--color-brass-light);
+            outline-offset: 2px;
         }
 
         .proof-grid {
@@ -656,6 +960,7 @@
         .reveal--d1 { transition-delay: 0.08s; }
         .reveal--d2 { transition-delay: 0.16s; }
         .reveal--d3 { transition-delay: 0.24s; }
+        .reveal--d4 { transition-delay: 0.32s; }
 
         /* Contact modal */
         .modal {
@@ -866,7 +1171,7 @@
                 You&rsquo;ve now seen what&rsquo;s inside Foshan &mdash; the Louvre mall, the raw materials market, the factory floors, the QC lab, the destruction tests. Beyond Showrooms is what I built after I came home.
             </p>
             <p class="body-text reveal reveal--d2">
-                I spent weeks there asking one question: <span class="emphasis">can you get genuinely premium furniture without paying Western retail markups?</span> The answer, as you saw, is yes &mdash; if you know where to look and who to trust. I&rsquo;m trying to be that person for you.
+                I spent weeks there asking one question: Can you get <span class="emphasis">genuinely premium furniture</span> at rational prices by buying direct from factories?
             </p>
 
             <figure class="bridge-collage reveal reveal--d3">
@@ -904,6 +1209,10 @@
                     >
                 </div>
             </figure>
+
+            <p class="body-text reveal reveal--d4">
+                The answer, as you saw, is yes &mdash; if you know where to look and who to trust. I&rsquo;m trying to be that person for you.
+            </p>
         </div>
     </section>
 
@@ -911,78 +1220,89 @@
     <section class="section" aria-labelledby="process-title">
         <div class="container">
             <h2 id="process-title" class="section-title section-title--lg reveal">How it works</h2>
-            <p class="section-bridge reveal reveal--d1">I&rsquo;d like to help with your home furnishing in 3 easy steps.</p>
+            <p class="section-bridge reveal reveal--d1">Whether it&rsquo;s being unsure of where to start or fearing costly mistakes, I know furnishing a large home is high-stakes. Let me <span class="emphasis">make the process easier</span> for you, using 3 easy steps.</p>
 
             <ol class="steps">
                 <li class="step reveal reveal--d1">
                     <span class="step__num" aria-hidden="true">1</span>
-                    <h3 class="step__title">I&rsquo;ll show you collections</h3>
+                    <h3 class="step__title">Tell me about your home</h3>
                     <p class="step__body">
-                        <span class="emphasis">Curated whole-room interiors</span> from the factories I visited &mdash; and others I&rsquo;ve added since. Real showroom photography, not renders.
+                        Share your floor plans, photos, budget, and concerns. <span class="emphasis">No pressure to commit</span> &mdash; let&rsquo;s confirm we&rsquo;re a good fit.
                     </p>
                 </li>
                 <li class="step reveal reveal--d2">
                     <span class="step__num" aria-hidden="true">2</span>
-                    <h3 class="step__title">You tell me what resonates</h3>
+                    <h3 class="step__title">Choose and refine your direction</h3>
                     <p class="step__body">
-                        What you love, what you&rsquo;d change, what doesn&rsquo;t fit. <span class="emphasis">No pressure to commit</span> &mdash; I&rsquo;d rather get it right than rush you.
+                        I&rsquo;ll show you <span class="emphasis">curated whole-room collections</span> inspired by world-class luxury brands. Choose a direction and refine to your taste and budget.
                     </p>
                 </li>
                 <li class="step reveal reveal--d3">
                     <span class="step__num" aria-hidden="true">3</span>
                     <h3 class="step__title">I&rsquo;ll handle everything</h3>
                     <p class="step__body">
-                        Tailoring, production, order consolidation, QC, shipping, delivery. <span class="emphasis">I stay involved until it&rsquo;s in your home.</span>
+                        Tailoring, production, QC, shipping, customs, delivery, and placement. <span class="emphasis">I stay involved until it&rsquo;s in your home.</span>
                     </p>
                 </li>
             </ol>
+
+            <div class="after-order reveal">
+                <p class="eyebrow">From factory to your home</p>
+                <p class="after-order__intro">Once you confirm an order, I stay involved at every step:</p>
+
+                <div class="after-order-grid" data-after-order-grid tabindex="0" aria-label="Order fulfillment steps">
+                    <div class="after-order-grid__cells">
+                        <button type="button" class="after-order-grid__cell is-active" data-after-order-cell aria-pressed="true">
+                            <img class="after-order-grid__img" src="images/post_sales_1.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+                        </button>
+                        <button type="button" class="after-order-grid__cell" data-after-order-cell aria-pressed="false">
+                            <img class="after-order-grid__img" src="images/post_sales_2.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+                        </button>
+                        <button type="button" class="after-order-grid__cell" data-after-order-cell aria-pressed="false">
+                            <img class="after-order-grid__img" src="images/post_sales_3.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+                        </button>
+                        <button type="button" class="after-order-grid__cell" data-after-order-cell aria-pressed="false">
+                            <img class="after-order-grid__img" src="images/post_sales_4.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+                        </button>
+                    </div>
+
+                    <div class="after-order-grid__progress" data-after-order-progress aria-hidden="true">
+                        <span class="after-order-grid__progress-fill" data-after-order-progress-fill></span>
+                    </div>
+
+                    <div class="after-order-grid__caption-panel" aria-live="polite">
+                        <p class="after-order-grid__caption" data-after-order-caption>
+                            <span class="after-order-grid__num" aria-hidden="true">1</span> <span class="after-order-grid__label">Production</span> &mdash; Typically 6 to 8 weeks; every item is made to order.
+                        </p>
+                        <p class="after-order-grid__caption" data-after-order-caption hidden>
+                            <span class="after-order-grid__num" aria-hidden="true">2</span> <span class="after-order-grid__label">Final inspection</span> &mdash; I send you photos of all pieces for approval before they&rsquo;re boxed and shipped.
+                        </p>
+                        <p class="after-order-grid__caption" data-after-order-caption hidden>
+                            <span class="after-order-grid__num" aria-hidden="true">3</span> <span class="after-order-grid__label">Shipping</span> &mdash; All items consolidated into a single container, so everything ships together.
+                        </p>
+                        <p class="after-order-grid__caption" data-after-order-caption hidden>
+                            <span class="after-order-grid__num" aria-hidden="true">4</span> <span class="after-order-grid__label">Last-mile delivery</span> &mdash; Includes placement and installation.
+                        </p>
+                    </div>
+
+                    <div class="after-order-grid__dots" data-after-order-dots role="tablist" aria-label="Select step"></div>
+                </div>
+
+                <div class="process-result reveal">
+                    <span class="process-result__label">The result</span>
+                    <p class="process-result__text">With my help, you can furnish with confidence, less stress, and <span class="emphasis">reach a final outcome you&rsquo;ll love</span>. I&rsquo;ll guide you every step of the way.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- 4. Why trust me -->
-    <section class="section section--warm" aria-labelledby="trust-title">
+    <!-- 4. Collections -->
+    <section class="section" aria-labelledby="collections-title">
         <div class="container container--wide">
-            <h2 id="trust-title" class="section-title section-title--lg reveal">I didn&rsquo;t just visit factories.<br>I filmed inside them.</h2>
-            <p class="body-text reveal reveal--d2">
-                Most sourcing services talk about &ldquo;factory partners&rdquo; in the abstract. You watched me walk the floors, pull apart sofas, and run head-to-head tests.
-            </p>
-
-            <div class="proof-grid reveal reveal--d3">
-                <figure class="proof-card">
-                    <img
-                        class="proof-card__img"
-                        src="images/factory_2.jpg"
-                        alt="Inside a modern designer furniture factory in Foshan"
-                        width="1200"
-                        height="750"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                    <figcaption class="proof-card__body">
-                        <h3 class="proof-card__title">The factories from Episode 2</h3>
-                        <p class="proof-card__text">A modern designer furniture factory and a manufacturer with a full QC destruction lab &mdash; both now in my sourcing network.</p>
-                    </figcaption>
-                </figure>
-                <figure class="proof-card">
-                    <img
-                        class="proof-card__img"
-                        src="images/factory_3.jpg"
-                        alt="Export-grade furniture manufacturing campus in Foshan"
-                        width="1200"
-                        height="750"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                    <figcaption class="proof-card__body">
-                        <h3 class="proof-card__title">Partners I&rsquo;ve added since filming</h3>
-                        <p class="proof-card__text">The documentary captured a slice of Foshan. I&rsquo;ve since added more export-grade factories to my network &mdash; same vetting, same standards.</p>
-                    </figcaption>
-                </figure>
-            </div>
-
             <div class="collections-block reveal">
                 <div class="collections-block__header">
-                    <h3 class="section-title section-title--lg" style="margin-bottom: 0;">Whole-room collections, ready to browse</h3>
+                    <h2 id="collections-title" class="section-title section-title--lg" style="margin-bottom: 0;">Whole-room collections, ready to browse</h2>
+                    <p class="collections-block__intro">I always start with <span class="emphasis">curated whole-room interiors</span> &mdash; each one a starting point ready to be customized.</p>
                 </div>
 
                 <div class="lp-case-carousel lp-approach__carousel" data-showroom-carousel aria-roledescription="carousel" tabindex="0">
@@ -1069,13 +1389,61 @@
         </div>
     </section>
 
-    <!-- 5. Real furnished homes -->
+    <!-- 5. Why trust me -->
+    <section class="section section--warm" aria-labelledby="trust-title">
+        <div class="container container--wide">
+            <h2 id="trust-title" class="section-title section-title--lg reveal">I didn&rsquo;t just visit factories.<br>I filmed inside them.</h2>
+            <p class="body-text reveal reveal--d1">
+                Many sourcing services talk about &ldquo;factory partners&rdquo; in the abstract. You watched me walk the floors, pull apart sofas, and run head-to-head tests.
+            </p>
+            <p class="body-text reveal reveal--d1">
+                I&rsquo;ve since curated <span class="emphasis">25+ premium furniture factories</span> from Foshan, including the ones you&rsquo;ve seen in the docuseries. More are being added monthly.
+            </p>
+
+            <figure class="trust-visual reveal reveal--d2">
+                <button type="button" class="trust-visual__trigger" data-open-partners aria-label="Explore sample factory partners">
+                    <img
+                        class="trust-visual__img"
+                        src="images/factory_3.jpg"
+                        alt="Export-grade furniture manufacturing campus in Foshan"
+                        width="1200"
+                        height="750"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                    <span class="trust-visual__hint" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                    </span>
+                </button>
+                <figcaption class="trust-visual__footer">
+                    <button type="button" class="trust-visual__link" data-open-partners>Explore sample factories</button>
+                </figcaption>
+            </figure>
+
+            <div class="factory-direct reveal reveal--d3">
+                <p class="eyebrow">Why factory direct?</p>
+                <ul class="factory-direct__list">
+                    <li class="factory-direct__item">
+                        <span class="factory-direct__label">Bespoke designer furniture</span> &mdash; Custom sizes, materials, fabrics, and finishes readily available.
+                    </li>
+                    <li class="factory-direct__item">
+                        <span class="factory-direct__label">More home for your budget</span> &mdash; Access options not available to you locally, while avoiding luxury markups.
+                    </li>
+                    <li class="factory-direct__item">
+                        <span class="factory-direct__label">Trusted factory partner network</span> &mdash; Thousands of large home projects already completed worldwide.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Success stories -->
     <section class="section case-studies" aria-labelledby="homes-title">
         <div class="container container--wide">
-            <h2 id="homes-title" class="section-title section-title--lg reveal">Real furnished homes</h2>
-            <p class="body-text case-studies__intro reveal reveal--d1">
-                These are actual finished homes, completed by our factory partners.
-            </p>
+            <div class="case-studies__header reveal">
+                <h2 id="homes-title" class="section-title section-title--lg">Success Stories</h2>
+                <p class="case-studies__intro reveal reveal--d1">Showrooms show what&rsquo;s possible. Here are <span class="emphasis">actual finished homes</span>, delivered by my factory partners.</p>
+            </div>
 
             <div class="lp-case-carousel reveal reveal--d2" data-case-carousel aria-roledescription="carousel" tabindex="0">
                 <div class="lp-carousel-body">
@@ -1189,7 +1557,7 @@
         </div>
     </section>
 
-    <!-- 6. My promise & closing -->
+    <!-- 7. My promise & closing -->
     <section class="section section--closing" aria-labelledby="promise-title">
         <div class="container">
             <div class="founder-intro reveal">
@@ -1211,24 +1579,20 @@
             </div>
 
             <p class="body-text reveal reveal--d1">
-                I&rsquo;m selective about the projects I take on. That&rsquo;s by design &mdash; no handing you off to a sales team, no routing you through a call centre. You work with me, start to finish.
+                I&rsquo;m selective &mdash; no sales team, no call centre. You work with me, start to finish.
             </p>
             <p class="body-text reveal reveal--d2">
-                <span class="emphasis">No fees until you place an order.</span> That&rsquo;s right. I&rsquo;m doing this because I genuinely want to help people furnish better homes &mdash; and I&rsquo;m asking, kindly, that you don&rsquo;t take advantage of that. If you&rsquo;re serious about your project, I&rsquo;m serious about helping you.
+                <span class="emphasis">No fees until you place an order.</span> If you&rsquo;re serious about your project, I&rsquo;m serious about helping you. If it&rsquo;s not the right fit, I&rsquo;ll say so &mdash; no hard sell, no follow-up spam.
             </p>
 
-            <div class="founder-note reveal reveal--d3">
-                <p>If it&rsquo;s not the right fit, I&rsquo;ll say so. No hard sell, no follow-up spam. Just an honest conversation about your home.</p>
-            </div>
-
-            <p class="founder-sign reveal">
+            <p class="founder-sign reveal reveal--d3">
                 <span class="founder-sign__text">&mdash; David, Beyond Showrooms</span>
             </p>
 
             <hr class="founder-divider reveal" aria-hidden="true">
 
             <div class="founder-closing reveal">
-                <p class="founder-closing__lede">Ready when you are.<br>Tell me what&rsquo;s on your mind.</p>
+                <p class="founder-closing__lede">Ready when you are &mdash; tell me what&rsquo;s on your mind.</p>
                 <div class="btn-row founder-closing__btn">
                     <button type="button" class="btn" data-open-contact>CONTACT ME, tell me what you need</button>
                 </div>
@@ -1237,6 +1601,23 @@
     </section>
 
 </main>
+
+<!-- Factory partners modal -->
+<div id="partnersModal" class="lp-modal lp-modal--partners" hidden>
+    <div class="lp-modal__backdrop" data-close-partners></div>
+    <div
+        class="lp-modal__panel lp-modal__panel--partners"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="partnersModalTitle"
+    >
+        <button type="button" class="lp-modal__close" data-close-partners aria-label="Close">&times;</button>
+        <span class="lp-modal-eyebrow">My network</span>
+        <h2 id="partnersModalTitle" class="lp-modal__title">Sample factory partners</h2>
+        <p class="lp-modal__lead">I&rsquo;ve curated a network of <span class="emphasis">over 25 export-grade manufacturers</span> in Foshan, vetted for quality, scale, and large-home projects. Here are a few sample partners.</p>
+        <div id="partnersList" class="lp-partners-list" aria-live="polite"></div>
+    </div>
+</div>
 
 <!-- Showroom preview modal -->
 <div id="showroomModal" class="lp-modal lp-modal--showroom" hidden>
@@ -1252,7 +1633,7 @@
                 <p class="lp-showroom-loading">Curating sample pieces&hellip;</p>
             </div>
             <div class="lp-showroom-cta">
-                <p class="lp-showroom-cta__kicker">Everything here is available for purchase — tell me what catches your eye.</p>
+                <p class="lp-showroom-cta__kicker">Everything here is available for purchase.</p>
                 <h3 class="lp-showroom-cta__title">See something you like?</h3>
                 <button type="button" class="lp-btn--primary" data-showroom-book>Tell me what you&rsquo;re looking for</button>
             </div>
@@ -1291,6 +1672,7 @@
 </div>
 
 <script src="founder_image_captions.js"></script>
+<script src="founder_factory_partners.js"></script>
 <script src="founder_showroom.js"></script>
 <script>
 (function () {
@@ -1299,22 +1681,28 @@
     var closeEls = document.querySelectorAll('[data-close-contact]');
     var lastFocus = null;
 
+    function closeModal() {
+        if (!modal) return;
+        modal.hidden = true;
+        if (window.syncFounderModalBodyLock) {
+            window.syncFounderModalBodyLock();
+        } else if (!document.getElementById('showroomModal') || document.getElementById('showroomModal').hidden) {
+            document.body.style.overflow = '';
+        }
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
     function openModal() {
         if (!modal) return;
         lastFocus = document.activeElement;
         modal.hidden = false;
-        document.body.style.overflow = 'hidden';
+        if (window.syncFounderModalBodyLock) {
+            window.syncFounderModalBodyLock();
+        } else {
+            document.body.style.overflow = 'hidden';
+        }
         var closeBtn = modal.querySelector('.modal__close');
         if (closeBtn) closeBtn.focus();
-    }
-
-    function closeModal() {
-        if (!modal) return;
-        modal.hidden = true;
-        if (!document.getElementById('showroomModal') || document.getElementById('showroomModal').hidden) {
-            document.body.style.overflow = '';
-        }
-        if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
 
     window.openFounderContact = openModal;
