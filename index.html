@@ -511,6 +511,7 @@
         }
 
         .after-order-grid__cell {
+            position: relative;
             display: block;
             margin: 0;
             padding: 0;
@@ -553,11 +554,37 @@
             object-fit: cover;
         }
 
+        .after-order-grid__roman {
+            position: absolute;
+            top: 0.35rem;
+            left: 0.35rem;
+            z-index: 2;
+            padding: 0.18rem 0.32rem;
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 600;
+            font-style: italic;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.92);
+            background: rgba(26, 26, 24, 0.42);
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .after-order-grid__cell.is-active .after-order-grid__roman {
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--color-brass);
+        }
+
         .after-order-grid__progress {
-            margin-top: 0.5rem;
-            height: 2px;
-            background: #d8cfc2;
-            border-radius: 1px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            height: 3px;
+            background: rgba(216, 207, 194, 0.85);
+            border-radius: 0;
             overflow: hidden;
         }
 
@@ -1259,7 +1286,7 @@
                 You&rsquo;ve now seen what&rsquo;s inside Foshan &mdash; the Louvre mall, the raw materials market, the factory floors, the QC lab, the destruction tests.
             </p>
             <p class="body-text reveal reveal--d2">
-                I spent weeks there asking one question: Can you get <span class="emphasis">genuinely premium furniture</span> at rational prices by buying direct from factories?
+                I spent weeks there asking one question: Can you get <span class="emphasis">genuinely premium furniture at rational prices</span> by buying direct from factories?
             </p>
 
             <figure class="bridge-collage reveal reveal--d3">
@@ -1311,7 +1338,7 @@
                 <div class="collections-block__header">
                     <h2 id="collections-title" class="section-title section-title--lg" style="margin-bottom: 0;">Start with collections</h2>
                     <p class="collections-block__intro">Whether you&rsquo;re unsure where to start or worried about costly mistakes, I know furnishing a home is high-stakes.</p>
-                    <p class="collections-block__intro">That&rsquo;s why I&rsquo;ll start you with <span class="emphasis">curated whole-room collections</span> &mdash; inspired by world-class luxury brands, each one a starting point ready to customize.</p>
+                    <p class="collections-block__intro">That&rsquo;s why I&rsquo;ll start you with <span class="emphasis">curated whole-room collections</span> &mdash; inspired by world-class luxury brands, each one a starting point ready for you to customize.</p>
                 </div>
 
                 <div class="lp-case-carousel lp-approach__carousel" data-showroom-carousel aria-roledescription="carousel" tabindex="0">
@@ -1416,7 +1443,7 @@
                     <span class="step__num" aria-hidden="true">2</span>
                     <h3 class="step__title">Choose and refine your direction</h3>
                     <p class="step__body">
-                        Choose a direction from the collections above and we&rsquo;ll refine it to your taste and budget.
+                        Choose a direction from my curated collections, then we&rsquo;ll refine it to your taste and budget.
                     </p>
                 </li>
                 <li class="step reveal reveal--d3">
@@ -1435,35 +1462,38 @@
                 <div class="after-order-grid" data-after-order-grid tabindex="0" aria-label="Order fulfillment steps">
                     <div class="after-order-grid__cells">
                         <button type="button" class="after-order-grid__cell is-active" data-after-order-cell aria-pressed="true">
+                            <span class="after-order-grid__roman" aria-hidden="true">i</span>
                             <img class="after-order-grid__img" src="images/post_sales_1.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+                            <div class="after-order-grid__progress" data-after-order-progress aria-hidden="true">
+                                <span class="after-order-grid__progress-fill" data-after-order-progress-fill></span>
+                            </div>
                         </button>
                         <button type="button" class="after-order-grid__cell" data-after-order-cell aria-pressed="false">
+                            <span class="after-order-grid__roman" aria-hidden="true">ii</span>
                             <img class="after-order-grid__img" src="images/post_sales_2.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
                         </button>
                         <button type="button" class="after-order-grid__cell" data-after-order-cell aria-pressed="false">
+                            <span class="after-order-grid__roman" aria-hidden="true">iii</span>
                             <img class="after-order-grid__img" src="images/post_sales_3.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
                         </button>
                         <button type="button" class="after-order-grid__cell" data-after-order-cell aria-pressed="false">
+                            <span class="after-order-grid__roman" aria-hidden="true">iv</span>
                             <img class="after-order-grid__img" src="images/post_sales_4.jpg" alt="" width="1600" height="1000" loading="lazy" decoding="async">
                         </button>
                     </div>
 
-                    <div class="after-order-grid__progress" data-after-order-progress aria-hidden="true">
-                        <span class="after-order-grid__progress-fill" data-after-order-progress-fill></span>
-                    </div>
-
                     <div class="after-order-grid__caption-panel" aria-live="polite">
                         <p class="after-order-grid__caption" data-after-order-caption>
-                            <span class="after-order-grid__num" aria-hidden="true">1</span> <span class="after-order-grid__label">Production</span> &mdash; Typically 6 to 8 weeks; every item is made to order.
+                            <span class="after-order-grid__num" aria-hidden="true">i</span> <span class="after-order-grid__label">Production</span> &mdash; Typically 6 to 8 weeks; every item is made to order.
                         </p>
                         <p class="after-order-grid__caption" data-after-order-caption hidden>
-                            <span class="after-order-grid__num" aria-hidden="true">2</span> <span class="after-order-grid__label">Final inspection</span> &mdash; I send you photos of all pieces for approval before they&rsquo;re boxed and shipped.
+                            <span class="after-order-grid__num" aria-hidden="true">ii</span> <span class="after-order-grid__label">Final inspection</span> &mdash; I send you photos of all pieces for approval before they&rsquo;re boxed and shipped.
                         </p>
                         <p class="after-order-grid__caption" data-after-order-caption hidden>
-                            <span class="after-order-grid__num" aria-hidden="true">3</span> <span class="after-order-grid__label">Shipping</span> &mdash; All items consolidated into a single container, so everything ships together.
+                            <span class="after-order-grid__num" aria-hidden="true">iii</span> <span class="after-order-grid__label">Shipping</span> &mdash; All items consolidated into a single container, so everything ships together.
                         </p>
                         <p class="after-order-grid__caption" data-after-order-caption hidden>
-                            <span class="after-order-grid__num" aria-hidden="true">4</span> <span class="after-order-grid__label">Last-mile delivery</span> &mdash; Includes placement and installation.
+                            <span class="after-order-grid__num" aria-hidden="true">iv</span> <span class="after-order-grid__label">Last-mile delivery</span> &mdash; Includes placement and installation.
                         </p>
                     </div>
 
@@ -1513,7 +1543,7 @@
             </figure>
 
             <div class="factory-direct reveal reveal--d3">
-                <p class="eyebrow">Why factory direct?</p>
+                <p class="eyebrow">Why buy from factories?</p>
                 <ul class="factory-direct__list">
                     <li class="factory-direct__item">
                         <span class="factory-direct__label">Bespoke designer furniture</span> &mdash; Custom sizes, materials, fabrics, and finishes readily available.
@@ -1522,7 +1552,7 @@
                         <span class="factory-direct__label">More home for your budget</span> &mdash; Access options not available to you locally, while avoiding luxury markups.
                     </li>
                     <li class="factory-direct__item">
-                        <span class="factory-direct__label">Trusted factory partner network</span> &mdash; Thousands of large home projects already completed worldwide.
+                        <span class="factory-direct__label">Trusted network of export-grade factories</span> &mdash; Thousands of large home projects already completed worldwide.
                     </li>
                 </ul>
             </div>

@@ -723,6 +723,10 @@ function initAfterOrderGrid() {
             dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
         });
 
+        if (progress) {
+            cells[index]?.appendChild(progress);
+        }
+
         restartProgress();
     }
 
