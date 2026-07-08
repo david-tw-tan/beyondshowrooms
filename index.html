@@ -1031,6 +1031,35 @@
             }
         }
 
+        .founder-credit {
+            margin-top: clamp(2.25rem, 5vw, 3rem);
+            padding-top: 1.35rem;
+            border-top: 1px solid var(--color-hairline);
+            text-align: center;
+            max-width: 24rem;
+            margin-inline: auto;
+        }
+
+        .founder-credit__text {
+            margin: 0;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--color-ink-faint);
+        }
+
+        .founder-credit__text a {
+            color: var(--color-ink-muted);
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(138, 132, 124, 0.35);
+            transition: color var(--transition-fast), border-color var(--transition-fast);
+        }
+
+        .founder-credit__text a:hover {
+            color: var(--color-brass);
+            border-color: rgba(166, 139, 91, 0.45);
+        }
+
         .watermark {
             display: block;
             position: absolute;
@@ -1141,6 +1170,20 @@
             gap: 0.65rem;
         }
 
+        .contact-option-card {
+            border: 1px solid var(--color-hairline);
+            border-radius: 2px;
+            background: #fff;
+            transition:
+                border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+        }
+
+        .contact-option-card:hover {
+            border-color: var(--color-brass-light);
+            box-shadow: var(--shadow-subtle, 0 2px 8px rgba(26, 26, 24, 0.06));
+        }
+
         .contact-option {
             display: flex;
             align-items: flex-start;
@@ -1158,6 +1201,16 @@
         .contact-option:hover {
             border-color: var(--color-brass-light);
             box-shadow: var(--shadow-subtle, 0 2px 8px rgba(26, 26, 24, 0.06));
+        }
+
+        .contact-option--inner {
+            border: none;
+            border-radius: 0;
+        }
+
+        .contact-option--inner:hover {
+            border-color: transparent;
+            box-shadow: none;
         }
 
         .contact-option__icon {
@@ -1184,20 +1237,35 @@
         }
 
         .contact-option__footnote {
-            display: block;
-            margin-top: 0.4rem;
+            margin: 0;
+            padding: 0 1rem 0.85rem 3.1rem;
             font-size: 0.7rem;
             line-height: 1.4;
             font-style: italic;
-            color: var(--color-ink-faint);
-            opacity: 0.85;
+            color: #a8a196;
+        }
+
+        .contact-option__footnote-brand {
+            font-weight: inherit;
+            font-style: italic;
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 0.12em;
+            text-decoration-color: rgba(138, 132, 124, 0.55);
+            transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+        }
+
+        .contact-option__footnote-brand:hover {
+            color: var(--color-ink-muted);
+            text-decoration-color: rgba(94, 90, 84, 0.75);
         }
 
         .modal__note {
-            margin: 1rem 0 0;
-            font-size: 0.78rem;
+            margin: 1.25rem 0 0;
+            font-size: 0.82rem;
+            font-weight: 500;
             line-height: 1.5;
-            color: var(--color-ink-faint);
+            color: var(--color-ink-muted);
             text-align: center;
         }
 
@@ -1233,7 +1301,7 @@
         <div class="container">
             <span class="watermark" aria-hidden="true">BS</span>
 
-            <p class="eyebrow reveal">From the documentary</p>
+            <p class="eyebrow reveal">From the Secret Furniture Empire docuseries</p>
 
             <figure class="doc-visual reveal reveal--d1">
                 <button type="button" class="doc-visual__play" data-doc-video-play aria-label="Play Episode 1 of the Beyond Showrooms docuseries">
@@ -1719,6 +1787,10 @@
                     <button type="button" class="btn" data-open-contact>CONTACT ME, tell me what you need</button>
                 </div>
             </div>
+
+            <div class="founder-credit reveal">
+                <p class="founder-credit__text">Beyond Showrooms is affiliated with <a href="https://www.wildchina.com" target="_blank" rel="noopener noreferrer">WildChina</a> &mdash; trusted access in China since 2001.</p>
+            </div>
         </div>
     </section>
 
@@ -1769,7 +1841,7 @@
     <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
         <button type="button" class="modal__close" data-close-contact aria-label="Close">&times;</button>
         <h2 id="contactModalTitle" class="modal__title">Tell me about your project</h2>
-        <p class="modal__lede">Quick questions welcome. Share as much or as little as you&rsquo;d like — I&rsquo;d love to hear from you.</p>
+        <p class="modal__lede">Quick questions welcome. Let&rsquo;s chat.</p>
         <div class="contact-options">
             <a href="https://wa.me/8618500507084" class="contact-option" data-contact="whatsapp" target="_blank" rel="noopener noreferrer">
                 <svg class="contact-option__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
@@ -1779,15 +1851,17 @@
                     <span class="contact-option__hint">Usually the fastest way to reach me</span>
                 </span>
             </a>
-            <a href="mailto:david.tan@wildchina.com?subject=My%20home%20project" class="contact-option" data-contact="email">
-                <svg class="contact-option__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                <span>
-                    <span class="contact-option__label">Email</span>
-                    <span class="contact-option__hint">david.tan@wildchina.com</span>
-                    <span class="contact-option__hint">Share your floor plans, photos, or just say hello</span>
-                    <span class="contact-option__footnote">BeyondShowrooms is affiliated with WildChina — you&rsquo;ll see this email for now</span>
-                </span>
-            </a>
+            <div class="contact-option-card">
+                <a href="mailto:david.tan@wildchina.com?subject=My%20home%20project" class="contact-option contact-option--inner" data-contact="email">
+                    <svg class="contact-option__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <span>
+                        <span class="contact-option__label">Email</span>
+                        <span class="contact-option__hint">david.tan@wildchina.com</span>
+                        <span class="contact-option__hint">Share plans, photos, or just say hello</span>
+                    </span>
+                </a>
+                <p class="contact-option__footnote">Beyond Showrooms grew out of <a href="https://www.wildchina.com" class="contact-option__footnote-brand" target="_blank" rel="noopener noreferrer">WildChina</a>, trusted in China since 2001. You&rsquo;ll see their email for now.</p>
+            </div>
         </div>
         <p class="modal__note">No fees until you order. No obligation.</p>
     </div>
