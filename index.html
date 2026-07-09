@@ -156,6 +156,15 @@
             border-radius: 2px;
         }
 
+        @media (min-width: 640px) {
+            .founder-byline {
+                width: fit-content;
+                max-width: 30rem;
+                margin-inline: auto;
+                padding: 1rem 1.35rem;
+            }
+        }
+
         .founder-byline__photo {
             flex-shrink: 0;
             width: 3.25rem;
@@ -599,7 +608,7 @@
             background: var(--color-brass);
             border-radius: 1px;
             animation: after-order-progress linear forwards;
-            animation-duration: var(--progress-duration, 5500ms);
+            animation-duration: var(--progress-duration, 4500ms);
         }
 
         .after-order-grid__progress.is-paused .after-order-grid__progress-fill {
@@ -731,8 +740,16 @@
         }
 
         .trust-visual {
-            margin-top: 1.75rem;
-            max-width: var(--content-wide);
+            display: block;
+            margin: 1.75rem auto 0;
+            width: 100%;
+            max-width: 28rem;
+        }
+
+        @media (min-width: 640px) {
+            .trust-visual__img {
+                aspect-ratio: 5 / 3;
+            }
         }
 
         .trust-visual__trigger {
@@ -1301,7 +1318,7 @@
         <div class="container">
             <span class="watermark" aria-hidden="true">BS</span>
 
-            <p class="eyebrow reveal">From the Secret Furniture Empire docuseries</p>
+            <p class="eyebrow reveal">From the &ldquo;Secret Furniture Empire&rdquo; docuseries</p>
 
             <figure class="doc-visual reveal reveal--d1">
                 <button type="button" class="doc-visual__play" data-doc-video-play aria-label="Play Episode 1 of the Beyond Showrooms docuseries">
@@ -1401,14 +1418,15 @@
 
     <!-- 3. Collections -->
     <section class="section" aria-labelledby="collections-title">
+        <div class="container">
+            <div class="collections-block__header reveal">
+                <h2 id="collections-title" class="section-title section-title--lg" style="margin-bottom: 0;">Start with collections</h2>
+                <p class="collections-block__intro">Whether you&rsquo;re unsure where to start or worried about costly mistakes, I know furnishing a home is high-stakes.</p>
+                <p class="collections-block__intro">That&rsquo;s why I&rsquo;ll start you with <span class="emphasis">curated whole-room collections</span> &mdash; inspired by world-class luxury brands, each one a starting point ready for you to customize.</p>
+            </div>
+        </div>
         <div class="container container--wide">
             <div class="collections-block reveal">
-                <div class="collections-block__header">
-                    <h2 id="collections-title" class="section-title section-title--lg" style="margin-bottom: 0;">Start with collections</h2>
-                    <p class="collections-block__intro">Whether you&rsquo;re unsure where to start or worried about costly mistakes, I know furnishing a home is high-stakes.</p>
-                    <p class="collections-block__intro">That&rsquo;s why I&rsquo;ll start you with <span class="emphasis">curated whole-room collections</span> &mdash; inspired by world-class luxury brands, each one a starting point ready for you to customize.</p>
-                </div>
-
                 <div class="lp-case-carousel lp-approach__carousel" data-showroom-carousel aria-roledescription="carousel" tabindex="0">
                     <div class="lp-carousel-body">
                         <div class="lp-carousel-stage">
@@ -1581,15 +1599,18 @@
 
     <!-- 5. Why trust me -->
     <section class="section" aria-labelledby="trust-title">
-        <div class="container container--wide">
-            <h2 id="trust-title" class="section-title section-title--lg reveal">I didn&rsquo;t just visit factories.<br>I filmed inside them.</h2>
-            <p class="body-text reveal reveal--d1">
-                You watched me walk the floors, pull apart sofas, and run head-to-head tests.
-            </p>
-            <p class="body-text reveal reveal--d1">
-                I&rsquo;ve since curated <span class="emphasis">25+ premium furniture factories</span> from Foshan, including the ones you&rsquo;ve seen in the docuseries. More are being added monthly.
-            </p>
-
+        <div class="container">
+            <div class="trust-section__header reveal">
+                <h2 id="trust-title" class="section-title section-title--lg">I didn&rsquo;t just visit factories.<br>I filmed inside them.</h2>
+                <p class="body-text reveal reveal--d1">
+                    You watched me walk the floors, pull apart sofas, and run head-to-head tests.
+                </p>
+                <p class="body-text reveal reveal--d1">
+                    I&rsquo;ve since curated <span class="emphasis">25+ premium furniture factories</span> from Foshan, including the ones you&rsquo;ve seen in the docuseries. More are being added monthly.
+                </p>
+            </div>
+        </div>
+        <div class="container">
             <figure class="trust-visual reveal reveal--d2">
                 <button type="button" class="trust-visual__trigger" data-open-partners aria-label="Explore sample factory partners">
                     <img
@@ -1609,7 +1630,8 @@
                     <button type="button" class="trust-visual__link" data-open-partners>Explore sample factories</button>
                 </figcaption>
             </figure>
-
+        </div>
+        <div class="container">
             <div class="factory-direct reveal reveal--d3">
                 <p class="eyebrow">Why buy from factories?</p>
                 <ul class="factory-direct__list">
@@ -1629,12 +1651,13 @@
 
     <!-- 6. Success stories -->
     <section class="section section--warm case-studies" aria-labelledby="homes-title">
-        <div class="container container--wide">
+        <div class="container">
             <div class="case-studies__header reveal">
                 <h2 id="homes-title" class="section-title section-title--lg">Success Stories</h2>
                 <p class="case-studies__intro reveal reveal--d1">Showrooms show what&rsquo;s possible. Here are <span class="emphasis">actual finished homes</span>, delivered by my factory partners.</p>
             </div>
-
+        </div>
+        <div class="container container--wide">
             <div class="lp-case-carousel reveal reveal--d2" data-case-carousel aria-roledescription="carousel" tabindex="0">
                 <div class="lp-carousel-body">
                     <div class="lp-carousel-stage">

@@ -563,6 +563,7 @@ function initSlideCarousel(carousel, config) {
     const autoRotateMs = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
         ? (config.autoRotateMs || 0)
         : 0;
+    const pauseWhenOffscreen = config.pauseWhenOffscreen === true;
 
     slides.forEach((_, i) => {
         const dot = document.createElement('button');
@@ -635,6 +636,21 @@ function initSlideCarousel(carousel, config) {
                 startAuto();
             }
         });
+
+        if (pauseWhenOffscreen && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    const isVisible = entries.some((entry) => entry.isIntersecting);
+                    if (isVisible) {
+                        startAuto();
+                    } else {
+                        stopAuto();
+                    }
+                },
+                { threshold: 0.2 }
+            );
+            observer.observe(carousel);
+        }
     }
 
     viewport?.addEventListener(
@@ -675,7 +691,8 @@ function initAfterOrderGrid() {
     if (!cells.length) return;
 
     let index = 0;
-    const autoRotateMs = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 5500;
+    const autoRotateMs = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 4500;
+    let isOnScreen = true;
 
     cells.forEach((_, i) => {
         const dot = document.createElement('button');
@@ -701,6 +718,7 @@ function initAfterOrderGrid() {
     }
 
     function resumeProgress() {
+        if (!isOnScreen) return;
         progress?.classList.remove('is-paused');
     }
 
@@ -734,6 +752,7 @@ function initAfterOrderGrid() {
         progressFill?.style.setProperty('--progress-duration', `${autoRotateMs}ms`);
         progressFill?.addEventListener('animationend', (event) => {
             if (event.animationName !== 'after-order-progress') return;
+            if (!isOnScreen) return;
             goTo(index + 1);
         });
     } else {
@@ -763,6 +782,22 @@ function initAfterOrderGrid() {
                 resumeProgress();
             }
         });
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    isOnScreen = entries.some((entry) => entry.isIntersecting);
+                    if (isOnScreen) {
+                        resumeProgress();
+                        restartProgress();
+                    } else {
+                        pauseProgress();
+                    }
+                },
+                { threshold: 0.2 }
+            );
+            observer.observe(root);
+        }
     }
 
     goTo(0);
@@ -798,7 +833,8 @@ function initShowroomCarousel() {
         dots: '[data-showroom-dots]',
         viewport: '.lp-case-carousel__viewport',
         dotClass: 'lp-case-carousel__dot',
-        dotLabel: 'Collection'
+        dotLabel: 'Collection',
+        autoRotateMs: 7500
     });
 }
 
