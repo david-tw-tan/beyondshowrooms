@@ -63,8 +63,18 @@
     color: var(--color-ink-muted, #5e5a54);
 }
 
-.case-studies .lp-case-carousel {
-    max-width: 52rem;
+[data-showroom-carousel],
+[data-case-carousel] {
+    width: 100%;
+    max-width: var(--content-carousel, 52rem);
+    margin-inline: auto;
+}
+
+.collections-block__note,
+.collections-block__cta {
+    width: 100%;
+    max-width: var(--content-carousel, 52rem);
+    margin-inline: auto;
 }
 
 .case-studies .lp-case-carousel__caption {

@@ -3,7 +3,7 @@
  * Update contact URLs before going live.
  */
 const LANDING_CONFIG = {
-    whatsAppUrl: 'https://wa.me/8618500507084',
+    whatsAppUrl: 'https://wa.me/8618500507027',
     emailUrl: 'mailto:david.tan@wildchina.com',
     youtubeSeriesUrl: 'https://www.youtube.com/@beyondshowrooms'
 };
