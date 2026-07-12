@@ -28,6 +28,9 @@
     script.defer = true;
     script.src = SCRIPT_SRC;
     script.dataset.websiteId = WEBSITE_ID;
+    script.onload = function () {
+        whenUmamiReady(initYoutubeReferralTracking);
+    };
     document.head.appendChild(script);
 
     var CTA_RULES = [
@@ -35,7 +38,6 @@
         { selector: '[data-open-showroom]', event: 'showroom_cta' },
         { selector: '[data-open-partners]', event: 'partners_cta' },
         { selector: '[data-doc-video-play]', event: 'video_play' },
-        { selector: '#bridge-cta, .bridge-cta__link', event: 'bridge_cta' },
         { selector: 'a[href="https://www.youtube.com/@beyondshowrooms"]', event: 'docuseries_link' },
         { selector: '[data-contact="whatsapp"]', event: 'contact_whatsapp' },
         { selector: '[data-contact="email"]', event: 'contact_email' }
@@ -45,9 +47,54 @@
         return window.location.pathname || '/';
     }
 
-    function bridgeEpisode() {
-        var match = pagePath().match(/\/ep(\d+)/);
-        return match ? 'ep' + match[1] : null;
+    function youtubeEpisodeFromUrl() {
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('utm_source') !== 'youtube') {
+            return null;
+        }
+
+        var campaign = params.get('utm_campaign');
+        return /^ep[123]$/.test(campaign) ? campaign : null;
+    }
+
+    function withYoutubeEpisode(data) {
+        var episode = youtubeEpisodeFromUrl();
+        if (episode) {
+            data.youtube_episode = episode;
+        }
+        return data;
+    }
+
+    function whenUmamiReady(fn) {
+        if (window.umami && typeof window.umami.track === 'function') {
+            fn();
+            return;
+        }
+
+        var attempts = 0;
+        var timer = setInterval(function () {
+            attempts += 1;
+            if (window.umami && typeof window.umami.track === 'function') {
+                clearInterval(timer);
+                fn();
+            } else if (attempts >= 40) {
+                clearInterval(timer);
+            }
+        }, 50);
+    }
+
+    function initYoutubeReferralTracking() {
+        var params = new URLSearchParams(window.location.search);
+        var episode = youtubeEpisodeFromUrl();
+        if (!episode) {
+            return;
+        }
+
+        trackEvent('youtube_' + episode, {
+            redirect: '/' + episode,
+            medium: params.get('utm_medium') || '',
+            page: pagePath()
+        });
     }
 
     function ctaLocation(el) {
@@ -351,21 +398,10 @@
                 continue;
             }
 
-            trackEvent(rule.event, (function () {
-                var data = {
-                    location: ctaLocation(el),
-                    page: pagePath()
-                };
-
-                if (rule.event === 'bridge_cta') {
-                    var episode = bridgeEpisode();
-                    if (episode) {
-                        data.episode = episode;
-                    }
-                }
-
-                return data;
-            }()));
+            trackEvent(rule.event, withYoutubeEpisode({
+                location: ctaLocation(el),
+                page: pagePath()
+            }));
             return;
         }
     });
