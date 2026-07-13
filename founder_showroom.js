@@ -838,7 +838,20 @@ function initShowroomCarousel() {
     });
 }
 
-function initDocVideo() {
+function initDocHero() {
+    const config = window.__BS_VISITOR || { staticHero: false };
+    const youtubeAnswer = document.querySelector('[data-bridge-answer="youtube"]');
+    const directAnswer = document.querySelector('[data-bridge-answer="direct"]');
+
+    if (config.staticHero) {
+        if (youtubeAnswer) youtubeAnswer.hidden = false;
+        if (directAnswer) directAnswer.hidden = true;
+        return;
+    }
+
+    if (youtubeAnswer) youtubeAnswer.hidden = true;
+    if (directAnswer) directAnswer.hidden = false;
+
     const playBtn = document.querySelector('[data-doc-video-play]');
     const embedHost = document.querySelector('[data-doc-video-embed]');
     if (!playBtn || !embedHost) return;
@@ -872,7 +885,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initCaseStudyCarousel();
     initShowroomModal();
     initPartnersModal();
-    initDocVideo();
+    initDocHero();
     window.syncFounderModalBodyLock = syncFounderModalBodyLock;
 });
 

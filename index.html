@@ -9,7 +9,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
-    <link rel="preload" as="image" href="images/img_journal_doc.jpeg" fetchpriority="high">
+    <script>
+    (function () {
+        var EP_THUMBS = {
+            ep1: 'images/img_journal_doc_ep1.jpeg',
+            ep2: 'images/img_journal_doc_ep2.jpeg',
+            ep3: 'images/img_journal_doc_ep3.jpeg'
+        };
+        var DEFAULT_THUMB = 'images/img_journal_doc.jpeg';
+        var params = new URLSearchParams(window.location.search);
+        var campaign = params.get('utm_campaign');
+        var isYoutubeRedirect = params.get('utm_source') === 'youtube' && EP_THUMBS[campaign];
+        var thumb = isYoutubeRedirect ? EP_THUMBS[campaign] : DEFAULT_THUMB;
+
+        window.__BS_VISITOR = {
+            thumb: thumb,
+            staticHero: Boolean(isYoutubeRedirect)
+        };
+
+        var preload = document.createElement('link');
+        preload.rel = 'preload';
+        preload.as = 'image';
+        preload.href = thumb;
+        preload.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(preload);
+    }());
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="founder_showroom.css">
     <script defer src="/analytics.js"></script>
@@ -338,6 +363,29 @@
             aspect-ratio: 16 / 9;
             object-fit: cover;
             object-position: center 42%;
+        }
+
+        .doc-visual--static .doc-visual__play {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .doc-visual--static .doc-visual__play-icon {
+            display: none;
+        }
+
+        .body-text__external-link {
+            display: inline;
+            text-decoration: underline;
+            text-underline-offset: 0.15em;
+        }
+
+        .body-text__external-icon {
+            display: inline-block;
+            vertical-align: -0.12em;
+            width: 0.85em;
+            height: 0.85em;
+            margin-left: 0.12em;
         }
 
         .btn {
@@ -1346,10 +1394,11 @@
 
             <p class="eyebrow reveal">From the &ldquo;Secret Furniture Empire&rdquo; docuseries</p>
 
-            <figure class="doc-visual reveal reveal--d1">
+            <figure class="doc-visual reveal reveal--d1" data-doc-visual>
                 <button type="button" class="doc-visual__play" data-doc-video-play aria-label="Play Episode 1 of the Beyond Showrooms docuseries">
                     <img
                         class="doc-visual__img"
+                        data-doc-visual-img
                         src="images/img_journal_doc.jpeg"
                         alt="Filming inside Foshan&rsquo;s furniture district for the Beyond Showrooms documentary"
                         width="1280"
@@ -1363,6 +1412,23 @@
                 </button>
                 <div class="doc-visual__embed" data-doc-video-embed hidden></div>
             </figure>
+            <script>
+            (function () {
+                var config = window.__BS_VISITOR;
+                if (!config) return;
+                var img = document.querySelector('[data-doc-visual-img]');
+                if (img) img.src = config.thumb;
+                if (config.staticHero) {
+                    var figure = document.querySelector('[data-doc-visual]');
+                    var playBtn = document.querySelector('[data-doc-video-play]');
+                    if (figure) figure.classList.add('doc-visual--static');
+                    if (playBtn) {
+                        playBtn.removeAttribute('aria-label');
+                        playBtn.setAttribute('tabindex', '-1');
+                    }
+                }
+            }());
+            </script>
 
             <h1 id="hero-title" class="hero-title reveal reveal--d2">You&rsquo;ve seen Foshan.<br>Now let&rsquo;s talk about your home.</h1>
 
@@ -1436,8 +1502,11 @@
                 </div>
             </figure>
 
-            <p class="body-text reveal reveal--d4">
+            <p class="body-text reveal reveal--d4" data-bridge-answer="youtube">
                 The answer, as you saw in <a href="https://www.youtube.com/@beyondshowrooms" target="_blank" rel="noopener noreferrer">our docuseries</a>, is yes &mdash; if you know where to look and who to trust. I&rsquo;m trying to be that person for you.
+            </p>
+            <p class="body-text reveal reveal--d4" data-bridge-answer="direct" hidden>
+                The answer, as you saw in our docuseries (<a href="https://www.youtube.com/@beyondshowrooms" target="_blank" rel="noopener noreferrer" class="body-text__external-link">watch it on YouTube<svg class="body-text__external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>), is yes &mdash; if you know where to look and who to trust. I&rsquo;m trying to be that person for you.
             </p>
         </div>
     </section>
