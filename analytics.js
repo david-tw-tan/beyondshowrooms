@@ -1,12 +1,9 @@
 (function () {
     'use strict';
 
-    // ── Setup (after Umami signup) ───────────────────────────────────────────
-    // 1. Sign up at https://cloud.umami.is → Hobby plan ($0, no card)
-    // 2. Add website → copy Website ID → paste below
-    // 3. On your devices, visit once: https://www.beyondshowrooms.com/?noanalytics=1
-    var WEBSITE_ID = '9070ab5c-784f-469f-b0df-e73f0f32084e';
-    var SCRIPT_SRC = 'https://cloud.umami.is/script.js';
+    // Requires a static Umami tag in HTML, e.g.:
+    // <script defer src="https://cloud.umami.is/script.js" data-website-id="..."></script>
+    // Umami will not initialize if script.js is injected dynamically (no document.currentScript).
 
     if (new URLSearchParams(window.location.search).has('noanalytics')) {
         try {
@@ -20,19 +17,6 @@
         }
     } catch (e) {}
 
-    if (!WEBSITE_ID || WEBSITE_ID === 'REPLACE_WITH_YOUR_WEBSITE_ID') {
-        return;
-    }
-
-    var script = document.createElement('script');
-    script.defer = true;
-    script.src = SCRIPT_SRC;
-    script.dataset.websiteId = WEBSITE_ID;
-    script.onload = function () {
-        whenUmamiReady(initYoutubeReferralTracking);
-    };
-    document.head.appendChild(script);
-
     var CTA_RULES = [
         { selector: '[data-open-contact]', event: 'contact_cta' },
         { selector: '[data-open-showroom]', event: 'showroom_cta' },
@@ -43,18 +27,30 @@
         { selector: '[data-contact="email"]', event: 'contact_email' }
     ];
 
+    var pendingEvents = [];
+    var youtubeReferralSent = false;
+
     function pagePath() {
         return window.location.pathname || '/';
     }
 
     function youtubeEpisodeFromUrl() {
         var params = new URLSearchParams(window.location.search);
-        if (params.get('utm_source') !== 'youtube') {
-            return null;
+        if (params.get('utm_source') === 'youtube') {
+            var campaign = params.get('utm_campaign');
+            if (/^ep[123]$/.test(campaign)) {
+                return campaign;
+            }
         }
 
-        var campaign = params.get('utm_campaign');
-        return /^ep[123]$/.test(campaign) ? campaign : null;
+        try {
+            var stored = sessionStorage.getItem('bs_youtube_episode');
+            if (/^ep[123]$/.test(stored)) {
+                return stored;
+            }
+        } catch (e) {}
+
+        return null;
     }
 
     function withYoutubeEpisode(data) {
@@ -77,24 +73,50 @@
             if (window.umami && typeof window.umami.track === 'function') {
                 clearInterval(timer);
                 fn();
-            } else if (attempts >= 40) {
+            } else if (attempts >= 100) {
                 clearInterval(timer);
             }
-        }, 50);
+        }, 100);
+    }
+
+    function flushPendingEvents() {
+        if (!window.umami || typeof window.umami.track !== 'function') {
+            return;
+        }
+
+        while (pendingEvents.length) {
+            var item = pendingEvents.shift();
+            window.umami.track(item.name, item.data);
+        }
+    }
+
+    function trackEvent(name, data) {
+        if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track(name, data);
+            return;
+        }
+
+        pendingEvents.push({ name: name, data: data || {} });
     }
 
     function initYoutubeReferralTracking() {
+        if (youtubeReferralSent) {
+            return;
+        }
+
         var params = new URLSearchParams(window.location.search);
         var episode = youtubeEpisodeFromUrl();
         if (!episode) {
             return;
         }
 
+        youtubeReferralSent = true;
         trackEvent('youtube_' + episode, {
             redirect: '/' + episode,
             medium: params.get('utm_medium') || '',
             page: pagePath()
         });
+        flushPendingEvents();
     }
 
     function ctaLocation(el) {
@@ -113,12 +135,6 @@
             }
         }
         return pagePath();
-    }
-
-    function trackEvent(name, data) {
-        if (window.umami && typeof window.umami.track === 'function') {
-            window.umami.track(name, data);
-        }
     }
 
     function onReady(fn) {
@@ -373,7 +389,17 @@
         window.addEventListener('pagehide', sendSummary);
     }
 
+    whenUmamiReady(function () {
+        flushPendingEvents();
+        initYoutubeReferralTracking();
+    });
+
     onReady(function () {
+        whenUmamiReady(function () {
+            flushPendingEvents();
+            initYoutubeReferralTracking();
+        });
+
         observeSectionOnce(document.getElementById('collections-title'), 'collections');
         observeSectionOnce(document.getElementById('trust-title'), 'factories');
         observeSectionOnce(document.getElementById('homes-title'), 'success_stories');
@@ -402,6 +428,7 @@
                 location: ctaLocation(el),
                 page: pagePath()
             }));
+            flushPendingEvents();
             return;
         }
     });

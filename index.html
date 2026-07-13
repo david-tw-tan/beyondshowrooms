@@ -27,6 +27,12 @@
             staticHero: Boolean(isYoutubeRedirect)
         };
 
+        if (isYoutubeRedirect) {
+            try {
+                sessionStorage.setItem('bs_youtube_episode', campaign);
+            } catch (err) {}
+        }
+
         var preload = document.createElement('link');
         preload.rel = 'preload';
         preload.as = 'image';
@@ -37,6 +43,7 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="founder_showroom.css">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="9070ab5c-784f-469f-b0df-e73f0f32084e"></script>
     <script defer src="/analytics.js"></script>
 
     <style>
