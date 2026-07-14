@@ -307,6 +307,8 @@ function showroomMotionEnabled() {
     return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+let founderBodyLockScrollY = 0;
+
 function syncFounderModalBodyLock() {
     const contactModal = document.getElementById('contactModal');
     const anyOpen =
@@ -314,7 +316,28 @@ function syncFounderModalBodyLock() {
         (contactModal && !contactModal.hidden) ||
         (partnersModal && !partnersModal.hidden);
 
-    document.body.style.overflow = anyOpen ? 'hidden' : '';
+    if (anyOpen) {
+        if (document.body.dataset.bsScrollLocked === '1') return;
+        founderBodyLockScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+        document.body.dataset.bsScrollLocked = '1';
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${founderBodyLockScrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.width = '100%';
+        return;
+    }
+
+    if (document.body.dataset.bsScrollLocked !== '1') return;
+    document.body.removeAttribute('data-bs-scroll-locked');
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    window.scrollTo(0, founderBodyLockScrollY);
 }
 
 function syncShowroomModalBodyLock() {
@@ -507,7 +530,7 @@ function openPartnersModal() {
     renderPartnersList();
     partnersModal.hidden = false;
     syncFounderModalBodyLock();
-    partnersModal.querySelector('.lp-modal__close')?.focus();
+    partnersModal.querySelector('.lp-modal__close')?.focus({ preventScroll: true });
 }
 
 function closePartnersModal() {
@@ -516,7 +539,7 @@ function closePartnersModal() {
     partnersModal.hidden = true;
     syncFounderModalBodyLock();
     if (partnersLastFocus && partnersLastFocus.focus) {
-        partnersLastFocus.focus();
+        partnersLastFocus.focus({ preventScroll: true });
     }
 }
 
