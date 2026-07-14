@@ -9,8 +9,9 @@ Frontend-only MVP. This doc focuses on the **showrooms viz tool** (`showrooms/in
 | `/` | `index.html` | Founder homepage (default) | `founder_showroom.css`, `founder_showroom.js`, `founder_image_captions.js`, `images/` |
 | `/future_hp/` | `future_hp/index.html` | Archived marketing landing page (for later dual-homepage) | `landing_page.css`, `landing_page.js`, `landing_copy_designer.js`, …, `images_lp/` |
 | `/showrooms/` | `showrooms/index.html` | Room styling / collection browse tool | `showrooms/waterfall.css`, `showrooms/waterfall.js`, `showrooms/furniture_database.json`, `showrooms/img_db_final/`, room-picker JPGs in `showrooms/` |
+| `/firstlook/{clientId}/` | `firstlook/{clientId}/index.html` | Private client First Look proposals (noindex) | Shared `firstlook/style.css` + `firstlook/lightbox.js`; images live in each client folder. See `firstlook/README.md`. |
 
-Deploy founder homepage assets at repo root (`index.html`, `founder_*`, `images/`). Deploy `future_hp/` and `showrooms/` as self-contained folders. Episode bridge pages (`ep1/`, `ep2/`, `ep3/`) link to `/`.
+Deploy founder homepage assets at repo root (`index.html`, `founder_*`, `images/`). Deploy `future_hp/` and `showrooms/` as self-contained folders. Episode bridge pages (`ep1/`, `ep2/`, `ep3/`) link to `/`. First Look pages are unlisted (`noindex, nofollow`).
 
 ---
 

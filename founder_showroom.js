@@ -44,6 +44,9 @@ let showroomResizeTimer = null;
 let showroomCloseTimer = null;
 const showroomAspectCache = new Map();
 const SHOWROOM_MODAL_ANIM_MS = 500;
+const IMAGE_WARM_CONCURRENCY = 2;
+const warmedImageUrls = new Set();
+let homepageImageWarmStarted = false;
 
 function getShowroomImageKey(item) {
     return item.image || '';
@@ -432,6 +435,143 @@ function initShowroomModal() {
             window.openFounderContact();
         }
     });
+}
+
+/** Living → bedroom → dining → accessories (SHOWROOM_SECTIONS order). */
+function getModalPrefetchUrls() {
+    return SHOWROOM_SECTIONS.flatMap((section) =>
+        (section.items || [])
+            .map((item) => resolveShowroomImageUrl(item))
+            .filter(Boolean)
+    );
+}
+
+/**
+ * In-page images below the hero, document order (bridge collage → carousels → …).
+ * Hero is left to its existing eager/preload path.
+ */
+function getInPageWarmUrls() {
+    const main = document.querySelector('main');
+    if (!main) return [];
+
+    const hero = main.querySelector('.hero-wrap');
+    const urls = [];
+    const seen = new Set();
+
+    main.querySelectorAll('img[src]').forEach((img) => {
+        if (hero && hero.contains(img)) return;
+
+        const raw = img.getAttribute('src');
+        if (!raw) return;
+
+        const url = new URL(raw, window.location.href).href;
+        if (seen.has(url) || warmedImageUrls.has(url)) return;
+        seen.add(url);
+        urls.push(url);
+    });
+
+    return urls;
+}
+
+function isAnyFounderImageModalOpen() {
+    return (
+        showroomIsOpen ||
+        (showroomModal && !showroomModal.hidden) ||
+        (partnersModal && !partnersModal.hidden)
+    );
+}
+
+function prefetchImageUrl(url) {
+    if (!url || warmedImageUrls.has(url)) {
+        return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.decoding = 'async';
+        if ('fetchPriority' in img) {
+            img.fetchPriority = 'low';
+        }
+
+        const finish = () => {
+            warmedImageUrls.add(url);
+            resolve();
+        };
+
+        img.onload = finish;
+        img.onerror = finish;
+        img.src = url;
+    });
+}
+
+function waitWhileModalOpen() {
+    if (!isAnyFounderImageModalOpen()) {
+        return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+        const tick = () => {
+            if (!isAnyFounderImageModalOpen()) {
+                resolve();
+                return;
+            }
+            window.setTimeout(tick, 400);
+        };
+        tick();
+    });
+}
+
+async function warmImageUrlQueue(urls) {
+    const queue = urls.filter((url) => url && !warmedImageUrls.has(url));
+    if (!queue.length) return;
+
+    let next = 0;
+
+    async function worker() {
+        while (next < queue.length) {
+            await waitWhileModalOpen();
+            const url = queue[next++];
+            if (!url || warmedImageUrls.has(url)) continue;
+            await prefetchImageUrl(url);
+        }
+    }
+
+    const workers = Math.min(IMAGE_WARM_CONCURRENCY, queue.length);
+    await Promise.all(Array.from({ length: workers }, () => worker()));
+}
+
+/**
+ * After page load: warm in-page images top→bottom (excl. hero), then modal gallery.
+ * Concurrency 1–2 so GitHub Pages is not flooded.
+ */
+async function runHomepageImageWarmPipeline() {
+    await warmImageUrlQueue(getInPageWarmUrls());
+    await warmImageUrlQueue(getModalPrefetchUrls());
+}
+
+function scheduleHomepageImageWarmPipeline() {
+    if (homepageImageWarmStarted) return;
+    homepageImageWarmStarted = true;
+
+    const start = () => {
+        if (navigator.connection?.saveData) return;
+
+        const run = () => {
+            runHomepageImageWarmPipeline().catch(() => {});
+        };
+
+        if (typeof window.requestIdleCallback === 'function') {
+            window.requestIdleCallback(run, { timeout: 4000 });
+        } else {
+            window.setTimeout(run, 2000);
+        }
+    };
+
+    if (document.readyState === 'complete') {
+        start();
+    } else {
+        window.addEventListener('load', start, { once: true });
+    }
 }
 
 function createPartnerStat(label, value) {
@@ -909,6 +1049,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initShowroomModal();
     initPartnersModal();
     initDocHero();
+    scheduleHomepageImageWarmPipeline();
     window.syncFounderModalBodyLock = syncFounderModalBodyLock;
 });
 

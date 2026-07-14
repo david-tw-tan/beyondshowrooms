@@ -1,0 +1,695 @@
+/**
+ * Beyond Showrooms — First Look (shared styles)
+ * Used by every client page under firstlook/*/index.html
+ * Visual language matches the homepage collections modal.
+ *
+ * Tokens are inlined (not CSS variables) for maximum compatibility.
+ * Palette / type match founder homepage: Cormorant + Jost, warm paper, charcoal ink.
+ */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Jost', system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #1a1a18;
+    background-color: #f0ebe4;
+    background-image:
+        radial-gradient(ellipse 80% 50% at 15% 0%, rgba(255, 255, 255, 0.45) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 40% at 90% 100%, rgba(166, 139, 91, 0.07) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: #1a1a18;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition: color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+a:hover {
+    color: #a68b5b;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.fl-page {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: 0 clamp(1.15rem, 4vw, 2.25rem) 4.5rem;
+}
+
+/* ─── Header ─── */
+
+.fl-header {
+    padding: 2.75rem 0 1.75rem;
+    text-align: center;
+}
+
+.fl-header__brand {
+    margin: 0 0 1.35rem;
+    font-family: 'Jost', system-ui, -apple-system, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8a847c;
+}
+
+.fl-header__title {
+    margin: 0 0 0.45rem;
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.15rem, 6vw, 3rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+}
+
+.fl-header__subtitle {
+    margin: 0;
+    font-size: clamp(0.92rem, 2.2vw, 1.05rem);
+    font-weight: 400;
+    color: #a68b5b;
+}
+
+.fl-header__rule {
+    display: block;
+    width: min(42vw, 11rem);
+    height: 1px;
+    margin: 1.5rem auto 0;
+    border: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #d5cdc2 22%,
+        #c4a97a 50%,
+        #d5cdc2 78%,
+        transparent 100%
+    );
+    opacity: 0.88;
+}
+
+/* ─── Intro ─── */
+
+.fl-intro {
+    max-width: 42rem;
+    margin: 0 auto 2.25rem;
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #5e5a54;
+    text-align: center;
+}
+
+.fl-intro strong {
+    font-weight: 500;
+    color: #1a1a18;
+}
+
+/* ─── Sticky room nav ─── */
+
+.fl-room-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    margin: 0 calc(-1 * clamp(1.15rem, 4vw, 2.25rem)) 2rem;
+    padding: 0.7rem clamp(1.15rem, 4vw, 2.25rem);
+    /* Full-width bar wash — keep midtone tinted so it doesn't read as "fading out" */
+    background-color: #ebe4d8;
+    background-image: linear-gradient(
+        90deg,
+        #d9d0c0 0%,
+        #e8e0d3 22%,
+        #efe8dc 50%,
+        #e8e0d3 78%,
+        #d9d0c0 100%
+    );
+    border-top: 1px solid #e0d8cc;
+    border-bottom: 1px solid #e0d8cc;
+}
+
+.fl-room-nav__inner {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    max-width: 68rem;
+    margin: 0 auto;
+}
+
+.fl-room-nav__icon {
+    flex-shrink: 0;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    color: #a68b5b;
+}
+
+.fl-room-nav__list {
+    display: flex;
+    flex-wrap: nowrap;
+    flex: 1 1 auto;
+    min-width: 0; /* allow shrink so overflow scroll kicks in */
+    gap: 0.35rem 1.15rem;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    /* Soft edge fade hints that more rooms may sit off-screen */
+    mask-image: linear-gradient(
+        90deg,
+        #000 0%,
+        #000 calc(100% - 1.75rem),
+        transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        #000 0%,
+        #000 calc(100% - 1.75rem),
+        transparent 100%
+    );
+}
+
+.fl-room-nav__list::-webkit-scrollbar {
+    display: none;
+}
+
+.fl-room-nav__link {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #8a847c;
+    text-decoration: none;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fl-room-nav__link:hover {
+    color: #1a1a18;
+}
+
+.fl-room-nav__link.is-active {
+    color: #1a1a18;
+    border-bottom-color: #c4a97a;
+}
+
+/* ─── Room sections ─── */
+
+.fl-rooms {
+    margin-bottom: 2.5rem;
+}
+
+.fl-room {
+    margin-bottom: 2.75rem;
+    scroll-margin-top: 3.75rem;
+}
+
+.fl-room:last-child {
+    margin-bottom: 0;
+}
+
+.fl-room + .fl-room {
+    padding-top: 0.5rem;
+}
+
+.fl-room + .fl-room::before {
+    content: '';
+    display: block;
+    width: min(42vw, 11rem);
+    height: 1px;
+    margin: 0 auto 2rem;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #d5cdc2 22%,
+        #c4a97a 50%,
+        #d5cdc2 78%,
+        transparent 100%
+    );
+    opacity: 0.88;
+}
+
+.fl-room__toggle {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    text-align: left;
+    padding: 0.15rem 0.1rem;
+}
+
+.fl-room__title {
+    margin: 0;
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.45rem, 3.8vw, 1.85rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #1a1a18;
+}
+
+.fl-room__chevron {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    color: #8a847c;
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fl-room.is-collapsed .fl-room__chevron {
+    transform: rotate(-90deg);
+}
+
+.fl-room__note {
+    margin: 0.25rem 0 1.15rem;
+    padding: 0 0.1rem;
+    font-size: 0.78rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.45;
+    color: #8a847c;
+}
+
+.fl-room__body {
+    overflow: hidden;
+}
+
+.fl-room.is-collapsed .fl-room__note,
+.fl-room.is-collapsed .fl-room__body {
+    display: none;
+}
+
+/* ─── Masonry (same pattern as homepage collections modal) ─── */
+
+.fl-masonry.masonry-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.fl-masonry.masonry-layout .masonry-column {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.fl-gallery__item {
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.fl-gallery__item button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    cursor: zoom-in;
+}
+
+.fl-gallery__item img {
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+    background: #f3efe8;
+}
+
+.fl-gallery__caption {
+    margin: 0.3rem 0 0;
+    padding: 0 0.12rem;
+    font-size: 0.72rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.02em;
+    color: #5e5a54;
+}
+
+@media (min-width: 768px) {
+    .fl-masonry.masonry-layout {
+        gap: 14px;
+    }
+
+    .fl-masonry.masonry-layout .masonry-column {
+        gap: 1.35rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .fl-masonry.masonry-layout {
+        gap: 16px;
+    }
+
+    .fl-masonry.masonry-layout .masonry-column {
+        gap: 1.5rem;
+    }
+}
+
+/* ─── Sourcing note ─── */
+
+.fl-sourcing {
+    margin: 2.5rem auto 0;
+    max-width: 36rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid #e8e2d9;
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+    color: #8a847c;
+}
+
+/* ─── What Happens Next ─── */
+
+.fl-next {
+    margin: 3.75rem auto 0;
+    max-width: 42rem;
+    padding-top: 0;
+    border-top: none;
+}
+
+.fl-next::before {
+    content: '';
+    display: block;
+    width: min(52vw, 14rem);
+    height: 1px;
+    margin: 0 auto 2.5rem;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #d5cdc2 18%,
+        #a68b5b 50%,
+        #d5cdc2 82%,
+        transparent 100%
+    );
+    opacity: 0.95;
+}
+
+.fl-next__title,
+.fl-about__title {
+    margin: 0 0 1.5rem;
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.45rem, 3.5vw, 1.75rem);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-align: center;
+}
+
+.fl-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: fl-step;
+}
+
+.fl-step {
+    position: relative;
+    margin: 0 0 1.65rem;
+    padding-left: 2.65rem;
+    counter-increment: fl-step;
+}
+
+.fl-step:last-child {
+    margin-bottom: 0;
+}
+
+.fl-step::before {
+    content: counter(fl-step);
+    position: absolute;
+    left: 0;
+    top: -0.08em;
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 1.65rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #a68b5b;
+}
+
+.fl-step__heading {
+    margin: 0 0 0.35rem;
+    font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: #a68b5b;
+}
+
+.fl-step__body {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #5e5a54;
+}
+
+.fl-contact {
+    margin: 2.5rem 0 0;
+    text-align: center;
+}
+
+.fl-contact__prompt {
+    margin: 0 0 1.25rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #5e5a54;
+}
+
+.fl-contact__prompt strong {
+    font-weight: 500;
+    color: #1a1a18;
+}
+
+.fl-contact__options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 22rem;
+    margin: 0 auto;
+}
+
+.fl-contact__option {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.95rem 1rem;
+    text-align: left;
+    text-decoration: none;
+    color: #1a1a18;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid #e0d8cc;
+    border-radius: 2px;
+    transition: border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fl-contact__option:hover {
+    color: #1a1a18;
+    border-color: #c4a97a;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.fl-contact__icon {
+    flex-shrink: 0;
+    width: 1.35rem;
+    height: 1.35rem;
+    color: #a68b5b;
+}
+
+.fl-contact__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    min-width: 0;
+}
+
+.fl-contact__label {
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.fl-contact__detail {
+    font-size: 0.82rem;
+    color: #5e5a54;
+}
+
+/* ─── About ─── */
+
+.fl-about {
+    margin: 3.75rem auto 0;
+    max-width: 42rem;
+    padding-top: 0;
+    border-top: none;
+}
+
+.fl-about::before {
+    content: '';
+    display: block;
+    width: min(52vw, 14rem);
+    height: 1px;
+    margin: 0 auto 2.5rem;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #d5cdc2 18%,
+        #a68b5b 50%,
+        #d5cdc2 82%,
+        transparent 100%
+    );
+    opacity: 0.95;
+}
+
+.fl-about p {
+    margin: 0 0 1.15rem;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: #5e5a54;
+}
+
+.fl-about p:last-child {
+    margin-bottom: 0;
+}
+
+/* ─── Footer ─── */
+
+.fl-footer {
+    margin: 3.5rem auto 0;
+    max-width: 42rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid #e8e2d9;
+    text-align: center;
+}
+
+.fl-footer__copy {
+    margin: 0 0 0.25rem;
+    font-size: 0.82rem;
+    color: #5e5a54;
+}
+
+.fl-footer__site {
+    margin: 0 0 0.85rem;
+    font-size: 0.78rem;
+}
+
+.fl-footer__privacy {
+    margin: 0;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: #8a847c;
+}
+
+/* ─── Lightbox ─── */
+
+.fl-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(26, 26, 24, 0.92);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.fl-lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.25s ease, visibility 0s linear 0s;
+}
+
+.fl-lightbox__close {
+    position: absolute;
+    top: 0.85rem;
+    right: 1rem;
+    z-index: 2;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.65rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fl-lightbox__close:hover {
+    color: #fff;
+}
+
+.fl-lightbox__figure {
+    margin: 0;
+    max-width: min(1100px, 100%);
+    max-height: calc(100vh - 2.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fl-lightbox__img {
+    max-width: 100%;
+    max-height: calc(100vh - 5.5rem);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.fl-lightbox__caption {
+    margin: 0.85rem 0 0;
+    max-width: 36rem;
+    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+body.fl-lightbox-open {
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .fl-lightbox,
+    .fl-room__chevron,
+    a,
+    .fl-room-nav__link {
+        transition: none;
+    }
+}
