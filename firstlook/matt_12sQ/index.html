@@ -23,12 +23,14 @@
         <p class="fl-header__brand">Beyond Showrooms</p>
         <h1 class="fl-header__title">First Look</h1>
         <p class="fl-header__subtitle">A Starting Point for Your Foshan Journey</p>
+        <!-- ▼ Update this date whenever you send or revise the proposal -->
+        <p class="fl-header__date">15 July 2026</p>
         <hr class="fl-header__rule">
     </header>
 
     <!-- ▼ Edit client name in the greeting below -->
     <p class="fl-intro">
-        <strong>Hi Matt</strong> — here's your First Look, based on your starting brief. Think of this as a starting point for our first conversation. Note what catches your eye and what doesn't, and we'll use that as our guide when we connect.
+        <strong>Hi Matt</strong> — here's your First Look, based on your brief: Hermès-like, and not flashy. Think of this as a starting point for our first conversation. Note what catches your eye and what doesn't — we'll use that feedback to refine your direction as we move forward.
     </p>
 
     <!-- Sticky room jump links (built from FIRST_LOOK_CONFIG.rooms) -->
@@ -38,11 +40,11 @@
     <div id="fl-rooms" class="fl-rooms"></div>
 
     <p class="fl-sourcing">
-        Furniture pieces are all photographed in factory showrooms — ready to tailor to your home.
+        Furniture pieces are photographed in factory showrooms where possible. Many pieces can be customized — ask us about it.
     </p>
 
     <section class="fl-next" aria-labelledby="fl-next-title">
-        <h2 id="fl-next-title" class="fl-next__title">What Happens Next?</h2>
+        <h2 id="fl-next-title" class="fl-next__title">What Happens Next</h2>
         <ol class="fl-steps">
             <li class="fl-step">
                 <h3 class="fl-step__heading">You review this First Look</h3>
@@ -50,7 +52,7 @@
             </li>
             <li class="fl-step">
                 <h3 class="fl-step__heading">We get on a call</h3>
-                <p class="fl-step__body">A relaxed 20–30 minute conversation to go through your feedback. Ask us anything about our process — and we'll clarify timing, budget, and any key concerns. By the end, we'll both know if we're a fit. If yes, let's proceed to Step 3.</p>
+                <p class="fl-step__body">A relaxed 20–30 minute conversation to go through your feedback. Ask us anything about our process — and we'll clarify timing, budget, and any key concerns. By the end, we'll both know if we're a fit.</p>
             </li>
             <li class="fl-step">
                 <h3 class="fl-step__heading">We build out your full collection</h3>
@@ -62,7 +64,18 @@
             </li>
         </ol>
         <div class="fl-contact">
-            <p class="fl-contact__prompt"><strong>Ready to set up that first call?</strong></p>
+            <div class="fl-contact__person">
+                <img
+                    class="fl-contact__photo"
+                    src="../david.jpg"
+                    alt="David — Beyond Showrooms"
+                    width="144"
+                    height="144"
+                    loading="lazy"
+                    decoding="async"
+                >
+                <p class="fl-contact__prompt"><strong>Ready to set up a discovery call?</strong></p>
+            </div>
             <div class="fl-contact__options">
                 <a
                     class="fl-contact__option"
@@ -96,10 +109,10 @@
             Beyond Showrooms was started by two people who spent months going deep inside Foshan's designer furniture factories — and came back convinced of a smarter way for international homeowners to furnish their homes.
         </p>
         <p>
-            We're affiliated with <a href="https://www.wildchina.com" target="_blank" rel="noopener noreferrer">WildChina</a>, China's leading bespoke travel provider since 2001. They'll be handling your travel needs should you choose to visit Foshan.
+            We're affiliated with <a href="https://www.wildchina.com" target="_blank" rel="noopener noreferrer">WildChina</a>, China's leading bespoke travel provider since 2001. That's where our passion for high-touch, end-to-end service comes from.
         </p>
         <p>
-            Be sure to watch our docuseries, <a href="https://www.youtube.com/playlist?list=PLem0TGDnDhbR_qDtnVKB2VRIXDtdB-se5" target="_blank" rel="noopener noreferrer">Secret Furniture Empire</a>, on YouTube.
+            We also made a documentary about all of this — worth a watch. → <a href="https://www.youtube.com/playlist?list=PLem0TGDnDhbR_qDtnVKB2VRIXDtdB-se5" target="_blank" rel="noopener noreferrer">Secret Furniture Empire</a>
         </p>
     </section>
 
@@ -118,11 +131,9 @@
   for a client (plus the intro greeting, <title>, and room titles).
 
   Image files live in THIS folder next to index.html.
-  Naming: {roomtype}{roomnumber}_{piecenumber}.jpg
-  Examples: livingroom1_01.jpg, bedroom2_01.jpg
+  Current naming in this folder: living_room_1.jpg, dining_room_1.jpg, …
 
-  Room subheaders ("8 preview pieces.") are generated automatically from image count —
-  do not add a note field.
+  After dropping new photos, run:  python3 resize_images.py
 
   Caption format: [Material] — [one distinguishing detail]
   Never use the word "replica". Prefer "designer-inspired".
@@ -135,98 +146,55 @@ window.FIRST_LOOK_CONFIG = {
             id: 'living-room',
             title: 'Living Room',
             images: [
-                {
-                    src: 'livingroom1_01.jpg',
-                    caption: 'Tufted modular seating — mustard and white, architectural backdrop.',
-                    alt: 'Living room with tufted modular seating in mustard and white'
-                },
-                {
-                    src: 'livingroom1_02.jpg',
-                    caption: 'Black leather modulars — marble coffee table, monochrome palette.',
-                    alt: 'Living room with black leather modular seating and marble table'
-                },
-                {
-                    src: 'livingroom1_03.jpg',
-                    caption: 'Quilted leather seating — honeycomb texture, warm cognac tones.',
-                    alt: 'Living room with quilted leather seating in cognac tones'
-                },
-                {
-                    src: 'livingroom1_04.jpg',
-                    caption: 'Gloss-wood frame seating — marble cluster tables, soft neutrals.',
-                    alt: 'Living room with gloss-wood frame seating and marble tables'
-                },
-                {
-                    src: 'livingroom1_05.jpg',
-                    caption: 'Pebble modular seating — organic silhouettes, sculptural art wall.',
-                    alt: 'Living room with pebble modular seating'
-                },
-                {
-                    src: 'livingroom1_06.jpg',
-                    caption: 'Rounded bubble seating — bold cobalt, sculptural lounge forms.',
-                    alt: 'Living room with rounded bubble seating in cobalt blue'
-                },
-                {
-                    src: 'livingroom1_07.jpg',
-                    caption: 'Low lounge seating — graphic rug, gallery-calm layout.',
-                    alt: 'Living room with low lounge seating and graphic rug'
-                },
-                {
-                    src: 'livingroom1_08.jpg',
-                    caption: 'Navy modular sofa — mustard ottoman, white marble table.',
-                    alt: 'Living room with navy modular sofa and mustard ottoman'
-                }
+                { src: 'living_room_1.jpg', caption: 'Woven cognac leather — cream modular seating.', alt: 'Living room with woven cognac leather sofa and cream modular seating' },
+                { src: 'living_room_2.jpg', caption: 'Cream modular seating — woven leather, mustard chair.', alt: 'Living room with cream modular sofa and mustard accent chair' },
+                { src: 'living_room_4.jpg', caption: 'Tan leather sofa — cream ottoman, quiet lines.', alt: 'Tan leather sofa with cream ottoman' },
+                { src: 'living_room_5.jpg', caption: 'Cream modular seating — mirrored coffee table.', alt: 'Cream modular living set with mirrored coffee table' },
+                { src: 'living_room_6.jpg', caption: 'Cream-and-brown sectional — round wood table.', alt: 'Cream and brown sectional with round wood coffee table' },
+                { src: 'living_room_7.jpg', caption: 'Off-white modular sofa — brass-frame tables.', alt: 'Off-white modular sofa with brass-framed coffee tables' },
+                { src: 'living_room_8.jpg', caption: 'Wood and green cabinets — slim metal frame.', alt: 'Modular wood and green cabinet unit' },
+                { src: 'living_room_9.jpg', caption: 'Honey fabric ottoman — leather trim, metal base.', alt: 'Honey fabric ottoman with leather trim' },
+                { src: 'living_room_10.jpg', caption: 'Cognac tufted lounge — soft modular seat.', alt: 'Cognac tufted modular lounge chair' },
+                { src: 'living_room_11.jpg', caption: 'Black leather chaise — fluid sculptural form.', alt: 'Black leather chaise lounge' },
+                { src: 'living_room_12.jpg', caption: 'Cognac leather armchair — pleated back.', alt: 'Cognac leather armchair with pleated back' },
+                { src: 'living_room_13.jpg', caption: 'Cognac leather chair — cylinder arms, V-legs.', alt: 'Cognac leather chair with cylindrical arms' },
+                { src: 'living_room_14.jpg', caption: 'Cowhide chaise — chrome tubular frame.', alt: 'Cowhide chaise longue with chrome frame' },
+                { src: 'living_room_15.jpg', caption: 'Black leather lounge — walnut shell classic.', alt: 'Black leather lounge chair with walnut shell' },
+                { src: 'living_room_16.jpg', caption: 'Terracotta lounge — quilted seat, dark wood.', alt: 'Terracotta quilted lounge chair with dark wood frame' }
             ]
         },
         {
             id: 'dining-room',
             title: 'Dining Room',
             images: [
-                {
-                    src: 'diningroom1_01.jpg',
-                    caption: 'Lacquer dining table — tailored chairs, quiet showroom setting.',
-                    alt: 'Dining room with lacquer table and tailored chairs'
-                },
-                {
-                    src: 'diningroom1_02.jpg',
-                    caption: 'Sculptural dining table — statement seating, mixed finishes.',
-                    alt: 'Dining room with sculptural table and statement seating'
-                },
-                {
-                    src: 'diningroom1_03.jpg',
-                    caption: 'Modern dining suite — clean lines, warm wood tones.',
-                    alt: 'Modern dining suite with warm wood tones'
-                },
-                {
-                    src: 'diningroom1_04.jpg',
-                    caption: 'Refined dining set — upholstered chairs, stone-top table.',
-                    alt: 'Dining room with upholstered chairs and stone-top table'
-                }
+                { src: 'dining_room_1.jpg', caption: 'Black stone table — taupe leather chairs.', alt: 'Black stone dining table with taupe leather chairs' },
+                { src: 'dining_room_2.jpg', caption: 'Wood dining table — ribbed legs, mixed chairs.', alt: 'Wood dining table with mixed contemporary chairs' },
+                { src: 'dining_room_3.jpg', caption: 'Chevron wood table — cane and bouclé chairs.', alt: 'Chevron wood dining table with cane and bouclé chairs' },
+                { src: 'dining_room_4.jpg', caption: 'Burgundy leather chair — seamless sculpted form.', alt: 'Burgundy leather dining chair' },
+                { src: 'dining_room_5.jpg', caption: 'Plywood seat, black steel — mid-century lines.', alt: 'Plywood and black steel dining chair' }
             ]
         },
         {
             id: 'bedroom',
             title: 'Bedroom',
             images: [
-                {
-                    src: 'bedroom1_01.jpg',
-                    caption: 'Upholstered bed — layered textiles, soft neutral finish.',
-                    alt: 'Bedroom with upholstered bed and layered textiles'
-                },
-                {
-                    src: 'bedroom1_02.jpg',
-                    caption: 'Tufted headboard — contemporary suite, quiet proportions.',
-                    alt: 'Bedroom with tufted headboard'
-                },
-                {
-                    src: 'bedroom1_03.jpg',
-                    caption: 'Custom-finish bed — layered linens, restrained bedside storage.',
-                    alt: 'Bedroom with custom-finish bed and bedside storage'
-                },
-                {
-                    src: 'bedroom1_04.jpg',
-                    caption: 'Channel-tufted headboard — pale palette, low-profile frame.',
-                    alt: 'Bedroom with channel-tufted headboard in a pale palette'
-                }
+                { src: 'bedroom_1.jpg', caption: 'Taupe leather headboard — wood frame suite.', alt: 'Bedroom with taupe leather headboard' },
+                { src: 'bedroom_2.jpg', caption: 'Beige fabric bed — wide headboard, soft neutrals.', alt: 'Beige upholstered bed with wide headboard' },
+                { src: 'bedroom_3.jpg', caption: 'Terracotta leather bed — cream nightstands.', alt: 'Terracotta leather bed with cream nightstands' },
+                { src: 'bedroom_4.jpg', caption: 'Black leather headboard — caramel quilted bench.', alt: 'Black leather headboard with caramel quilted bench' },
+                { src: 'bedroom_5.jpg', caption: 'Cognac leather bed — channel-stitched headboard.', alt: 'Cognac leather bed with channel stitching' },
+                { src: 'bedroom_6.jpg', caption: 'Beige nightstand — green marble lamp.', alt: 'Beige nightstand with green marble lamp' },
+                { src: 'bedroom_7.jpg', caption: 'Wood nightstand — leather pull, warm lamp.', alt: 'Wood nightstand with leather pull and warm lamp' },
+                { src: 'bedroom_8.jpg', caption: 'Dark wood nightstand — stacked round drawers.', alt: 'Dark wood stacked round nightstand' }
+            ]
+        },
+        {
+            id: 'study',
+            title: 'Study',
+            images: [
+                { src: 'study_1.jpg', caption: 'Cognac leather desk — wood legs, clean set.', alt: 'Cognac leather desk with wood legs' },
+                { src: 'study_2.jpg', caption: 'Kidney leather desk — matching cognac chairs.', alt: 'Kidney-shaped leather desk with cognac chairs' },
+                { src: 'study_3.jpg', caption: 'Black wood desk — orange leather chair.', alt: 'Black wood desk with orange leather chair' }
             ]
         }
     ]

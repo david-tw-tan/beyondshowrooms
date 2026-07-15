@@ -89,17 +89,26 @@ button {
 }
 
 .fl-header__subtitle {
-    margin: 0;
+    margin: 0 0 0.65rem;
     font-size: clamp(0.92rem, 2.2vw, 1.05rem);
     font-weight: 400;
     color: #a68b5b;
+}
+
+.fl-header__date {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8a847c;
 }
 
 .fl-header__rule {
     display: block;
     width: min(42vw, 11rem);
     height: 1px;
-    margin: 1.5rem auto 0;
+    margin: 1.35rem auto 0;
     border: 0;
     background: linear-gradient(
         90deg,
@@ -150,30 +159,14 @@ button {
     border-bottom: 1px solid #e0d8cc;
 }
 
-.fl-room-nav__inner {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    max-width: 68rem;
-    margin: 0 auto;
-}
-
-.fl-room-nav__icon {
-    flex-shrink: 0;
-    display: block;
-    width: 1rem;
-    height: 1rem;
-    color: #a68b5b;
-}
-
 .fl-room-nav__list {
     display: flex;
     flex-wrap: nowrap;
-    flex: 1 1 auto;
-    min-width: 0; /* allow shrink so overflow scroll kicks in */
+    max-width: 68rem;
+    margin: 0 auto;
+    min-width: 0;
     gap: 0.35rem 1.15rem;
     justify-content: flex-start;
-    margin: 0;
     padding: 0;
     list-style: none;
     overflow-x: auto;
@@ -270,7 +263,7 @@ button {
 }
 
 .fl-room__title {
-    margin: 0;
+    margin: 0 0 1rem;
     font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
     font-size: clamp(1.45rem, 3.8vw, 1.85rem);
     font-weight: 700;
@@ -289,22 +282,10 @@ button {
     transform: rotate(-90deg);
 }
 
-.fl-room__note {
-    margin: 0.25rem 0 1.15rem;
-    padding: 0 0.1rem;
-    font-size: 0.78rem;
-    font-style: normal;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    line-height: 1.45;
-    color: #8a847c;
-}
-
 .fl-room__body {
     overflow: hidden;
 }
 
-.fl-room.is-collapsed .fl-room__note,
 .fl-room.is-collapsed .fl-room__body {
     display: none;
 }
@@ -359,7 +340,7 @@ button {
     color: #5e5a54;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
     .fl-masonry.masonry-layout {
         gap: 14px;
     }
@@ -369,7 +350,7 @@ button {
     }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 960px) {
     .fl-masonry.masonry-layout {
         gap: 16px;
     }
@@ -480,8 +461,32 @@ button {
     text-align: center;
 }
 
+.fl-contact__person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.95rem;
+    margin-bottom: 1.35rem;
+}
+
+.fl-contact__photo {
+    width: 7.5rem;
+    height: 7.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;
+    background: #e8e2d9;
+}
+
+@media (min-width: 768px) {
+    .fl-contact__photo {
+        width: 9rem;
+        height: 9rem;
+    }
+}
+
 .fl-contact__prompt {
-    margin: 0 0 1.25rem;
+    margin: 0;
     font-size: 0.92rem;
     line-height: 1.6;
     color: #5e5a54;
@@ -573,9 +578,17 @@ button {
 
 .fl-about p {
     margin: 0 0 1.15rem;
-    font-size: 0.92rem;
+    font-size: 0.84rem;
     line-height: 1.7;
+    color: #8a847c;
+}
+
+.fl-about a {
     color: #5e5a54;
+}
+
+.fl-about a:hover {
+    color: #a68b5b;
 }
 
 .fl-about p:last-child {

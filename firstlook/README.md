@@ -29,9 +29,9 @@ firstlook/
    Example: `sarah_7xKp` (random suffix keeps the URL non-guessable).
 2. Open the new `index.html` and edit only:
    - Greeting name in the intro paragraph (e.g. `Hi Sarah —`)
+   - Proposal / update date in the header
    - `<title>` / meta description
    - **`FIRST_LOOK_CONFIG`** — rooms, image paths, captions
-     (piece-count subheaders are auto-generated from each room’s image list)
 3. Replace image files in the folder (see naming below).
 4. Deploy. Send the client: `www.beyondshowrooms.com/firstlook/{folder}/`
 
@@ -55,10 +55,9 @@ Do **not** change `style.css` or `lightbox.js` for a single client.
 Rules:
 
 - Lowercase only  
-- Zero-pad piece numbers (`01`, `02`…) so files sort cleanly  
-- Room number = physical room (second bedroom → `bedroom2_…`)  
 - Captions live in the config, not in filenames  
-- All image files sit in the **client folder** next to `index.html`
+- All image files sit in the **client folder** next to `index.html`  
+- After adding photos, run `python3 resize_images.py` from that folder (max long edge 1600px)
 
 ---
 
@@ -84,7 +83,7 @@ window.FIRST_LOOK_CONFIG = {
 };
 ```
 
-Room subheaders show **`N preview pieces.`** automatically from `images.length` — no `note` field needed.
+Room titles only — no piece-count subheaders. Captions carry the detail.
 
 Caption format: **`[Material] — [one distinguishing detail]`**  
 Factual and restrained. No “stunning”, “luxurious”, etc.  
@@ -100,7 +99,7 @@ Any number of images per room is fine — masonry handles volume.
 |---------|----------|
 | Sticky nav | Room jump links; horizontal swipe/scroll when rooms overflow the viewport; tracks active section on scroll |
 | Collapsible rooms | Title toggles section; **open by default** |
-| Masonry | 1 col &lt;768px · 2 cols 768–1279 · 3 cols ≥1280 (homepage collections pattern) |
+| Masonry | 1 col &lt;640px gallery · 2 cols 640–959 · 3 cols ≥960 (auto; no manual toggle) |
 | Lightbox | Click image → full-screen; Esc / × / backdrop to close |
 | Privacy | `noindex, nofollow` in `<head>` |
 
@@ -116,8 +115,8 @@ Keep these unless intentionally revising the template for all clients:
 - Intro, What Happens Next steps, sourcing note, About, footer — as in the Matt template  
 - Furniture only (no floor plan on the page)  
 - No site nav, cookies, pop-ups, or social share buttons  
-- Sticky room jump bar with a small menu icon + full-width warm gradient wash  
-- Contact block offers WhatsApp + Email (same details as the homepage contact modal)  
+- Sticky room jump bar (room name anchors; swipes when overflow)  
+- Contact block offers WhatsApp + Email, with shared founder photo (`firstlook/david.jpeg`)  
 - Style brief for the factory (e.g. “Hermès-like”) stays **off-page**
 
 ---
@@ -131,6 +130,7 @@ Keep these unless intentionally revising the template for all clients:
 ## Checklist before sending to a client
 
 - [ ] Client name in intro greeting (+ title / meta)  
+- [ ] Proposal / update date set  
 - [ ] Real photos in the client folder (naming convention above)  
 - [ ] Captions updated in `FIRST_LOOK_CONFIG`  
 - [ ] Room titles match the project  

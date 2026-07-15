@@ -8,7 +8,6 @@
  *     {
  *       id: 'living-room',          // used for anchors + sticky nav
  *       title: 'Living Room',
- *       // note is optional and unused — piece count is auto-generated
  *       images: [
  *         { src: 'livingroom1_01.jpg', caption: 'Material — detail.', alt: '…' }
  *       ]
@@ -36,9 +35,10 @@
 
     /* ─── Column count (mobile 1 / tablet 2 / desktop 3) ─── */
 
+    /* Column count uses gallery width (page is capped ~68rem, so viewport≥1280 never applied before). */
     function getColumnCount(width) {
-        if (width < 768) return 1;
-        if (width < 1280) return 2;
+        if (width < 640) return 1;
+        if (width < 960) return 2;
         return 3;
     }
 
@@ -106,7 +106,9 @@
         });
     }
 
-    function createGalleryItem(item, eager, globalIndex) {
+    const EAGER_IMAGE_COUNT = 6; // first N images on the page load immediately (above the fold)
+
+    function createGalleryItem(item, globalIndex) {
         const figure = document.createElement('figure');
         figure.className = 'fl-gallery__item';
 
@@ -118,8 +120,13 @@
         const img = document.createElement('img');
         img.src = item.src;
         img.alt = item.alt || item.caption || '';
+        // Top of page: eager. Below fold: browser lazy-loads as user scrolls.
+        const eager = globalIndex < EAGER_IMAGE_COUNT;
         img.loading = eager ? 'eager' : 'lazy';
         img.decoding = 'async';
+        if (globalIndex < 2) {
+            img.fetchPriority = 'high';
+        }
 
         btn.appendChild(img);
         figure.appendChild(btn);
@@ -138,11 +145,10 @@
         const heights = new Array(columnCount).fill(0);
         const columnGap = getColumnGap(columnCount);
         const columnWidth = getColumnWidth(columnCount, gridEl);
-        const eagerCount = columnCount * 2;
 
         images.forEach((item, i) => {
             const target = pickShortestColumn(columns, heights);
-            const figure = createGalleryItem(item, i < eagerCount, indexOffset + i);
+            const figure = createGalleryItem(item, indexOffset + i);
             columns[target].appendChild(figure);
             heights[target] += columnWidth * aspects[i] + columnGap;
         });
@@ -181,18 +187,6 @@
     function buildStickyNav(rooms) {
         if (!navRoot) return;
 
-        const inner = document.createElement('div');
-        inner.className = 'fl-room-nav__inner';
-
-        /* Decorative menu cue — marks the strip as navigation */
-        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        icon.setAttribute('class', 'fl-room-nav__icon');
-        icon.setAttribute('viewBox', '0 0 16 16');
-        icon.setAttribute('aria-hidden', 'true');
-        icon.setAttribute('focusable', 'false');
-        icon.innerHTML =
-            '<path fill="currentColor" d="M1.5 3.25h13a.75.75 0 0 0 0-1.5h-13a.75.75 0 0 0 0 1.5zm0 5.5h13a.75.75 0 0 0 0-1.5h-13a.75.75 0 0 0 0 1.5zm0 5.5h13a.75.75 0 0 0 0-1.5h-13a.75.75 0 0 0 0 1.5z"/>';
-
         const list = document.createElement('ul');
         list.className = 'fl-room-nav__list';
         list.setAttribute('role', 'list');
@@ -208,10 +202,8 @@
             list.appendChild(li);
         });
 
-        inner.appendChild(icon);
-        inner.appendChild(list);
         navRoot.innerHTML = '';
-        navRoot.appendChild(inner);
+        navRoot.appendChild(list);
         navRoot.hidden = false;
     }
 
@@ -366,14 +358,6 @@
             section.appendChild(toggle);
 
             const images = Array.isArray(room.images) ? room.images : [];
-            const count = images.length;
-            if (count > 0) {
-                const note = document.createElement('p');
-                note.className = 'fl-room__note';
-                note.textContent =
-                    count === 1 ? '1 preview piece.' : count + ' preview pieces.';
-                section.appendChild(note);
-            }
 
             const body = document.createElement('div');
             body.className = 'fl-room__body';
