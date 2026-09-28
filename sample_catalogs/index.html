@@ -378,12 +378,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: auto;
-            max-width: 100%;
             margin: 0;
-            padding: 1.25rem;
-            box-sizing: border-box;
-            overflow-x: clip;
+            padding: 0;
+            overflow-x: hidden;
             overflow-y: auto;
         }
 
@@ -400,10 +397,10 @@
 
         .lightbox__panel {
             position: relative;
-            width: min(40rem, 100%);
-            max-width: 100%;
+            width: min(40rem, calc(100% - 2.5rem));
+            max-width: calc(100% - 2.5rem);
             min-width: 0;
-            margin: auto;
+            margin: 1.25rem auto;
             flex: 0 1 auto;
             padding: 3.4rem 1.35rem 2.45rem;
             background: var(--color-surface);
@@ -645,34 +642,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: auto;
-            max-width: 100%;
             margin: 0;
-            padding: 1.25rem;
-            box-sizing: border-box;
-            overflow-x: clip;
+            padding: 0;
+            overflow-x: hidden;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: none;
-        }
-
-        @media (max-width: 719px) {
-            .lightbox,
-            .modal {
-                left: 0;
-                right: auto;
-                width: 100%;
-                width: 100dvw;
-                max-width: 100dvw;
-                padding-left: 1.25rem;
-                padding-right: 1.25rem;
-            }
-
-            .lightbox__panel,
-            .modal__panel {
-                width: 100%;
-                max-width: 100%;
-            }
         }
 
         .modal[hidden] {
@@ -688,11 +663,10 @@
 
         .modal__panel {
             position: relative;
-            justify-self: center;
-            width: min(26rem, 100%);
-            max-width: 100%;
+            width: min(26rem, calc(100% - 2.5rem));
+            max-width: calc(100% - 2.5rem);
             min-width: 0;
-            margin: auto;
+            margin: 1.25rem auto;
             flex: 0 1 auto;
             padding: 3.35rem 1.75rem 2.15rem;
             background: var(--color-surface);
