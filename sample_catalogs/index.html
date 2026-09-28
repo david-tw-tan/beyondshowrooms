@@ -44,13 +44,14 @@
         html {
             scroll-behavior: smooth;
             overflow-x: clip;
+            max-width: 100%;
         }
 
         body {
             margin: 0;
+            max-width: 100%;
+            overflow-x: clip;
             padding-top: 4.35rem;
-            padding-left: var(--page-gutter);
-            padding-right: var(--page-gutter);
             font-family: var(--font-body);
             font-size: 1rem;
             line-height: 1.65;
@@ -108,8 +109,10 @@
 
         .page-logo:focus-visible,
         .header-contact:focus-visible,
-        .catalog:focus-visible,
+        .catalog__open:focus-visible,
+        .catalog__action:focus-visible,
         .modal__close:focus-visible,
+        .lightbox__close:focus-visible,
         .btn:focus-visible {
             outline: 2px solid var(--color-brass-light);
             outline-offset: 3px;
@@ -132,6 +135,12 @@
 
         .header-contact:hover {
             color: var(--color-brass);
+        }
+
+        main,
+        .site-footer {
+            padding-left: var(--page-gutter);
+            padding-right: var(--page-gutter);
         }
 
         .section {
@@ -157,6 +166,14 @@
             max-width: var(--content-wide);
             margin-left: auto;
             margin-right: auto;
+        }
+
+        @media (max-width: 719px) {
+            .section--intro .container,
+            .factory-head {
+                padding-left: 0.85rem;
+                padding-right: 0.85rem;
+            }
         }
 
         .eyebrow {
@@ -233,14 +250,14 @@
         }
 
         .catalog {
+            --thumb: 5.75rem;
             display: grid;
-            grid-template-columns: minmax(0, 5.75rem) minmax(0, 1fr) auto;
-            gap: 0.85rem 0.85rem;
+            grid-template-columns: minmax(0, var(--thumb)) minmax(0, 1fr) auto;
+            gap: 0.85rem;
             align-items: center;
             width: 100%;
             min-width: 0;
             padding: 0.7rem;
-            text-decoration: none;
             background: var(--color-surface);
             border: 1px solid var(--color-hairline);
             border-radius: 2px;
@@ -251,15 +268,36 @@
                 transform var(--transition-fast);
         }
 
-        .catalog > span {
+        .catalog__open {
+            grid-column: 1 / 3;
+            display: grid;
+            grid-template-columns: minmax(0, var(--thumb)) minmax(0, 1fr);
+            gap: 0.85rem;
+            align-items: center;
+            min-width: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+            background: none;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .catalog__open > span {
             min-width: 0;
         }
 
         @media (min-width: 720px) {
             .catalog {
-                grid-template-columns: 9.5rem 1fr auto;
+                --thumb: 9.5rem;
                 gap: 1.15rem 1.35rem;
                 padding: 0.7rem 0.85rem 0.7rem 0.7rem;
+            }
+
+            .catalog__open {
+                gap: 1.15rem 1.35rem;
             }
         }
 
@@ -314,6 +352,9 @@
             height: 2.75rem;
             margin-right: 0.35rem;
             color: var(--color-brass);
+            text-decoration: none;
+            position: relative;
+            z-index: 1;
         }
 
         .catalog__action svg {
@@ -325,6 +366,158 @@
 
         .catalog:hover .catalog__action svg {
             transform: translateY(3px);
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 120;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            max-width: 100%;
+            margin: 0;
+            padding: 1.25rem;
+            box-sizing: border-box;
+            overflow-x: clip;
+            overflow-y: auto;
+        }
+
+        .lightbox[hidden] {
+            display: none;
+        }
+
+        .lightbox__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 19, 18, 0.62);
+            backdrop-filter: blur(4px);
+        }
+
+        .lightbox__panel {
+            position: relative;
+            width: min(40rem, 100%);
+            max-width: 100%;
+            min-width: 0;
+            margin: auto;
+            flex: 0 1 auto;
+            padding: 3.4rem 1.35rem 2.45rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-hairline);
+            border-radius: 4px;
+            box-shadow: 0 16px 48px rgba(26, 26, 24, 0.22);
+        }
+
+        @media (min-width: 720px) {
+            .lightbox__panel {
+                padding-left: 2.35rem;
+                padding-right: 2.35rem;
+            }
+        }
+
+        .lightbox__close {
+            position: absolute;
+            top: 0.7rem;
+            right: 0.75rem;
+            z-index: 1;
+            width: 2.15rem;
+            height: 2.15rem;
+            border: none;
+            border-radius: 2px;
+            background: transparent;
+            font-size: 1.45rem;
+            line-height: 1;
+            color: var(--color-ink-faint);
+            cursor: pointer;
+        }
+
+        .lightbox__close:hover {
+            color: var(--color-ink);
+        }
+
+        .lightbox__figure {
+            margin: 0 0 1.35rem;
+            border-radius: 2px;
+            overflow: hidden;
+            background: #ece7e0;
+        }
+
+        .lightbox__img {
+            display: block;
+            width: 100%;
+            max-height: min(46vh, 24rem);
+            object-fit: contain;
+            background: #ece7e0;
+        }
+
+        .lightbox__body {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .lightbox__heading {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.35rem 0.7rem;
+            min-width: 0;
+            max-width: 100%;
+            margin: 0 0 0.7rem;
+        }
+
+        .lightbox__title {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: clamp(1.45rem, 3.4vw, 1.9rem);
+            font-weight: 500;
+            line-height: 1.15;
+        }
+
+        .lightbox__meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
+            margin: 0;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            line-height: 1;
+            color: var(--color-ink-faint);
+        }
+
+        .lightbox__pdf {
+            width: 0.85rem;
+            height: 0.85rem;
+            color: var(--color-ink-faint);
+        }
+
+        .lightbox__desc {
+            margin: 0;
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: var(--color-ink-muted);
+        }
+
+        .lightbox__download {
+            display: flex;
+            align-self: stretch;
+            width: 100%;
+            margin-top: 1.35rem;
+            padding-top: 1.15rem;
+            padding-bottom: 1.15rem;
+        }
+
+        @media (min-width: 720px) {
+            .lightbox__download {
+                align-self: center;
+                width: 16.5rem;
+            }
         }
 
         .visually-hidden {
@@ -449,14 +642,37 @@
             bottom: 0;
             left: 0;
             z-index: 100;
-            display: grid;
-            place-items: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            max-width: 100%;
             margin: 0;
             padding: 1.25rem;
-            overflow-x: hidden;
+            box-sizing: border-box;
+            overflow-x: clip;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: none;
+        }
+
+        @media (max-width: 719px) {
+            .lightbox,
+            .modal {
+                left: 0;
+                right: auto;
+                width: 100%;
+                width: 100dvw;
+                max-width: 100dvw;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
+
+            .lightbox__panel,
+            .modal__panel {
+                width: 100%;
+                max-width: 100%;
+            }
         }
 
         .modal[hidden] {
@@ -474,8 +690,11 @@
             position: relative;
             justify-self: center;
             width: min(26rem, 100%);
-            margin: 0;
-            padding: 2.5rem 1.5rem 2.15rem;
+            max-width: 100%;
+            min-width: 0;
+            margin: auto;
+            flex: 0 1 auto;
+            padding: 3.35rem 1.75rem 2.15rem;
             background: var(--color-surface);
             border: 1px solid var(--color-hairline);
             border-radius: 4px;
@@ -500,12 +719,24 @@
             color: var(--color-ink);
         }
 
+        .modal__portrait {
+            display: block;
+            width: 6.25rem;
+            height: 6.25rem;
+            margin: 0 auto 0.95rem;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 1px solid var(--color-hairline);
+        }
+
         .modal__title {
-            margin: 0 2rem 0.75rem 0;
+            margin: 0 0 1.15rem;
             font-family: var(--font-display);
             font-size: clamp(1.45rem, 4vw, 1.7rem);
             font-weight: 500;
             line-height: 1.2;
+            text-align: center;
         }
 
         .modal__lede {
@@ -513,6 +744,7 @@
             font-size: 0.95rem;
             line-height: 1.65;
             color: var(--color-ink-muted);
+            text-align: center;
         }
 
         .contact-primary {
@@ -544,7 +776,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 0.4rem;
+            min-width: 0;
+            max-width: 100%;
             margin: 2.1rem 0 0;
             font-size: 0.8rem;
             font-weight: 400;
@@ -560,6 +795,8 @@
         }
 
         .contact-email-fallback a {
+            min-width: 0;
+            overflow-wrap: anywhere;
             color: var(--color-ink-muted);
             text-decoration: underline;
             text-underline-offset: 0.14em;
@@ -599,79 +836,84 @@
                 </div>
                 <ul class="catalog-list">
                     <li>
-                        <a class="catalog" href="Factory%201%20-%20Italian%20Modern%20Living.pdf" download="Factory 1 - Italian Modern Living.pdf">
-                            <img class="catalog__thumb" src="thumb_factory1_italian_modern_living.jpeg" alt="" width="1184" height="861">
-                            <span>
-                                <span class="catalog__title">Italian Modern Living</span>
-                                <span class="catalog__meta"><span class="catalog__size">93 MB</span><span class="catalog__kind">PDF</span></span>
-                            </span>
-                            <span class="catalog__action">
-                                <span class="visually-hidden">Download</span>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Living" data-image="thumb_factory1_italian_modern_living.jpeg" data-size="93 MB" data-href="Factory%201%20-%20Italian%20Modern%20Living.pdf" data-download="Factory 1 - Italian Modern Living.pdf" data-description="Modern Italian minimalist classics and contemporary reinterpretations, inspired by the likes of Minotti, Flexform, Poliform and B&amp;B Italia.">
+                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_living.jpeg" alt="" width="1184" height="861">
+                                <span>
+                                    <span class="catalog__title">Italian Modern Living</span>
+                                    <span class="catalog__meta"><span class="catalog__size">93 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%201%20-%20Italian%20Modern%20Living.pdf" download="Factory 1 - Italian Modern Living.pdf" aria-label="Download Italian Modern Living PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="catalog" href="Factory%201%20-%20Italian%20Modern%20Dining.pdf" download="Factory 1 - Italian Modern Dining.pdf">
-                            <img class="catalog__thumb" src="thumb_factory1_italian_modern_dining.jpeg" alt="" width="856" height="750">
-                            <span>
-                                <span class="catalog__title">Italian Modern Dining</span>
-                                <span class="catalog__meta"><span class="catalog__size">27 MB</span><span class="catalog__kind">PDF</span></span>
-                            </span>
-                            <span class="catalog__action">
-                                <span class="visually-hidden">Download</span>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Dining" data-image="thumb_factory1_italian_modern_dining.jpeg" data-size="27 MB" data-href="Factory%201%20-%20Italian%20Modern%20Dining.pdf" data-download="Factory 1 - Italian Modern Dining.pdf" data-description="Italian modernist minimalism for the dining room, from refined marble-top dining tables to coordinated leather-upholstered dining chairs and complete dining sets.">
+                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_dining.jpeg" alt="" width="856" height="750">
+                                <span>
+                                    <span class="catalog__title">Italian Modern Dining</span>
+                                    <span class="catalog__meta"><span class="catalog__size">27 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%201%20-%20Italian%20Modern%20Dining.pdf" download="Factory 1 - Italian Modern Dining.pdf" aria-label="Download Italian Modern Dining PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="catalog" href="Factory%201%20-%20Italian%20Modern%20Bedroom.pdf" download="Factory 1 - Italian Modern Bedroom.pdf">
-                            <img class="catalog__thumb" src="thumb_factory1_italian_modern_bedroom.jpeg" alt="" width="864" height="676">
-                            <span>
-                                <span class="catalog__title">Italian Modern Bedroom</span>
-                                <span class="catalog__meta"><span class="catalog__size">28 MB</span><span class="catalog__kind">PDF</span></span>
-                            </span>
-                            <span class="catalog__action">
-                                <span class="visually-hidden">Download</span>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Bedroom" data-image="thumb_factory1_italian_modern_bedroom.jpeg" data-size="28 MB" data-href="Factory%201%20-%20Italian%20Modern%20Bedroom.pdf" data-download="Factory 1 - Italian Modern Bedroom.pdf" data-description="Italian modernist minimalism for the bedroom, featuring refined bedframes, upholstered beds, nightstands, dressers and complementary bedroom furnishings.">
+                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_bedroom.jpeg" alt="" width="864" height="676">
+                                <span>
+                                    <span class="catalog__title">Italian Modern Bedroom</span>
+                                    <span class="catalog__meta"><span class="catalog__size">28 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%201%20-%20Italian%20Modern%20Bedroom.pdf" download="Factory 1 - Italian Modern Bedroom.pdf" aria-label="Download Italian Modern Bedroom PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="catalog" href="Factory%201%20-%20Fashion%20House%20Luxury.pdf" download="Factory 1 - Fashion House Luxury.pdf">
-                            <img class="catalog__thumb" src="thumb_factory1_fashion_house_luxury.jpeg" alt="" width="1313" height="806">
-                            <span>
-                                <span class="catalog__title">Fashion House Luxury</span>
-                                <span class="catalog__meta"><span class="catalog__size">97 MB</span><span class="catalog__kind">PDF</span></span>
-                            </span>
-                            <span class="catalog__action">
-                                <span class="visually-hidden">Download</span>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Fashion House Luxury" data-image="thumb_factory1_fashion_house_luxury.jpeg" data-size="97 MB" data-href="Factory%201%20-%20Fashion%20House%20Luxury.pdf" data-download="Factory 1 - Fashion House Luxury.pdf" data-description="A luxurious collection of living, dining and bedroom furniture inspired by leading designer and fashion-house brands—from the refined elegance of Fendi, Hermès and Louis Vuitton to the opulent statement pieces of Versace, Visionnaire and Bentley.">
+                                <img class="catalog__thumb" src="thumb_factory1_fashion_house_luxury.jpeg" alt="" width="1313" height="806">
+                                <span>
+                                    <span class="catalog__title">Fashion House Luxury</span>
+                                    <span class="catalog__meta"><span class="catalog__size">97 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%201%20-%20Fashion%20House%20Luxury.pdf" download="Factory 1 - Fashion House Luxury.pdf" aria-label="Download Fashion House Luxury PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="catalog" href="Factory%201%20-%20Natural%20%26%20Eclectic%20Styles.pdf" download="Factory 1 - Natural &amp; Eclectic Styles.pdf">
-                            <img class="catalog__thumb" src="thumb_factory1_natural_eclectic_styles.jpeg" alt="" width="1404" height="1154">
-                            <span>
-                                <span class="catalog__title">Natural &amp; Eclectic Styles</span>
-                                <span class="catalog__meta"><span class="catalog__size">100 MB</span><span class="catalog__kind">PDF</span></span>
-                            </span>
-                            <span class="catalog__action">
-                                <span class="visually-hidden">Download</span>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Natural &amp; Eclectic Styles" data-image="thumb_factory1_natural_eclectic_styles.jpeg" data-size="100 MB" data-href="Factory%201%20-%20Natural%20%26%20Eclectic%20Styles.pdf" data-download="Factory 1 - Natural &amp; Eclectic Styles.pdf" data-description="This catalog captures the remaining styles from this factory not covered in the other collections—a diverse mix ranging from the natural woods and tactile fabrics of Natural Modern styles (think RH) to the more playful forms, colors and combinations of Eclectic design (think Ligne Roset and Roche Bobois).">
+                                <img class="catalog__thumb" src="thumb_factory1_natural_eclectic_styles.jpeg" alt="" width="1404" height="1154">
+                                <span>
+                                    <span class="catalog__title">Natural &amp; Eclectic Styles</span>
+                                    <span class="catalog__meta"><span class="catalog__size">100 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%201%20-%20Natural%20%26%20Eclectic%20Styles.pdf" download="Factory 1 - Natural &amp; Eclectic Styles.pdf" aria-label="Download Natural &amp; Eclectic Styles PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -685,34 +927,36 @@
                 </div>
                 <ul class="catalog-list">
                     <li>
-                        <a class="catalog" href="Factory%202%20-%20Factory%20Collection%202025.pdf" download="Factory 2 - Factory Collection 2025.pdf">
-                            <img class="catalog__thumb" src="thumb_factory2_collection_2025.jpeg" alt="" width="1266" height="764">
-                            <span>
-                                <span class="catalog__title">Factory Collection 2025</span>
-                                <span class="catalog__meta"><span class="catalog__size">91 MB</span><span class="catalog__kind">PDF</span></span>
-                            </span>
-                            <span class="catalog__action">
-                                <span class="visually-hidden">Download</span>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Factory Collection 2025" data-image="thumb_factory2_collection_2025.jpeg" data-size="91 MB" data-href="Factory%202%20-%20Factory%20Collection%202025.pdf" data-download="Factory 2 - Factory Collection 2025.pdf" data-description="This factory’s main collection, bringing together the major designer-inspired styles popular in Foshan—from Italian Modern and minimalist designs to Fashion House Luxury—all in one comprehensive catalog.">
+                                <img class="catalog__thumb" src="thumb_factory2_collection_2025.jpeg" alt="" width="1266" height="764">
+                                <span>
+                                    <span class="catalog__title">Factory Collection 2025</span>
+                                    <span class="catalog__meta"><span class="catalog__size">91 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%202%20-%20Factory%20Collection%202025.pdf" download="Factory 2 - Factory Collection 2025.pdf" aria-label="Download Factory Collection 2025 PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a class="catalog" href="Factory%202%20-%20Modern%20Rustic%20Collection%202026.pdf" download="Factory 2 - Modern Rustic Collection 2026.pdf">
-                            <img class="catalog__thumb" src="thumb_factory2_modern_rustic_collection_2025.jpeg" alt="" width="1092" height="794">
-                            <span>
-                                <span class="catalog__title">Modern Rustic Collection 2026</span>
-                                <span class="catalog__meta"><span class="catalog__size">22 MB</span><span class="catalog__kind">PDF</span></span>
-                            </span>
-                            <span class="catalog__action">
-                                <span class="visually-hidden">Download</span>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Modern Rustic Collection 2026" data-image="thumb_factory2_modern_rustic_collection_2025.jpeg" data-size="22 MB" data-href="Factory%202%20-%20Modern%20Rustic%20Collection%202026.pdf" data-download="Factory 2 - Modern Rustic Collection 2026.pdf" data-description="A newly released collection representing this factory’s significant new focus on the emerging Modern Rustic aesthetic, pairing warm fabrics, relaxed leather and natural wood with the understated, earthy elegance of Liaigre-inspired design.">
+                                <img class="catalog__thumb" src="thumb_factory2_modern_rustic_collection_2025.jpeg" alt="" width="1092" height="794">
+                                <span>
+                                    <span class="catalog__title">Modern Rustic Collection 2026</span>
+                                    <span class="catalog__meta"><span class="catalog__size">22 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%202%20-%20Modern%20Rustic%20Collection%202026.pdf" download="Factory 2 - Modern Rustic Collection 2026.pdf" aria-label="Download Modern Rustic Collection 2026 PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                        </a>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -751,8 +995,9 @@
         <div class="modal__backdrop" data-close-contact></div>
         <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
             <button type="button" class="modal__close" data-close-contact aria-label="Close">&times;</button>
+            <img class="modal__portrait" src="david.jpg" alt="David" width="179" height="179">
             <h2 id="contactModalTitle" class="modal__title">Want to find out more?</h2>
-            <p class="modal__lede">Contact me and let&rsquo;s chat.</p>
+            <p class="modal__lede">Contact me and let&rsquo;s chat. I&rsquo;m David, and I&rsquo;d love to hear from you.</p>
             <div class="contact-primary">
                 <a href="https://wa.me/8618500507027" class="btn contact-whatsapp-btn" data-contact="whatsapp" target="_blank" rel="noopener noreferrer">
                     <svg class="contact-option__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
@@ -768,39 +1013,106 @@
         </div>
     </div>
 
+    <div id="catalogLightbox" class="lightbox" hidden>
+        <div class="lightbox__backdrop" data-close-lightbox></div>
+        <div class="lightbox__panel" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+            <button type="button" class="lightbox__close" data-close-lightbox aria-label="Close">&times;</button>
+            <figure class="lightbox__figure">
+                <img class="lightbox__img" alt="" width="1184" height="861">
+            </figure>
+            <div class="lightbox__body">
+                <div class="lightbox__heading">
+                    <h2 id="lightboxTitle" class="lightbox__title"></h2>
+                    <p class="lightbox__meta">
+                        <span class="lightbox__size"></span>
+                        <svg class="lightbox__pdf" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3">
+                            <path d="M4 1.75h5.1L12.25 5v9.25H4z" stroke-linejoin="round"/>
+                            <path d="M9 1.75V5.25h3.25" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="visually-hidden">PDF</span>
+                    </p>
+                </div>
+                <p class="lightbox__desc"></p>
+                <a class="btn lightbox__download" href="#" download>Download PDF</a>
+            </div>
+        </div>
+    </div>
+
     <script>
     (function () {
         var modal = document.getElementById('contactModal');
-        var openBtns = document.querySelectorAll('[data-open-contact]');
-        var closeEls = document.querySelectorAll('[data-close-contact]');
-        var lastFocus = null;
+        var lightbox = document.getElementById('catalogLightbox');
+        var lbImg = lightbox.querySelector('.lightbox__img');
+        var lbTitle = document.getElementById('lightboxTitle');
+        var lbDesc = lightbox.querySelector('.lightbox__desc');
+        var lbSize = lightbox.querySelector('.lightbox__size');
+        var lbDownload = lightbox.querySelector('.lightbox__download');
+        var contactFocus = null;
+        var lightboxFocus = null;
+
+        function syncScrollLock() {
+            var contactOpen = modal && !modal.hidden;
+            var lightboxOpen = lightbox && !lightbox.hidden;
+            document.body.style.overflow = (contactOpen || lightboxOpen) ? 'hidden' : '';
+        }
 
         function closeModal() {
             if (!modal || modal.hidden) return;
             modal.hidden = true;
-            document.body.style.overflow = '';
-            if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+            syncScrollLock();
+            if (contactFocus && contactFocus.focus) contactFocus.focus({ preventScroll: true });
         }
 
         function openModal() {
             if (!modal) return;
-            lastFocus = document.activeElement;
+            contactFocus = document.activeElement;
             modal.hidden = false;
-            document.body.style.overflow = 'hidden';
-            var closeBtn = modal.querySelector('.modal__close');
-            if (closeBtn) closeBtn.focus({ preventScroll: true });
+            syncScrollLock();
         }
 
-        openBtns.forEach(function (btn) {
+        function closeLightbox() {
+            if (!lightbox || lightbox.hidden) return;
+            lightbox.hidden = true;
+            syncScrollLock();
+            if (lightboxFocus && lightboxFocus.focus) lightboxFocus.focus({ preventScroll: true });
+        }
+
+        function openLightbox(btn) {
+            if (!lightbox || !btn) return;
+            lbImg.src = btn.getAttribute('data-image');
+            lbImg.alt = btn.getAttribute('data-title');
+            lbTitle.textContent = btn.getAttribute('data-title');
+            lbDesc.textContent = btn.getAttribute('data-description');
+            lbSize.textContent = btn.getAttribute('data-size');
+            lbDownload.href = btn.getAttribute('data-href');
+            lbDownload.setAttribute('download', btn.getAttribute('data-download'));
+            lightboxFocus = btn;
+            lightbox.hidden = false;
+            syncScrollLock();
+        }
+
+        document.querySelectorAll('[data-open-contact]').forEach(function (btn) {
             btn.addEventListener('click', openModal);
         });
 
-        closeEls.forEach(function (el) {
+        document.querySelectorAll('[data-close-contact]').forEach(function (el) {
             el.addEventListener('click', closeModal);
         });
 
+        document.querySelectorAll('[data-open-lightbox]').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                openLightbox(btn);
+            });
+        });
+
+        document.querySelectorAll('[data-close-lightbox]').forEach(function (el) {
+            el.addEventListener('click', closeLightbox);
+        });
+
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeModal();
+            if (e.key !== 'Escape') return;
+            if (lightbox && !lightbox.hidden) closeLightbox();
+            else closeModal();
         });
     }());
     </script>
