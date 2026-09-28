@@ -464,14 +464,14 @@
             gap: 0.35rem 0.7rem;
             min-width: 0;
             max-width: 100%;
-            margin: 0 0 0.7rem;
+            margin: 0 0 1rem;
         }
 
         .lightbox__title {
             margin: 0;
             font-family: var(--font-display);
             font-size: clamp(1.45rem, 3.4vw, 1.9rem);
-            font-weight: 500;
+            font-weight: 600;
             line-height: 1.15;
         }
 
@@ -498,7 +498,7 @@
             margin: 0;
             font-size: 0.98rem;
             line-height: 1.65;
-            color: var(--color-ink-muted);
+            color: #7a756e;
         }
 
         .lightbox__download {
@@ -708,7 +708,7 @@
             margin: 0 0 1.15rem;
             font-family: var(--font-display);
             font-size: clamp(1.45rem, 4vw, 1.7rem);
-            font-weight: 500;
+            font-weight: 600;
             line-height: 1.2;
             text-align: center;
         }
@@ -717,7 +717,7 @@
             margin: 0 0 2rem;
             font-size: 0.95rem;
             line-height: 1.65;
-            color: var(--color-ink-muted);
+            color: #7a756e;
             text-align: center;
         }
 
@@ -730,6 +730,17 @@
         .contact-whatsapp-btn {
             width: 100%;
             font-weight: 600;
+            background: var(--color-ink);
+            border-color: var(--color-ink);
+            box-shadow:
+                0 2px 10px rgba(26, 26, 24, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .contact-whatsapp-btn:hover {
+            background: #2e2e2b;
+            border-color: #2e2e2b;
+            box-shadow: 0 4px 14px rgba(26, 26, 24, 0.18);
         }
 
         .contact-whatsapp-btn .contact-option__icon {
