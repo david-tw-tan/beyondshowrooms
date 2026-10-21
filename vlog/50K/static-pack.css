@@ -1,0 +1,467 @@
+body.static-pack {
+  --brand-bar-height: 44px;
+  padding-top: var(--brand-bar-height);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 15% 0%, rgba(255, 255, 255, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(166, 139, 91, 0.06) 0%, transparent 50%);
+}
+
+body.static-pack .brand-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  height: var(--brand-bar-height);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 28px;
+  background: rgba(240, 235, 228, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+body.static-pack .brand-bar a {
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #1a1a18;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+body.static-pack .brand-bar a:hover,
+body.static-pack .brand-bar a:focus-visible {
+  opacity: 0.72;
+  outline: none;
+}
+
+body.static-pack .title-row {
+  align-items: flex-start;
+  padding-bottom: 0;
+}
+
+body.static-pack .title-block {
+  min-width: 0;
+  padding: 8px 0 2px;
+}
+
+body.static-pack .vlog-source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 0.15em;
+  margin: 0 0 20px;
+  font-size: 0.92rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+body.static-pack .vlog-source-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 0.18em;
+}
+
+body.static-pack .vlog-source-item span {
+  text-decoration: underline;
+  text-decoration-color: rgba(109, 100, 90, 0.45);
+}
+
+body.static-pack .vlog-source-item:not([href=""]):hover span,
+body.static-pack .vlog-source-item:not([href=""]):focus-visible span {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+body.static-pack .vlog-source-item:not([href=""]):focus-visible {
+  outline: none;
+}
+
+body.static-pack .vlog-source-item[data-vlog-video][href=""] {
+  pointer-events: none;
+  cursor: default;
+}
+
+body.static-pack .vlog-source-item[data-vlog-video][href=""] span {
+  text-decoration: none;
+}
+
+body.static-pack .vlog-source-icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+body.static-pack .vlog-source-icon--yt {
+  color: #c4302b;
+}
+
+body.static-pack .vlog-source-icon--ext {
+  opacity: 0.72;
+}
+
+body.static-pack .vlog-source-item + .vlog-source-item::before {
+  content: "·";
+  margin: 0 0.65em;
+  color: rgba(109, 100, 90, 0.45);
+  font-size: 1.2em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+body.static-pack .controls-row {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+body.static-pack .top {
+  position: static;
+}
+
+body.static-pack .factory-name {
+  margin: 0 0 12px;
+  border-bottom-color: transparent;
+  pointer-events: none;
+}
+
+body.static-pack .fx-panel {
+  display: none !important;
+}
+
+body.static-pack .price-edit,
+body.static-pack .card-tools,
+body.static-pack .delete {
+  display: none !important;
+}
+
+body.static-pack .card,
+body.static-pack.manual-sort .card {
+  cursor: default;
+}
+
+body.static-pack .photo {
+  cursor: zoom-in;
+}
+
+.empty p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+body.static-pack .pack-footer {
+  border-top: 1px solid var(--line);
+  background-color: #f3efe8;
+  background-image:
+    linear-gradient(180deg, #f3efe8 0%, #f9f7f4 55%),
+    radial-gradient(ellipse 80% 100% at 50% 0%, rgba(166, 139, 91, 0.07) 0%, transparent 65%);
+  color: var(--muted);
+  text-align: center;
+  padding: clamp(2rem, 5vw, 2.75rem) 28px clamp(2.25rem, 6vw, 3rem);
+}
+
+body.static-pack .pack-footer__inner {
+  max-width: 20rem;
+  margin: 0 auto;
+}
+
+body.static-pack .pack-footer__thanks {
+  margin: 0 0 0.65rem;
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+body.static-pack .pack-footer__note {
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+body.static-pack .pack-footer__site {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+body.static-pack .pack-footer__note a,
+body.static-pack .pack-footer__site a {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-color: rgba(109, 100, 90, 0.45);
+}
+
+body.static-pack .pack-footer__note a:hover,
+body.static-pack .pack-footer__note a:focus-visible,
+body.static-pack .pack-footer__site a:hover,
+body.static-pack .pack-footer__site a:focus-visible {
+  text-decoration-color: var(--ink);
+  outline: none;
+}
+
+body.static-pack .pack-footer__copy {
+  margin: 1.25rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: rgba(109, 100, 90, 0.85);
+}
+
+@media (min-width: 721px) {
+  body.static-pack .pack-footer {
+    padding: clamp(2.75rem, 5vw, 3.5rem) 40px clamp(3rem, 6vw, 4rem);
+  }
+
+  body.static-pack .pack-footer__inner {
+    max-width: 32rem;
+  }
+
+  body.static-pack .pack-footer__thanks {
+    margin-bottom: 0.85rem;
+    font-size: clamp(1.85rem, 2.8vw, 2.35rem);
+    line-height: 1.2;
+  }
+
+  body.static-pack .pack-footer__note {
+    margin-bottom: 1rem;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.6;
+  }
+
+  body.static-pack .pack-footer__site {
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.6;
+  }
+
+  body.static-pack .pack-footer__copy {
+    margin-top: 1.65rem;
+    padding-top: 1.25rem;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 720px) {
+  body.static-pack {
+    --mobile-toolbar-height: 6.5rem;
+  }
+
+  body.static-pack .brand-bar {
+    padding: 0 16px;
+  }
+  body.static-pack .pack-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  body.static-pack .top {
+    padding: 10px 16px 0;
+  }
+
+  body.static-pack .top-intro {
+    padding-bottom: 4px;
+  }
+
+  body.static-pack .factory-name {
+    font-size: clamp(1.6rem, 7.5vw, 1.95rem);
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  body.static-pack .vlog-source {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+
+  body.static-pack .vlog-source-item {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  body.static-pack .vlog-source-item + .vlog-source-item::before {
+    content: none;
+    margin: 0;
+  }
+
+  body.static-pack .top-toolbar {
+    position: sticky;
+    top: var(--brand-bar-height);
+    z-index: 35;
+    margin: 0 -16px;
+    padding: 10px 16px 12px;
+    background: rgba(239, 232, 220, 0.97);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 6px 18px rgba(31, 25, 20, 0.07);
+  }
+
+  body.static-pack .controls-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 12px;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  body.static-pack .controls-row .row-split {
+    display: none;
+  }
+
+  body.static-pack .controls-row .inline-group:has(#zoomOut) {
+    display: none;
+  }
+
+  body.static-pack .controls-row .inline-group:not(.section-group) {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  body.static-pack .controls-row .inline-group:not(.section-group) .row-label {
+    flex: 0 0 auto;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  body.static-pack .currency-pills,
+  body.static-pack .sort-toggle {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 6px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  body.static-pack .currency-pills button,
+  body.static-pack .sort-toggle button {
+    flex: 0 0 auto;
+    padding: 7px 10px;
+    font-size: 0.8rem;
+  }
+
+  body.static-pack .section-group {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  body.static-pack .section-group .row-label {
+    flex: 0 0 auto;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  body.static-pack .room-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2px 0 4px;
+    mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 1.5rem), transparent 100%);
+  }
+
+  body.static-pack .room-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.static-pack .room-nav a {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+  }
+
+  body.static-pack .section {
+    scroll-margin-top: calc(var(--brand-bar-height) + var(--mobile-toolbar-height));
+  }
+
+  body.static-pack .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  body.static-pack .section-sum {
+    white-space: normal;
+    font-size: clamp(1.35rem, 5vw, 1.75rem);
+  }
+
+  body.static-pack .section-title {
+    font-size: clamp(1.65rem, 6vw, 2.1rem);
+  }
+
+  body.static-pack main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  body.static-pack .card {
+    padding: 10px 10px 14px;
+  }
+
+  body.static-pack .totals {
+    padding: 28px 16px 32px;
+    gap: 14px;
+  }
+
+  body.static-pack .totals .row {
+    gap: 12px;
+    max-width: none;
+  }
+
+  body.static-pack .totals .label {
+    font-size: clamp(1.15rem, 4.8vw, 1.45rem);
+    flex: 1;
+    min-width: 0;
+  }
+
+  body.static-pack .totals .amt {
+    font-size: clamp(1.35rem, 5.5vw, 1.85rem);
+    flex-shrink: 0;
+  }
+
+  body.static-pack .totals .grand {
+    margin-top: 4px;
+    padding-top: 16px;
+  }
+
+  body.static-pack .totals .grand .label {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+  }
+
+  body.static-pack .totals .grand .amt {
+    font-size: clamp(1.75rem, 7vw, 2.35rem);
+  }
+}

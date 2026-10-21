@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video labels — furniture review</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #5c5c5c;
+      --line: #d9d9d9;
+      --paper: #fff;
+      --wash: #f4f3f0;
+      --label: #111;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--wash);
+      line-height: 1.35;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+
+    .lede {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 62ch;
+    }
+
+    .print-btn {
+      appearance: none;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      font: inherit;
+      font-size: 13px;
+      padding: 8px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    h2 {
+      grid-column: 1 / -1;
+      margin: 22px 0 4px;
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    article {
+      display: grid;
+      grid-template-columns: minmax(180px, 38%) minmax(0, 1fr);
+      gap: 14px;
+      align-items: stretch;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    figure {
+      margin: 0;
+      background: #eee;
+      overflow: hidden;
+    }
+
+    figure img {
+      display: block;
+      width: 100%;
+      height: 168px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      padding: 4px 6px 4px 2px;
+    }
+
+    .num {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .label {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      color: var(--label);
+      line-height: 1.25;
+      overflow-wrap: break-word;
+    }
+
+    .note-line {
+      margin-top: auto;
+      padding-top: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px dotted var(--line);
+    }
+
+    .note-line span {
+      display: inline-block;
+      min-width: 70%;
+      border-bottom: 1px solid var(--line);
+      margin-left: 6px;
+    }
+
+    footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (min-width: 980px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+      .label { font-size: 18px; }
+      figure img { height: 156px; }
+    }
+
+    @media (max-width: 640px) {
+      header { flex-direction: column; align-items: flex-start; }
+      article { grid-template-columns: 1fr; }
+      figure img { height: 200px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .wrap { max-width: none; padding: 0; }
+      .print-btn { display: none; }
+      header {
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+      }
+      h1 { font-size: 16px; }
+      .lede { font-size: 11px; }
+      h2 { margin-top: 12px; }
+      .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      article {
+        grid-template-columns: 42% 1fr;
+        padding: 6px;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      figure img { height: 118px; }
+      .label { font-size: 14px; }
+      .note-line { padding-top: 10px; }
+      footer { margin-top: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Video labels for review</h1>
+        <p class="lede">
+          Suggested 3–5 word on-screen titles. Brand names are used only where
+          the silhouette is clearly identifiable. Notes line is for handwritten edits.
+        </p>
+      </div>
+      <button class="print-btn" type="button" onclick="window.print()">Print</button>
+    </header>
+
+    <div class="grid">
+      <h2>Living room</h2>
+
+      <article>
+        <figure><img src="images/c84d93758421443f896edfe12930e4ad.jpg" alt="White L-shaped sectional sofa" /></figure>
+        <div class="meta">
+          <div class="num">01 · Living room</div>
+          <p class="label">Minotti inspired sofa set</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/d77a8fe799b3493cbb8f2e8548355f9f.jpg" alt="Green marble coffee table" /></figure>
+        <div class="meta">
+          <div class="num">02 · Living room</div>
+          <p class="label">Minotti inspired marble table</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/056639bb0bbf4554b482fcc486fa68bf.jpg" alt="Grey lounge chair and ottoman" /></figure>
+        <div class="meta">
+          <div class="num">03 · Living room</div>
+          <p class="label">Tweed lounge and ottoman</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/38c35e81340547029caaa39718528692.jpg" alt="Pebble coffee tables on a grey rug" /></figure>
+        <div class="meta">
+          <div class="num">04 · Living room</div>
+          <p class="label">Organic pebble coffee tables</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/1318439cc0944528ad31ca727defb587.jpg" alt="Pair of black cell bookcases" /></figure>
+        <div class="meta">
+          <div class="num">05 · Living room</div>
+          <p class="label">Honeycomb cell bookcases</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <h2>Family room</h2>
+
+      <article>
+        <figure><img src="images/e3976cfd5c704ad8a6fd53896bbc93fa.jpg" alt="Grey sectional sofa with linking console" /></figure>
+        <div class="meta">
+          <div class="num">06 · Family room</div>
+          <p class="label">Minotti inspired sectional sofa</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/58f4359dcda8408daa2c184fc4fe0132.jpg" alt="Dark stained nested coffee tables" /></figure>
+        <div class="meta">
+          <div class="num">07 · Family room</div>
+          <p class="label">Nested oak coffee tables</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/6ffe54b5351b484189c6213ea584d061.jpg" alt="Navy boucle lounge chair" /></figure>
+        <div class="meta">
+          <div class="num">08 · Family room</div>
+          <p class="label">Sink-in navy lounge</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/70563958b0994c209f36eaf2b09e88d1.jpg" alt="Marble dining table with leather chairs" /></figure>
+        <div class="meta">
+          <div class="num">09 · Family room</div>
+          <p class="label">Sculptural marble dining set</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <h2>Office study</h2>
+
+      <article>
+        <figure><img src="images/8ff1c0e5d59045e9b75b05a41a699262.jpg" alt="Angular geometric writing desk" /></figure>
+        <div class="meta">
+          <div class="num">10 · Office study</div>
+          <p class="label">Cattelan inspired writing desk</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/f652520b40dc4f8f9f3257d326e6cfab.jpg" alt="Metal frame display bookcase" /></figure>
+        <div class="meta">
+          <div class="num">11 · Office study</div>
+          <p class="label">Gallery frame bookcase</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/6fff9742a23b4b109d8d3f858d9f2408.jpg" alt="Black leather office armchair" /></figure>
+        <div class="meta">
+          <div class="num">12 · Office study</div>
+          <p class="label">Minotti inspired office chair</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/afac79b8bc3d4db8915f1369fb2b6d73.jpg" alt="Pair of black leather lounge chairs" /></figure>
+        <div class="meta">
+          <div class="num">13 · Office study</div>
+          <p class="label">Minotti inspired lounge chairs</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <h2>Master bedroom</h2>
+
+      <article>
+        <figure><img src="images/dbbb5c632a5f4d5bbcbe3ef01792dd51.jpg" alt="Cream leather wraparound bed" /></figure>
+        <div class="meta">
+          <div class="num">14 · Master bedroom</div>
+          <p class="label">Cocoon leather platform bed</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/d857846f6d2f4db7a0547cc583ac50e4.jpg" alt="Round walnut marble nightstand" /></figure>
+        <div class="meta">
+          <div class="num">15 · Master bedroom</div>
+          <p class="label">Walnut drum nightstand</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/c7d99b84a6e0422b805bb1a3770d65ee.jpg" alt="Dark wood dresser with metal sides" /></figure>
+        <div class="meta">
+          <div class="num">16 · Master bedroom</div>
+          <p class="label">Minotti inspired dresser</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <h2>Kate’s bedroom</h2>
+
+      <article>
+        <figure><img src="images/d95d7070b2c3499a9ab44cef791767e6.jpg" alt="White boucle channel-tufted bed" /></figure>
+        <div class="meta">
+          <div class="num">17 · Kate’s bedroom</div>
+          <p class="label">Bouclé cloud platform bed</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/7acf1178392c4cdb8648c500d3c00058.jpg" alt="Glossy lacquer nightstand" /></figure>
+        <div class="meta">
+          <div class="num">18 · Kate’s bedroom</div>
+          <p class="label">Piano lacquer nightstand</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <h2>Ashton’s bedroom</h2>
+
+      <article>
+        <figure><img src="images/a85698b46bda46798c66364daef1bd79.jpg" alt="Black quilted leather bed" /></figure>
+        <div class="meta">
+          <div class="num">19 · Ashton’s bedroom</div>
+          <p class="label">Couture quilted leather bed</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/c7bd4d2a88fc4801ac7d1146f383781a.jpg" alt="Illuminated metal cylinder nightstand" /></figure>
+        <div class="meta">
+          <div class="num">20 · Ashton’s bedroom</div>
+          <p class="label">Lantern glow nightstand</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <h2>Garden patio</h2>
+
+      <article>
+        <figure><img src="images/46e53a9f22f24a7dae5912e99fe7bbd0.jpg" alt="Woven outdoor lounge set" /></figure>
+        <div class="meta">
+          <div class="num">21 · Garden patio</div>
+          <p class="label">Desert outdoor lounge set</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <h2>Additions</h2>
+
+      <article>
+        <figure><img src="images/additions_dining_table.jpeg" alt="Oval marble dining table with cream chairs" /></figure>
+        <div class="meta">
+          <div class="num">22 · Additions</div>
+          <p class="label">Minotti inspired dining table</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/additions_drawer_cabinet.jpeg" alt="Dark wood marble-top sideboard" /></figure>
+        <div class="meta">
+          <div class="num">23 · Additions</div>
+          <p class="label">Minotti inspired sideboard</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/additions_lamp.jpeg" alt="Diamond-cut stacked glass table lamp" /></figure>
+        <div class="meta">
+          <div class="num">24 · Additions</div>
+          <p class="label">Diamond-cut crystal lamp</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/additions_rotating_shelf.jpeg" alt="Rotating cube bookcase on a central column" /></figure>
+        <div class="meta">
+          <div class="num">25 · Additions</div>
+          <p class="label">Poltrona Frau inspired bookcase</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/additions_vanity_table.jpeg" alt="Dark sculptural vanity table with boucle chair" /></figure>
+        <div class="meta">
+          <div class="num">26 · Additions</div>
+          <p class="label">Crescent dressing table</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+
+      <article>
+        <figure><img src="images/additions_lego_bed.jpeg" alt="Cream wraparound bed with circular cookie quilting" /></figure>
+        <div class="meta">
+          <div class="num">27 · Additions</div>
+          <p class="label">Cookie-quilted wraparound bed</p>
+          <div class="note-line">Change to:<span></span></div>
+        </div>
+      </article>
+    </div>
+
+    <footer>
+      Brand names used only where the piece is clearly identifiable (Minotti, Cattelan, Poltrona Frau).
+      All other labels stay generic on purpose.
+    </footer>
+  </div>
+</body>
+</html>
