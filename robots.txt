@@ -1,0 +1,16 @@
+# https://www.beyondshowrooms.com/
+User-agent: *
+Allow: /
+
+# Private client proposals (also noindex in HTML)
+Disallow: /firstlook/
+
+# Archived homepages and internal drafts
+Disallow: /hp_alt_versions/
+Disallow: /sample_catalogs/
+Disallow: /bridge pages (old)/
+
+# Duplicate browse surface; primary tool is /showrooms/
+Disallow: /catalogue/
+
+Sitemap: https://www.beyondshowrooms.com/sitemap.xml

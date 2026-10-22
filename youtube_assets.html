@@ -14,7 +14,8 @@
             --color-surface: #f9f7f4;
             --color-ink: #1a1a18;
             --color-ink-muted: #5e5a54;
-            --logo-tracking: 0.18em;
+            --logo-tracking: 0.14em;   /* match index.html .page-logo */
+            --logo-weight: 500;        /* match index.html .page-logo */
             --logo-tracking-loud: 0.22em;
         }
 
@@ -112,6 +113,12 @@
             font-weight: 600;
         }
 
+        .variant__label--locked::after {
+            content: ' · locked';
+            color: #967a4f;
+            font-weight: 600;
+        }
+
         /* ─── Icons ─── */
         .icon-row {
             display: flex;
@@ -137,10 +144,11 @@
             height: 800px;
         }
 
+        /* Icon type — same DNA as index.html .page-logo (Cormorant Garamond 500, 0.14em, uppercase) */
         .yt-icon__word {
             font-family: var(--font-display);
             font-size: 2.35rem;
-            font-weight: 600;
+            font-weight: var(--logo-weight);
             letter-spacing: var(--logo-tracking);
             text-transform: uppercase;
             color: #ffffff;
@@ -159,7 +167,7 @@
             align-items: center;
             gap: 0.08em;
             font-family: var(--font-display);
-            font-weight: 600;
+            font-weight: var(--logo-weight);
             letter-spacing: var(--logo-tracking);
             text-transform: uppercase;
             color: #ffffff;
@@ -177,6 +185,20 @@
 
         .yt-icon--export .yt-icon__stack {
             font-size: 4.85rem;
+        }
+
+        .yt-icon__letter {
+            font-family: var(--font-display);
+            font-size: 12rem;
+            font-weight: var(--logo-weight);
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 0.78;
+            margin-top: -0.02em;
+        }
+
+        .yt-icon--export .yt-icon__letter {
+            font-size: 34rem;
         }
 
         /* ─── Banner (2048×1152 — YouTube upload canvas) ─── */
@@ -308,9 +330,18 @@
         <!-- ─── Icons ─── -->
         <section class="asset-section" aria-labelledby="icon-heading">
             <h2 id="icon-heading">Channel Icon — compare</h2>
-            <p class="asset-meta">800 × 800 px export · dark inverse surface (#1e1d1b) · white type</p>
+            <p class="asset-meta">800 × 800 px export · dark inverse surface (#1e1d1b) · white type · Cormorant Garamond 500 (same as site logo)</p>
 
             <div class="icon-row">
+                <div class="variant">
+                    <span class="variant__label variant__label--locked">Monogram · “B” only</span>
+                    <div class="asset-frame">
+                        <div class="yt-icon" role="img" aria-label="Icon monogram — letter B">
+                            <span class="yt-icon__letter">B</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="variant">
                     <span class="variant__label">A · “BEYOND” only</span>
                     <div class="asset-frame">
@@ -321,7 +352,7 @@
                 </div>
 
                 <div class="variant">
-                    <span class="variant__label variant__label--pick">B · “BEYOND / SHOW”</span>
+                    <span class="variant__label">B · “BEYOND / SHOW”</span>
                     <div class="asset-frame">
                         <div class="yt-icon" role="img" aria-label="Icon variant B — BEYOND SHOW">
                             <div class="yt-icon__stack">
@@ -329,6 +360,15 @@
                                 <span>Show</span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="variant" style="margin-top: 2rem;">
+                <span class="variant__label">Export size (monogram) — 800 × 800 px</span>
+                <div class="asset-frame" style="overflow-x: auto;">
+                    <div class="yt-icon yt-icon--export" role="img" aria-label="Icon export — letter B">
+                        <span class="yt-icon__letter">B</span>
                     </div>
                 </div>
             </div>
@@ -346,9 +386,9 @@
             </div>
 
             <div class="notes">
-                <strong>Icon take:</strong> “BEYOND” alone is cleaner at tiny sizes (comments, mobile nav).
-                “BEYOND / SHOW” is more distinctive and ties to the docuseries without cramming in “SHOWROOMS.”
-                At icon scale, two short lines beat one long word.
+                <strong>Locked:</strong> “B” monogram — export the 800 × 800 block below for YouTube upload.
+                Type matches <code>index.html</code> site logo: Cormorant Garamond, weight 500, 0.14em tracking, uppercase.
+                Best legibility at YouTube’s tiny avatar sizes.
             </div>
         </section>
 

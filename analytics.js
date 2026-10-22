@@ -18,14 +18,17 @@
     } catch (e) {}
 
     var CTA_RULES = [
+        { selector: '[data-whatsapp]', event: 'contact_whatsapp' },
         { selector: '[data-open-contact]', event: 'contact_cta' },
         { selector: '[data-hero-collections]', event: 'hero_collections' },
         { selector: '[data-open-showroom]', event: 'showroom_cta' },
+        { selector: '[data-carousel-lightbox-collections]', event: 'showroom_cta' },
         { selector: '[data-open-partners]', event: 'partners_cta' },
         { selector: '[data-doc-video-play]', event: 'video_play' },
         { selector: 'a[href="https://www.youtube.com/@beyondshowrooms"]', event: 'docuseries_link' },
         { selector: '[data-contact="whatsapp"]', event: 'contact_whatsapp' },
         { selector: '[data-contact="email"]', event: 'contact_email' },
+        { selector: '.email-reveal a[href^="mailto:"]', event: 'contact_email' },
         { selector: '[data-showroom-book]', event: 'contact_cta' }
     ];
 
@@ -415,9 +418,17 @@
             initYoutubeReferralTracking();
         });
 
-        observeSectionOnce(document.getElementById('collections-title'), 'scroll_collections');
-        observeSectionOnce(document.getElementById('trust-title'), 'scroll_factories');
+        observeSectionOnce(
+            document.getElementById('collections-title') || document.getElementById('quality-title'),
+            'scroll_collections'
+        );
+        observeSectionOnce(
+            document.getElementById('trust-title') || document.getElementById('factories-title'),
+            'scroll_factories'
+        );
         observeSectionOnce(document.getElementById('homes-title'), 'scroll_success_stories');
+        observeSectionOnce(document.getElementById('process-title'), 'scroll_process');
+        observeSectionOnce(document.getElementById('promise-title'), 'scroll_promise');
         observeSectionOnce(document.querySelector('.site-footer'), 'scroll_bottom');
 
         watchModalScrollBottom('showroomModal', '.lp-showroom-scroll', '.lp-showroom-cta', 'showroom');

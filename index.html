@@ -3,1511 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="You watched inside Foshan. Beyond Showrooms is what I built when I came home — curated whole-room luxury interiors, factory-direct. Talk to me directly. No fees until you order.">
-    <title>Beyond Showrooms — From the Documentary</title>
-
+    <title>Beyond Showrooms — Furnish it from Foshan</title>
+    <meta name="description" content="High-end designer furniture from Foshan, made to order for your home, direct from the factory. Work with David from the first conversation through installation.">
+    <link rel="canonical" href="https://www.beyondshowrooms.com/">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Beyond Showrooms">
+    <meta property="og:url" content="https://www.beyondshowrooms.com/">
+    <meta property="og:title" content="Beyond Showrooms — Furnish it from Foshan">
+    <meta property="og:description" content="High-end designer furniture from Foshan, made to order for your home, direct from the factory. Work with David from the first conversation through installation.">
+    <meta property="og:image" content="https://www.beyondshowrooms.com/images/interior_1.jpg">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Beyond Showrooms — Furnish it from Foshan">
+    <meta name="twitter:description" content="High-end designer furniture from Foshan, made to order for your home. Factory-direct with personal guidance through installation.">
+    <meta name="twitter:image" content="https://www.beyondshowrooms.com/images/interior_1.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
-    <script>
-    (function () {
-        var EP_THUMBS = {
-            ep1: 'images/img_journal_doc_ep1.jpeg',
-            ep2: 'images/img_journal_doc_ep2.jpeg',
-            ep3: 'images/img_journal_doc_ep3.jpeg'
-        };
-        var DEFAULT_THUMB = 'images/img_journal_doc.jpeg';
-        var params = new URLSearchParams(window.location.search);
-        var campaign = params.get('utm_campaign');
-        var isYoutubeRedirect = params.get('utm_source') === 'youtube' && EP_THUMBS[campaign];
-        var thumb = isYoutubeRedirect ? EP_THUMBS[campaign] : DEFAULT_THUMB;
-
-        window.__BS_VISITOR = {
-            thumb: thumb,
-            staticHero: Boolean(isYoutubeRedirect)
-        };
-
-        if (isYoutubeRedirect) {
-            try {
-                sessionStorage.setItem('bs_youtube_episode', campaign);
-            } catch (err) {}
-        }
-
-        var preload = document.createElement('link');
-        preload.rel = 'preload';
-        preload.as = 'image';
-        preload.href = thumb;
-        preload.setAttribute('fetchpriority', 'high');
-        document.head.appendChild(preload);
-    }());
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="images/img_journal_doc.jpeg" fetchpriority="high">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="founder_showroom.css">
+    <link rel="stylesheet" href="index.css">
     <script defer src="https://cloud.umami.is/script.js" data-website-id="9070ab5c-784f-469f-b0df-e73f0f32084e"></script>
     <script defer src="/analytics.js"></script>
-
-    <style>
-        :root {
-            --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-            --font-body: 'Jost', system-ui, -apple-system, sans-serif;
-
-            --color-ink: #1a1a18;
-            --color-ink-muted: #5e5a54;
-            --color-ink-faint: #8a847c;
-            --color-paper: #f0ebe4;
-            --color-surface: #f9f7f4;
-            --color-surface-warm: #f3efe8;
-            --color-hairline: #e8e2d9;
-            --color-brass: #a68b5b;
-            --color-brass-light: #c4a97a;
-
-            --content-max: 36rem;
-            --content-wide: 44rem;
-            --content-carousel: 44rem;
-            --section-pad: clamp(3rem, 8vw, 5rem);
-            --transition-fast: 0.22s cubic-bezier(0.22, 1, 0.36, 1);
-            --transition-smooth: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        @media (min-width: 900px) {
-            :root {
-                --content-max: 38rem;
-                --content-wide: 54rem;
-                --content-carousel: 48rem;
-            }
-        }
-
-        @media (min-width: 1200px) {
-            :root {
-                --content-max: 40rem;
-                --content-wide: 62rem;
-                --content-carousel: 52rem;
-            }
-        }
-
-        @media (min-width: 1440px) {
-            :root {
-                --content-max: 42rem;
-                --content-wide: 68rem;
-                --content-carousel: 56rem;
-            }
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            font-family: var(--font-body);
-            font-size: 1rem;
-            line-height: 1.65;
-            color: var(--color-ink);
-            background-color: var(--color-paper);
-            background-image:
-                radial-gradient(ellipse 80% 50% at 15% 0%, rgba(255, 255, 255, 0.45) 0%, transparent 55%),
-                radial-gradient(ellipse 60% 40% at 90% 100%, rgba(166, 139, 91, 0.07) 0%, transparent 50%);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-        }
-
-        a {
-            color: inherit;
-        }
-
-        .page-header {
-            padding: 1.25rem clamp(1.25rem, 4vw, 2rem);
-            border-bottom: 1px solid var(--color-hairline);
-            background: rgba(240, 235, 228, 0.92);
-            backdrop-filter: blur(8px);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .page-header__inner {
-            max-width: var(--content-wide);
-            margin: 0 auto;
-        }
-
-        .page-logo {
-            font-family: var(--font-display);
-            font-size: 0.95rem;
-            font-weight: 500;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: var(--color-ink);
-        }
-
-        main {
-            overflow-x: clip;
-        }
-
-        .section {
-            padding: var(--section-pad) clamp(1.25rem, 4vw, 2rem);
-        }
-
-        .section--warm {
-            background: var(--color-surface-warm);
-            border-block: 1px solid var(--color-hairline);
-        }
-
-        .section--closing {
-            padding-bottom: clamp(3.5rem, 10vw, 5.5rem);
-        }
-
-        .container {
-            max-width: var(--content-max);
-            margin: 0 auto;
-        }
-
-        .container--wide {
-            max-width: var(--content-wide);
-        }
-
-        .eyebrow {
-            margin: 0 0 0.85rem;
-            font-family: var(--font-display);
-            font-size: 1.08rem;
-            font-weight: 600;
-            font-style: italic;
-            line-height: 1.4;
-            color: var(--color-brass);
-        }
-
-        .hero-title {
-            margin: 0 0 1.25rem;
-            font-family: var(--font-display);
-            font-size: clamp(1.35rem, 5.5vw + 0.25rem, 2.75rem);
-            font-weight: 500;
-            line-height: 1.12;
-            letter-spacing: 0.01em;
-            text-wrap: balance;
-        }
-
-        .hero-lede {
-            margin: 0 0 1.25rem;
-            font-size: clamp(1.02rem, 2.2vw, 1.12rem);
-            line-height: 1.75;
-            color: var(--color-ink-muted);
-        }
-
-        .founder-byline {
-            display: flex;
-            align-items: center;
-            gap: 0.85rem;
-            margin: 0;
-            padding: 0.85rem 1rem;
-            background: rgba(249, 247, 244, 0.75);
-            border: 1px solid var(--color-hairline);
-            border-radius: 2px;
-        }
-
-        @media (min-width: 640px) {
-            .founder-byline {
-                width: fit-content;
-                max-width: 30rem;
-                padding: 1rem 1.35rem;
-            }
-        }
-
-        .founder-byline__photo {
-            flex-shrink: 0;
-            width: 3.25rem;
-            height: 3.25rem;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center 22%;
-            border: 1px solid var(--color-hairline);
-        }
-
-        .founder-byline__text {
-            font-size: 0.95rem;
-            line-height: 1.55;
-            color: var(--color-ink-muted);
-        }
-
-        .founder-byline__name {
-            font-weight: 500;
-            color: var(--color-ink);
-        }
-
-        .body-text {
-            margin: 0;
-            font-size: clamp(1rem, 2vw, 1.08rem);
-            line-height: 1.82;
-            color: var(--color-ink-muted);
-        }
-
-        .body-text + .body-text {
-            margin-top: 1.1rem;
-        }
-
-        .body-text a {
-            color: var(--color-brass);
-            font-weight: 500;
-            text-decoration: underline;
-            text-underline-offset: 0.15em;
-            transition: color var(--transition-fast);
-        }
-
-        .body-text a:hover {
-            color: var(--color-ink);
-        }
-
-        .emphasis {
-            font-weight: 500;
-            color: var(--color-ink);
-        }
-
-        .section-title {
-            margin: 0 0 1.5rem;
-            font-family: var(--font-display);
-            font-size: clamp(1.55rem, 3.8vw, 2rem);
-            font-weight: 500;
-            line-height: 1.18;
-            letter-spacing: 0.01em;
-            text-wrap: balance;
-        }
-
-        .section-title--lg {
-            font-size: clamp(1.75rem, 4.5vw, 2.35rem);
-        }
-
-        .section-bridge {
-            margin: -0.35rem 0 1.75rem;
-            font-size: clamp(1.02rem, 2.2vw, 1.12rem);
-            line-height: 1.65;
-            color: var(--color-ink-muted);
-        }
-
-        .doc-visual {
-            margin: 0 0 2rem;
-            border-radius: 2px;
-            overflow: hidden;
-            box-shadow: 0 8px 28px rgba(26, 26, 24, 0.1);
-            border: 1px solid var(--color-hairline);
-        }
-
-        .doc-visual__play {
-            display: block;
-            position: relative;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            border: none;
-            background: none;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .doc-visual__play[hidden] {
-            display: none;
-        }
-
-        .doc-visual__play:hover .doc-visual__play-icon {
-            transform: translate(-50%, -50%) scale(1.06);
-            background: rgba(255, 255, 255, 0.98);
-        }
-
-        .doc-visual__play:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 3px;
-        }
-
-        .doc-visual__play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 3.75rem;
-            height: 3.75rem;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.92);
-            color: var(--color-ink);
-            box-shadow: 0 4px 18px rgba(26, 26, 24, 0.18);
-            pointer-events: none;
-            transition:
-                transform var(--transition-fast),
-                background var(--transition-fast);
-        }
-
-        .doc-visual__embed {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: #000;
-        }
-
-        .doc-visual__embed[hidden] {
-            display: none;
-        }
-
-        .doc-visual__iframe {
-            display: block;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .doc-visual__img {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            object-position: center 42%;
-        }
-
-        .doc-visual--static .doc-visual__play {
-            cursor: default;
-            pointer-events: none;
-        }
-
-        .doc-visual--static .doc-visual__play-icon {
-            display: none;
-        }
-
-        .body-text__external-link {
-            display: inline;
-            text-decoration: underline;
-            text-underline-offset: 0.15em;
-        }
-
-        .body-text__external-icon {
-            display: inline-block;
-            vertical-align: -0.12em;
-            width: 0.85em;
-            height: 0.85em;
-            margin-left: 0.12em;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 0.9rem 1.75rem;
-            border-radius: 999px;
-            font-family: var(--font-display);
-            font-size: clamp(1.05rem, 2.3vw, 1.15rem);
-            font-weight: 500;
-            line-height: 1.2;
-            letter-spacing: 0.02em;
-            text-decoration: none;
-            border: 1px solid var(--color-brass);
-            background: var(--color-brass);
-            color: #fff;
-            cursor: pointer;
-            box-shadow:
-                0 2px 14px rgba(166, 139, 91, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.14);
-            transition:
-                background var(--transition-fast),
-                border-color var(--transition-fast),
-                box-shadow var(--transition-fast),
-                transform var(--transition-fast);
-        }
-
-        .btn:hover {
-            background: #967a4f;
-            border-color: var(--color-brass-light);
-            box-shadow: 0 8px 26px rgba(166, 139, 91, 0.38);
-            transform: translateY(-2px);
-        }
-
-        .btn:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 3px;
-        }
-
-        .btn--ink {
-            background: var(--color-ink);
-            border-color: var(--color-ink);
-            box-shadow:
-                0 2px 10px rgba(26, 26, 24, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        }
-
-        .btn--ink:hover {
-            background: #2e2e2b;
-            border-color: #2e2e2b;
-            box-shadow: 0 4px 14px rgba(26, 26, 24, 0.18);
-        }
-
-        .btn-row {
-            margin-top: 1.75rem;
-        }
-
-        .btn-row--hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        @media (min-width: 560px) {
-            .btn-row--hero {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-            }
-        }
-
-        @media (max-width: 559px) {
-            .btn-row--hero .btn {
-                width: 100%;
-                max-width: 18rem;
-            }
-        }
-
-        #collections-title {
-            scroll-margin-top: 5.5rem;
-        }
-
-        .bridge-collage {
-            margin-top: 1.75rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.4rem;
-        }
-
-        .bridge-collage + .body-text {
-            margin-top: 1.75rem;
-        }
-
-        .bridge-collage__item {
-            min-width: 0;
-            overflow: hidden;
-            border-radius: 2px;
-            box-shadow: 0 4px 18px rgba(26, 26, 24, 0.1);
-            border: 1px solid var(--color-hairline);
-        }
-
-        .bridge-collage__item--a {
-            grid-column: 1 / -1;
-            aspect-ratio: 16 / 9;
-            transform: rotate(-0.85deg);
-        }
-
-        .bridge-collage__item--b {
-            grid-column: 1;
-            aspect-ratio: 4 / 3;
-            transform: rotate(1.65deg);
-        }
-
-        .bridge-collage__item--c {
-            grid-column: 2;
-            aspect-ratio: 4 / 3;
-            transform: rotate(-1.65deg);
-        }
-
-        .bridge-collage__img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .bridge-collage__img--showroom {
-            object-position: center 55%;
-        }
-
-        .bridge-collage__img--test {
-            object-position: center 40%;
-        }
-
-        .bridge-collage__img--home {
-            object-position: center 45%;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .bridge-collage__item--a,
-            .bridge-collage__item--b,
-            .bridge-collage__item--c {
-                transform: none;
-            }
-        }
-
-        .steps {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: grid;
-            gap: 1.25rem;
-        }
-
-        @media (min-width: 768px) {
-            .steps {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-            }
-        }
-
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 1.35rem);
-            background: var(--color-surface);
-            border: 1px solid var(--color-hairline);
-            border-radius: 2px;
-        }
-
-        .step__num {
-            display: block;
-            width: auto;
-            height: auto;
-            margin: 0 0 0.65rem;
-            padding: 0;
-            border: none;
-            border-radius: 0;
-            background: none;
-            font-family: var(--font-display);
-            font-size: clamp(3.25rem, 9vw, 4.25rem);
-            font-weight: 600;
-            line-height: 1;
-            letter-spacing: -0.04em;
-            color: var(--color-brass);
-            opacity: 1;
-        }
-
-        .step__title {
-            margin: 0 0 0.5rem;
-            font-family: var(--font-display);
-            font-size: clamp(1.15rem, 2.5vw, 1.3rem);
-            font-weight: 700;
-            line-height: 1.25;
-            color: var(--color-ink);
-        }
-
-        .step__body {
-            margin: 0;
-            font-size: 0.92rem;
-            line-height: 1.65;
-            color: var(--color-ink-muted);
-        }
-
-        .after-order {
-            margin-top: clamp(2rem, 5vw, 2.75rem);
-        }
-
-        .after-order .eyebrow {
-            margin-bottom: 0.65rem;
-        }
-
-        .after-order__intro {
-            margin: 0 0 1.25rem;
-            font-size: clamp(1rem, 2vw, 1.08rem);
-            line-height: 1.75;
-            color: var(--color-ink-muted);
-        }
-
-        .after-order-grid__cells {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.4rem;
-        }
-
-        @media (min-width: 640px) {
-            .after-order-grid__cells {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        .after-order-grid__cell {
-            position: relative;
-            display: block;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            border: 2px solid var(--color-hairline);
-            border-radius: 2px;
-            overflow: hidden;
-            cursor: pointer;
-            background: none;
-            opacity: 0.5;
-            box-shadow: none;
-            transition:
-                opacity var(--transition-fast),
-                border-color var(--transition-fast),
-                box-shadow var(--transition-fast);
-        }
-
-        @media (min-width: 640px) {
-            .after-order-grid__cell {
-                aspect-ratio: 3 / 2;
-            }
-        }
-
-        .after-order-grid__cell.is-active {
-            opacity: 1;
-            border-color: var(--color-brass);
-            box-shadow: 0 4px 14px rgba(166, 139, 91, 0.22);
-        }
-
-        .after-order-grid__cell:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 2px;
-        }
-
-        .after-order-grid__img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .after-order-grid__roman {
-            position: absolute;
-            top: 0.35rem;
-            left: 0.35rem;
-            z-index: 2;
-            padding: 0.18rem 0.32rem;
-            font-family: var(--font-display);
-            font-size: 0.78rem;
-            font-weight: 600;
-            font-style: italic;
-            line-height: 1;
-            color: rgba(255, 255, 255, 0.92);
-            background: rgba(26, 26, 24, 0.42);
-            border-radius: 2px;
-            pointer-events: none;
-        }
-
-        .after-order-grid__cell.is-active .after-order-grid__roman {
-            background: rgba(255, 255, 255, 0.92);
-            color: var(--color-brass);
-        }
-
-        .after-order-grid__progress {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1;
-            height: 3px;
-            background: rgba(216, 207, 194, 0.85);
-            border-radius: 0;
-            overflow: hidden;
-        }
-
-        .after-order-grid__progress.is-hidden {
-            display: none;
-        }
-
-        .after-order-grid__progress-fill {
-            display: block;
-            height: 100%;
-            width: 0;
-            background: var(--color-brass);
-            border-radius: 1px;
-            animation: after-order-progress linear forwards;
-            animation-duration: var(--progress-duration, 4500ms);
-        }
-
-        .after-order-grid__progress.is-paused .after-order-grid__progress-fill {
-            animation-play-state: paused;
-        }
-
-        @keyframes after-order-progress {
-            from {
-                width: 0%;
-            }
-
-            to {
-                width: 100%;
-            }
-        }
-
-        .after-order-grid__caption-panel {
-            margin-top: 0.85rem;
-            min-height: 3.5rem;
-        }
-
-        .after-order-grid__caption {
-            margin: 0;
-            font-size: 0.92rem;
-            line-height: 1.6;
-            color: var(--color-ink-muted);
-        }
-
-        .after-order-grid__caption[hidden] {
-            display: none;
-        }
-
-        .after-order-grid__num {
-            font-family: var(--font-display);
-            font-weight: 600;
-            color: var(--color-brass);
-            margin-right: 0.2rem;
-        }
-
-        .after-order-grid__label {
-            font-weight: 500;
-            color: var(--color-ink);
-        }
-
-        .after-order-grid__dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.45rem;
-            margin-top: 0.85rem;
-        }
-
-        .after-order-grid__dot {
-            width: 0.45rem;
-            height: 0.45rem;
-            padding: 0;
-            border: none;
-            border-radius: 50%;
-            background: #c4b8a8;
-            cursor: pointer;
-            transition: background var(--transition-fast), transform var(--transition-fast);
-        }
-
-        .after-order-grid__dot.is-active {
-            background: var(--color-brass);
-            transform: scale(1.15);
-        }
-
-        .after-order-grid__dot:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 2px;
-        }
-
-        .factory-direct {
-            margin-top: clamp(1.75rem, 4vw, 2.25rem);
-        }
-
-        .factory-direct .eyebrow {
-            margin-bottom: 1rem;
-        }
-
-        .factory-direct__list {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            display: grid;
-            gap: 0.85rem;
-        }
-
-        .factory-direct__item {
-            font-size: 0.92rem;
-            line-height: 1.6;
-            color: var(--color-ink-muted);
-        }
-
-        .factory-direct__label {
-            font-weight: 500;
-            color: var(--color-ink);
-        }
-
-        .process-result {
-            margin: clamp(2rem, 5vw, 2.75rem) auto 0;
-            padding-top: clamp(1.5rem, 3.5vw, 2rem);
-            border-top: 1px solid var(--color-hairline);
-            max-width: 34rem;
-            text-align: center;
-        }
-
-        .process-result__label {
-            display: block;
-            margin: 0 0 1rem;
-            font-family: var(--font-display);
-            font-size: clamp(1.15rem, 2.8vw, 1.4rem);
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--color-brass);
-        }
-
-        .process-result__text {
-            margin: 0;
-            font-size: clamp(1rem, 2vw, 1.08rem);
-            line-height: 1.75;
-            color: var(--color-ink-muted);
-            text-wrap: balance;
-        }
-
-        .process-result__cta {
-            margin-top: clamp(2rem, 4vw, 2.5rem);
-        }
-
-        .trust-visual {
-            display: block;
-            margin: 1.75rem auto 0;
-            width: 100%;
-            max-width: 28rem;
-        }
-
-        @media (min-width: 640px) {
-            .trust-visual__img {
-                aspect-ratio: 5 / 3;
-            }
-        }
-
-        .trust-visual__trigger {
-            position: relative;
-            display: block;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            border: none;
-            background: none;
-            cursor: pointer;
-            text-align: left;
-            border-radius: 2px;
-            overflow: hidden;
-            border: 1px solid var(--color-hairline);
-            box-shadow: 0 4px 18px rgba(26, 26, 24, 0.1);
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-        }
-
-        .trust-visual__trigger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(26, 26, 24, 0.14);
-        }
-
-        .trust-visual__trigger:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 3px;
-        }
-
-        .trust-visual__hint {
-            position: absolute;
-            right: 0.55rem;
-            bottom: 0.55rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 1.65rem;
-            height: 1.65rem;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.92);
-            color: var(--color-ink-muted);
-            box-shadow: 0 2px 8px rgba(20, 19, 18, 0.12);
-            pointer-events: none;
-        }
-
-        .trust-visual__img {
-            display: block;
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-        }
-
-        .trust-visual__footer {
-            margin: 0.85rem 0 0;
-            text-align: center;
-        }
-
-        .trust-visual__link {
-            margin: 0;
-            padding: 0;
-            border: none;
-            background: none;
-            font-family: var(--font-body);
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: var(--color-brass);
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-offset: 0.15em;
-            transition: color var(--transition-fast);
-        }
-
-        .trust-visual__link:hover {
-            color: var(--color-ink);
-        }
-
-        .trust-visual__link:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 2px;
-        }
-
-        .proof-grid {
-            display: grid;
-            gap: 1.25rem;
-            margin-top: 1.75rem;
-        }
-
-        @media (min-width: 640px) {
-            .proof-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .proof-card {
-            margin: 0;
-            border-radius: 2px;
-            overflow: hidden;
-            border: 1px solid var(--color-hairline);
-            background: var(--color-surface);
-        }
-
-        .proof-card__img {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            object-fit: cover;
-        }
-
-        .proof-card__body {
-            padding: 0.9rem 1rem 1rem;
-        }
-
-        .proof-card__title {
-            margin: 0 0 0.35rem;
-            font-family: var(--font-display);
-            font-size: 1.05rem;
-            font-weight: 500;
-            line-height: 1.3;
-            color: var(--color-ink);
-        }
-
-        .proof-card__text {
-            margin: 0;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--color-ink-muted);
-        }
-
-        .proof-list {
-            margin: 1.5rem 0 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .proof-list li {
-            position: relative;
-            padding-left: 1.15rem;
-            font-size: 0.98rem;
-            line-height: 1.7;
-            color: var(--color-ink-muted);
-        }
-
-        .proof-list li + li {
-            margin-top: 0.65rem;
-        }
-
-        .proof-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.62em;
-            width: 0.35rem;
-            height: 0.35rem;
-            border-radius: 50%;
-            background: var(--color-brass);
-        }
-
-        .founder-intro {
-            display: grid;
-            gap: 1.35rem 1.75rem;
-            align-items: center;
-            margin-bottom: 1.75rem;
-        }
-
-        @media (max-width: 559px) {
-            .founder-intro {
-                text-align: center;
-            }
-        }
-
-        @media (min-width: 560px) {
-            .founder-intro {
-                grid-template-columns: auto 1fr;
-                gap: 1.75rem 2.25rem;
-            }
-        }
-
-        .founder-portrait {
-            margin: 0;
-            justify-self: center;
-        }
-
-        @media (min-width: 560px) {
-            .founder-portrait {
-                justify-self: start;
-            }
-        }
-
-        .founder-portrait__img {
-            display: block;
-            width: clamp(11rem, 50vw, 14rem);
-            height: clamp(11rem, 50vw, 14rem);
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center 22%;
-            border: 2px solid var(--color-hairline);
-            box-shadow: 0 6px 20px rgba(26, 26, 24, 0.08);
-        }
-
-        @media (min-width: 560px) {
-            .founder-portrait__img {
-                width: clamp(10rem, 20vw, 12.5rem);
-                height: clamp(10rem, 20vw, 12.5rem);
-            }
-        }
-
-        .founder-intro__copy .eyebrow {
-            margin-bottom: 0.65rem;
-        }
-
-        .founder-intro__copy .section-title {
-            margin-bottom: 0;
-        }
-
-        .founder-note {
-            margin-top: 1.5rem;
-            padding: 1.25rem 1.35rem;
-            border-left: 2px solid var(--color-brass);
-            background: rgba(166, 139, 91, 0.08);
-            border-radius: 0 2px 2px 0;
-        }
-
-        .founder-note p {
-            margin: 0;
-            font-size: 0.98rem;
-            line-height: 1.75;
-            color: var(--color-ink-muted);
-        }
-
-        .founder-sign {
-            display: flex;
-            align-items: center;
-            gap: 0.85rem;
-            margin-top: 1.35rem;
-            margin-bottom: 0;
-        }
-
-        .founder-sign__text {
-            font-family: var(--font-display);
-            font-size: clamp(1.25rem, 3.2vw, 1.55rem);
-            font-weight: 500;
-            font-style: italic;
-            color: var(--color-ink);
-        }
-
-        .founder-divider {
-            margin: clamp(2rem, 5vw, 2.75rem) auto 0;
-            width: min(48vw, 12rem);
-            height: 1px;
-            border: none;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                var(--color-hairline-dark) 20%,
-                var(--color-brass-light) 50%,
-                var(--color-hairline-dark) 80%,
-                transparent 100%
-            );
-            opacity: 0.9;
-        }
-
-        .founder-closing {
-            margin-top: clamp(2rem, 5vw, 2.75rem);
-            padding-top: 0;
-            text-align: center;
-        }
-
-        .founder-closing__lede {
-            margin: 0 auto;
-            padding: 0 clamp(1rem, 5vw, 2rem);
-            max-width: 28rem;
-            font-family: var(--font-display);
-            font-size: clamp(1.35rem, 3.4vw, 1.75rem);
-            font-weight: 600;
-            font-style: normal;
-            line-height: 1.35;
-            letter-spacing: 0.015em;
-            color: var(--color-ink);
-            text-wrap: balance;
-        }
-
-        .founder-closing__btn {
-            margin-top: 1.65rem;
-            text-align: center;
-        }
-
-        .founder-closing__btn .btn {
-            min-width: min(100%, 22rem);
-            font-size: clamp(0.98rem, 2.1vw, 1.1rem);
-            padding-inline: 1.5rem;
-        }
-
-        @media (max-width: 559px) {
-            .founder-closing__btn .btn {
-                width: 100%;
-                max-width: 18rem;
-            }
-        }
-
-        .site-footer {
-            padding: clamp(1.85rem, 4.5vw, 2.35rem) clamp(1.25rem, 4vw, 2rem) clamp(2rem, 5vw, 2.5rem);
-            border-top: 1px solid var(--color-hairline);
-            background-color: var(--color-surface);
-            background-image:
-                linear-gradient(180deg, var(--color-surface-warm) 0%, var(--color-surface) 55%),
-                radial-gradient(ellipse 80% 100% at 50% 0%, rgba(166, 139, 91, 0.07) 0%, transparent 65%);
-            color: var(--color-ink-muted);
-            text-align: center;
-        }
-
-        .site-footer__inner {
-            max-width: 24rem;
-            margin: 0 auto;
-        }
-
-        .site-footer__brand {
-            margin: 0;
-        }
-
-        .site-footer__label {
-            margin: 0 0 0.75rem;
-            font-size: 0.65rem;
-            font-weight: 500;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--color-ink-faint);
-        }
-
-        .site-footer__logo-link {
-            display: block;
-            width: fit-content;
-            margin: 0 auto;
-            transition: opacity var(--transition-fast);
-        }
-
-        .site-footer__logo-link:hover {
-            opacity: 0.78;
-        }
-
-        .site-footer__logo-link:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 4px;
-        }
-
-        .site-footer__logo {
-            display: block;
-            height: clamp(1.2rem, 3.2vw, 1.45rem);
-            width: auto;
-            max-width: min(11rem, 68vw);
-            filter: brightness(0);
-            opacity: 0.68;
-        }
-
-        .site-footer__note {
-            margin: 1.1rem auto 0;
-            padding-top: 1rem;
-            max-width: 19rem;
-            border-top: 1px solid var(--color-hairline);
-        }
-
-        .site-footer__note p {
-            margin: 0;
-            font-size: 0.78rem;
-            line-height: 1.55;
-            color: var(--color-ink-faint);
-        }
-
-        .site-footer__note p + p {
-            margin-top: 0.4rem;
-        }
-
-        .site-footer__note a {
-            color: var(--color-ink-muted);
-            font-weight: 500;
-            text-decoration: underline;
-            text-underline-offset: 0.15em;
-            text-decoration-color: rgba(94, 90, 84, 0.35);
-            transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-        }
-
-        .site-footer__note a:hover {
-            color: var(--color-brass);
-            text-decoration-color: rgba(166, 139, 91, 0.45);
-        }
-
-        .watermark {
-            display: block;
-            position: absolute;
-            right: clamp(-0.25rem, -1vw, 0.5rem);
-            bottom: 0;
-            font-family: var(--font-display);
-            font-size: clamp(6rem, 28vw, 9rem);
-            font-weight: 300;
-            line-height: 0.82;
-            letter-spacing: -0.14em;
-            color: var(--color-brass);
-            opacity: 0.07;
-            pointer-events: none;
-            user-select: none;
-        }
-
-        .hero-wrap {
-            position: relative;
-            padding-top: clamp(1.25rem, 3.5vw, 2.5rem);
-            padding-bottom: clamp(3rem, 8vw, 4.5rem);
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(0.75rem);
-            transition:
-                opacity var(--transition-smooth),
-                transform var(--transition-smooth);
-        }
-
-        .reveal.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal--d1 { transition-delay: 0.08s; }
-        .reveal--d2 { transition-delay: 0.16s; }
-        .reveal--d3 { transition-delay: 0.24s; }
-        .reveal--d4 { transition-delay: 0.32s; }
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            height: 100dvh;
-            max-height: 100dvh;
-            padding: 1.5rem;
-            overflow-x: hidden;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            overscroll-behavior: none;
-        }
-
-        .modal[hidden] {
-            display: none;
-        }
-
-        .modal__backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(20, 19, 18, 0.55);
-            backdrop-filter: blur(4px);
-        }
-
-        .modal__panel {
-            position: relative;
-            flex-shrink: 0;
-            width: min(26rem, 100%);
-            margin: auto;
-            padding: 2.5rem 2.15rem 2.15rem;
-            background: var(--color-surface);
-            border: 1px solid var(--color-hairline);
-            border-radius: 4px;
-            box-shadow: 0 16px 48px rgba(26, 26, 24, 0.18);
-        }
-
-        .modal__close {
-            position: absolute;
-            top: 0.85rem;
-            right: 0.9rem;
-            width: 2rem;
-            height: 2rem;
-            border: none;
-            background: transparent;
-            font-size: 1.5rem;
-            line-height: 1;
-            color: var(--color-ink-faint);
-            cursor: pointer;
-        }
-
-        .modal__close:hover {
-            color: var(--color-ink);
-        }
-
-        .modal__close:focus-visible {
-            outline: 2px solid var(--color-brass-light);
-            outline-offset: 3px;
-        }
-
-        .modal__title {
-            margin: 0 2rem 0.75rem 0;
-            font-family: var(--font-display);
-            font-size: clamp(1.45rem, 4vw, 1.7rem);
-            font-weight: 500;
-            line-height: 1.2;
-        }
-
-        .modal__lede {
-            margin: 0 0 2rem;
-            font-size: 0.95rem;
-            line-height: 1.65;
-            color: var(--color-ink-muted);
-        }
-
-        .contact-primary {
-            display: grid;
-            gap: 0.55rem;
-            justify-items: center;
-        }
-
-        .contact-whatsapp-btn {
-            width: 100%;
-            font-weight: 600;
-        }
-
-        .contact-whatsapp-btn .contact-option__icon {
-            width: 1.4rem;
-            height: 1.4rem;
-            flex-shrink: 0;
-        }
-
-        .contact-whatsapp-hint {
-            margin: 0;
-            font-size: 0.88rem;
-            font-weight: 500;
-            letter-spacing: 0.03em;
-            color: var(--color-ink-muted);
-        }
-
-        .contact-email-fallback {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            margin: 2.1rem 0 0;
-            font-size: 0.8rem;
-            font-weight: 400;
-            line-height: 1.5;
-            color: var(--color-ink-faint);
-        }
-
-        .contact-email-fallback__icon {
-            flex-shrink: 0;
-            width: 1.2rem;
-            height: 1.2rem;
-            color: var(--color-brass);
-        }
-
-        .contact-email-fallback a {
-            color: var(--color-ink-muted);
-            text-decoration: underline;
-            text-underline-offset: 0.14em;
-            text-decoration-color: rgba(166, 139, 91, 0.45);
-            transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-        }
-
-        .contact-email-fallback a:hover {
-            color: var(--color-brass);
-            text-decoration-color: var(--color-brass);
-        }
-
-        .modal__foot {
-            margin-top: 2rem;
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--color-hairline);
-        }
-
-        .modal__note {
-            margin: 0;
-            font-size: 0.82rem;
-            font-weight: 500;
-            line-height: 1.5;
-            color: var(--color-ink-muted);
-            text-align: center;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            html {
-                scroll-behavior: auto;
-            }
-
-            .reveal {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-
-            .btn:hover {
-                transform: none;
-            }
-        }
-    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Beyond Showrooms",
+        "url": "https://www.beyondshowrooms.com/",
+        "description": "Personal sourcing and project management for high-end designer furniture from Foshan, China — from factory selection through delivery and installation.",
+        "areaServed": "Worldwide",
+        "founder": {
+            "@type": "Person",
+            "name": "David Tan"
+        },
+        "sameAs": [
+            "https://www.youtube.com/@beyondshowrooms",
+            "https://insidefoshan.com"
+        ]
+    }
+    </script>
 </head>
-<body>
+<body id="top">
 
 <header class="page-header">
     <div class="page-header__inner">
-        <a href="#" class="page-logo" aria-label="Beyond Showrooms">Beyond Showrooms</a>
+        <a href="#top" class="page-logo" aria-label="Beyond Showrooms">Beyond Showrooms</a>
+        <a class="btn header-wa header-wa--plain" href="https://wa.me/8618500507027?text=Hi%20David%2C%20I%27m%20looking%20at%20Beyond%20Showrooms%20and%20want%20to%20talk%20about%20a%20home%20project." data-whatsapp aria-label="Contact David on WhatsApp">Contact</a>
     </div>
 </header>
 
 <main>
 
-    <!-- 1. Hero -->
     <section class="section hero-wrap" aria-labelledby="hero-title">
         <div class="container">
             <span class="watermark" aria-hidden="true">BS</span>
 
-            <p class="eyebrow reveal">From the Foshan docuseries</p>
+            <p class="eyebrow reveal">Planning a major home project?</p>
 
-            <figure class="doc-visual reveal reveal--d1" data-doc-visual>
-                <button type="button" class="doc-visual__play" data-doc-video-play aria-label="Play Episode 1 of the Beyond Showrooms docuseries">
-                    <img
-                        class="doc-visual__img"
-                        data-doc-visual-img
-                        src="images/img_journal_doc.jpeg"
-                        alt="Filming inside Foshan&rsquo;s furniture district for the Beyond Showrooms documentary"
-                        width="1280"
-                        height="720"
-                        fetchpriority="high"
-                        decoding="async"
-                    >
-                    <span class="doc-visual__play-icon" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v14.72L19 12 8 5.14z"/></svg>
-                    </span>
-                </button>
-                <div class="doc-visual__embed" data-doc-video-embed hidden></div>
-            </figure>
-            <script>
-            (function () {
-                var config = window.__BS_VISITOR;
-                if (!config) return;
-                var img = document.querySelector('[data-doc-visual-img]');
-                if (img) img.src = config.thumb;
-                if (config.staticHero) {
-                    var figure = document.querySelector('[data-doc-visual]');
-                    var playBtn = document.querySelector('[data-doc-video-play]');
-                    if (figure) figure.classList.add('doc-visual--static');
-                    if (playBtn) {
-                        playBtn.removeAttribute('aria-label');
-                        playBtn.setAttribute('tabindex', '-1');
-                    }
-                }
-            }());
-            </script>
+            <h1 id="hero-title" class="hero-title reveal reveal--d1">Furnish it from Foshan.<br>I&rsquo;ll take it from here.</h1>
 
-            <h1 id="hero-title" class="hero-title reveal reveal--d2">You&rsquo;ve seen Foshan.<br>Now let&rsquo;s talk about your home.</h1>
-
-            <p class="hero-lede reveal reveal--d3">
-                If you found me through the series &mdash; welcome. If you&rsquo;re just finding your way here &mdash; also welcome. Either way, you&rsquo;re in the right place.
+            <p class="hero-lede reveal reveal--d2">
+                Get <span class="emphasis">high-quality, designer-inspired furniture</span>, made to order for your home, <span class="emphasis">direct from the factory</span>. I run the process until every piece is in your home, installed.
             </p>
 
             <p class="founder-byline reveal reveal--d3">
@@ -1520,82 +78,49 @@
                     loading="eager"
                     decoding="async"
                 >
-                <span class="founder-byline__text"><span class="founder-byline__name">I&rsquo;m David</span> &mdash; I made the Secret Furniture Empire docuseries, and I&rsquo;m the one you&rsquo;ll actually talk to.</span>
+                <span class="founder-byline__text"><span class="founder-byline__name">I&rsquo;m David.</span> I made the Secret Furniture Empire docu-series, and I&rsquo;m the one you actually talk to.</span>
             </p>
 
-            <div class="btn-row btn-row--hero reveal reveal--d3">
-                <a class="btn btn--ink" href="#collections-title" data-hero-collections>See the collections</a>
-                <button type="button" class="btn" data-open-contact>Tell me about your project</button>
-            </div>
+            <figure class="doc-visual hero-still reveal reveal--d4">
+                <img
+                    class="doc-visual__img"
+                    src="images/img_journal_doc.jpeg"
+                    alt="On the floor of a Foshan furniture factory"
+                    width="1280"
+                    height="720"
+                    decoding="async"
+                >
+            </figure>
         </div>
     </section>
 
-    <!-- 2. The bridge -->
-    <section class="section section--warm" aria-labelledby="bridge-title">
+    <section class="section section--warm" id="quality" aria-labelledby="quality-title">
         <div class="container">
-            <h2 id="bridge-title" class="section-title reveal">What I built when I came home</h2>
+            <h2 id="quality-title" class="section-title section-title--lg reveal">The quality has to come first</h2>
             <p class="body-text reveal reveal--d1">
-                You&rsquo;ve now seen what&rsquo;s inside Foshan &mdash; the Louvre mall, the raw materials market, the factory floors, the QC lab, the destruction tests.
+                Buying direct only makes sense if the furniture is <span class="emphasis">genuinely good</span>. I work with Foshan factories where I deal directly with the owners&mdash;ones I&rsquo;d trust to furnish my own home. I&rsquo;m confident they are <span class="emphasis">among the best export-grade factories</span> there.
             </p>
             <p class="body-text reveal reveal--d2">
-                I spent weeks there asking one question: Can you get <span class="emphasis">genuinely premium furniture at rational prices</span> by buying direct from factories?
+                And it&rsquo;s not just me: Every client who has come with me &mdash; from the US, Middle East, and Mexico &mdash; was <span class="emphasis">impressed by the factories, and by the quality</span>.
+            </p>
+            <p class="body-text reveal reveal--d2">
+                I&rsquo;ve also mystery-shopped the <span class="emphasis">most successful domestic buying agent in China</span>. They use <span class="emphasis">largely the same suppliers</span>.
             </p>
 
-            <figure class="bridge-collage reveal reveal--d3">
-                <div class="bridge-collage__item bridge-collage__item--a">
-                    <img
-                        class="bridge-collage__img bridge-collage__img--showroom"
-                        src="images/img_1.jpg"
-                        alt="Curated whole-room collection in a partner factory showroom"
-                        width="1280"
-                        height="720"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                </div>
-                <div class="bridge-collage__item bridge-collage__item--b">
-                    <img
-                        class="bridge-collage__img bridge-collage__img--test"
-                        src="images/img_5.jpg"
-                        alt="Destruction test comparing premium Foshan leather sofa quality"
-                        width="967"
-                        height="544"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                </div>
-                <div class="bridge-collage__item bridge-collage__item--c">
-                    <img
-                        class="bridge-collage__img bridge-collage__img--home"
-                        src="images/img_4.jpg"
-                        alt="Family enjoying premium leather sofas in a furnished home"
-                        width="967"
-                        height="544"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                </div>
+            <figure class="client-photo reveal reveal--d3">
+                <img
+                    src="images/hero_2.jpg"
+                    alt="David with a client in a partner factory showroom"
+                    width="1400"
+                    height="824"
+                    loading="lazy"
+                    decoding="async"
+                >
             </figure>
 
-            <p class="body-text reveal reveal--d4" data-bridge-answer="youtube">
-                The answer, as you saw in <a href="https://www.youtube.com/@beyondshowrooms" target="_blank" rel="noopener noreferrer">our docuseries</a>, is yes &mdash; if you know where to look and who to trust. I&rsquo;m trying to be that person for you.
-            </p>
-            <p class="body-text reveal reveal--d4" data-bridge-answer="direct" hidden>
-                The answer, as you saw in our docuseries (<a href="https://www.youtube.com/@beyondshowrooms" target="_blank" rel="noopener noreferrer" class="body-text__external-link">watch it on YouTube<svg class="body-text__external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>), is yes &mdash; if you know where to look and who to trust. I&rsquo;m trying to be that person for you.
-            </p>
+            <p class="collections-block__intro collections-block__intro--body reveal reveal--d3"><span class="emphasis">Designer-level furniture, built to European standards</span>, photographed in the actual showrooms.</p>
         </div>
-    </section>
-
-    <!-- 3. Collections -->
-    <section class="section" aria-labelledby="collections-title">
-        <div class="container">
-            <div class="collections-block__header reveal">
-                <h2 id="collections-title" class="section-title section-title--lg" style="margin-bottom: 0;">Start with collections</h2>
-                <p class="collections-block__intro">Whether you&rsquo;re unsure where to start or worried about costly mistakes, I know furnishing a home is high-stakes.</p>
-                <p class="collections-block__intro">That&rsquo;s why I&rsquo;ll start you with <span class="emphasis">curated whole-room collections</span> &mdash; inspired by world-class luxury brands, each one a starting point ready for you to customize.</p>
-            </div>
-        </div>
-        <div class="container container--wide">
+        <div class="container container--wide quality-collections">
             <div class="collections-block reveal">
                 <div class="lp-case-carousel lp-approach__carousel" data-showroom-carousel aria-roledescription="carousel" tabindex="0">
                     <div class="lp-carousel-body">
@@ -1671,49 +196,74 @@
                         </div>
                     </div>
 
-                    <p class="collections-block__note">Real factory showrooms. Not AI renders or catalogs.</p>
+                    <p class="collections-block__note">Real factory showrooms. Photographed, not rendered.</p>
                 </div>
 
                 <div class="collections-block__cta">
-                    <button type="button" class="lp-btn--brass" data-open-showroom>Browse more collections</button>
+                    <button type="button" class="lp-btn--brass" data-open-showroom>See more collections</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 4. My Process -->
-    <section class="section section--warm" aria-labelledby="process-title">
+    <section class="section" id="why" aria-labelledby="why-title">
         <div class="container">
-            <h2 id="process-title" class="section-title section-title--lg reveal">My Process</h2>
-            <p class="section-bridge reveal reveal--d1">I&rsquo;ll simplify furnishing a large home for you, by using 3 easy steps.</p>
+            <h2 id="why-title" class="section-title section-title--lg reveal">Better than buying at home</h2>
+            <p class="section-bridge reveal reveal--d1">A local showroom is simpler. But for the right home, buying from Foshan is worth the effort.</p>
+            <ul class="compare reveal reveal--d2">
+                <li class="compare__item">
+                    <span class="compare__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>
+                    <h3 class="compare__title">More options</h3>
+                    <p class="compare__line"><span class="compare__tag">At a local store</span> Limited choice and often small retail stores. Outside major cities, there may be no luxury showrooms at all.</p>
+                    <p class="compare__line compare__line--here"><span class="compare__tag">Foshan direct</span> Hundreds of multi-story showrooms for designer furniture, all in one city.</p>
+                </li>
+                <li class="compare__item">
+                    <span class="compare__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-6h4v6"/></svg></span>
+                    <h3 class="compare__title">Freedom to customize</h3>
+                    <p class="compare__line"><span class="compare__tag">At a local store</span> Custom work is limited. When it is offered, it is extremely expensive.</p>
+                    <p class="compare__line compare__line--here"><span class="compare__tag">Foshan direct</span> Size, materials, and upholstery you can easily change, often at little or no extra cost.</p>
+                </li>
+                <li class="compare__item">
+                    <span class="compare__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 6H9.5a3.5 3.5 0 0 0 0 7H14a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+                    <h3 class="compare__title">Luxury that&rsquo;s rational</h3>
+                    <p class="compare__line"><span class="compare__tag">At a local store</span> Staggering markups for luxury retail brands.</p>
+                    <p class="compare__line compare__line--here"><span class="compare__tag">Foshan direct</span> Meaningfully lower costs for designer furniture, even after shipping and taxes.</p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section section--warm" id="process" aria-labelledby="process-title">
+        <div class="container">
+            <h2 id="process-title" class="section-title section-title--lg reveal">My process</h2>
+            <p class="section-bridge reveal reveal--d1">This is what happens when you hire me, in plain terms.</p>
 
             <ol class="steps">
                 <li class="step reveal reveal--d1">
                     <span class="step__num" aria-hidden="true">1</span>
                     <h3 class="step__title">Tell me about your home</h3>
                     <p class="step__body">
-                        Share your floor plans, photos, budget, and concerns. <span class="emphasis">No pressure to commit</span> &mdash; let&rsquo;s confirm we&rsquo;re a good fit.
+                        Share floor plans, photos, a budget, and the rooms that matter. <span class="emphasis">The first conversation is free</span>. I&rsquo;ll answer basic questions. If we&rsquo;re not a good fit, I&rsquo;ll tell you.
                     </p>
                 </li>
                 <li class="step reveal reveal--d2">
                     <span class="step__num" aria-hidden="true">2</span>
-                    <h3 class="step__title">Choose and refine your direction</h3>
+                    <h3 class="step__title">Create your plan</h3>
                     <p class="step__body">
-                        Choose a direction from my curated collections, then we&rsquo;ll refine it to your taste and budget.
+                        A <span class="emphasis">project fee of $750</span> starts this work: staged collections from the right factories, then an itemized furniture plan fitted to your floor plan.
                     </p>
                 </li>
                 <li class="step reveal reveal--d3">
                     <span class="step__num" aria-hidden="true">3</span>
-                    <h3 class="step__title">I&rsquo;ll handle everything</h3>
+                    <h3 class="step__title">Review and place order</h3>
                     <p class="step__body">
-                        Tailoring, production, QC, shipping, customs, delivery, and placement. <span class="emphasis">I stay involved until it&rsquo;s in your home.</span>
+                        Review the plan, then order. Most clients come to Foshan to see pieces in person; some order remotely. My service fee is <span class="emphasis">15% of the ex-factory total</span>, with the $750 credited.
                     </p>
                 </li>
             </ol>
-
             <div class="after-order reveal">
-                <p class="eyebrow">From factory to your home</p>
-                <p class="after-order__intro">Once you confirm an order, I stay involved at every step:</p>
+                <h3 class="post-order__title">Post-order, from factory to home</h3>
+                <p class="after-order__intro">Once you confirm an order, I stay involved until every piece is installed in your home:</p>
 
                 <div class="after-order-grid" data-after-order-grid tabindex="0" aria-label="Order fulfillment steps">
                     <div class="after-order-grid__cells">
@@ -1756,75 +306,44 @@
                     <div class="after-order-grid__dots" data-after-order-dots role="tablist" aria-label="Select step"></div>
                 </div>
 
-                <div class="process-result reveal">
-                    <span class="process-result__label">The result</span>
-                    <p class="process-result__text">With my help, you can furnish with confidence, less stress, and <span class="emphasis">reach a final outcome you&rsquo;ll love</span>. I&rsquo;ll guide you every step of the way.</p>
-                    <div class="process-result__cta">
-                        <button type="button" class="btn" data-open-contact>Have a project? Tell me about it</button>
-                    </div>
-                </div>
+                <aside class="after-order__note reveal" aria-label="Overseas aftercare">
+                    <p class="after-order__note-head">
+                        <svg class="after-order__note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12.572l-7.5 7.428-7.5-7.428a5 5 0 1 1 7.5-6.566 5 5 0 1 1 7.5 6.572z"/></svg>
+                        <span class="after-order__note-label">Overseas aftercare</span>
+                    </p>
+                    <p class="after-order__note-body">Factories will cover replacement parts&mdash;free in the first year, then at cost. Full unit replacements are for domestic (China) orders only.</p>
+                </aside>
             </div>
         </div>
     </section>
 
-    <!-- 5. Why trust me -->
-    <section class="section" aria-labelledby="trust-title">
+    <section class="section" id="factories" aria-labelledby="factories-title">
         <div class="container">
-            <div class="trust-section__header reveal">
-                <h2 id="trust-title" class="section-title section-title--lg">I didn&rsquo;t just visit factories.<br>I filmed inside them.</h2>
-                <p class="body-text reveal reveal--d1">
-                    You watched me walk the floors, pull apart sofas, and run head-to-head tests.
-                </p>
-                <p class="body-text reveal reveal--d1">
-                    I&rsquo;ve since curated <span class="emphasis">25+ premium furniture factories</span> from Foshan, including the ones you&rsquo;ve seen in the docuseries. More are being added monthly.
-                </p>
-            </div>
-        </div>
-        <div class="container">
-            <figure class="trust-visual reveal reveal--d2">
-                <button type="button" class="trust-visual__trigger" data-open-partners aria-label="Explore sample factory partners">
-                    <img
-                        class="trust-visual__img"
-                        src="images/factory_3.jpg"
-                        alt="Export-grade furniture manufacturing campus in Foshan"
-                        width="1200"
-                        height="750"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                    <span class="trust-visual__hint" aria-hidden="true">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-                    </span>
-                </button>
-                <figcaption class="trust-visual__footer">
-                    <button type="button" class="trust-visual__link" data-open-partners>Explore sample factories</button>
-                </figcaption>
+            <h2 id="factories-title" class="section-title section-title--lg reveal">A curated network of high-end factories</h2>
+            <p class="body-text reveal reveal--d1">
+                Some factories cover broad categories: living, dining, and bedroom. Others are specialists, focused on a single product such as outdoor furniture or dining tables. Broad-category factories come in <span class="emphasis">two general price tiers</span>.
+            </p>
+            <p class="body-text reveal reveal--d2">
+                You can mix factories for the rooms, style, and budget. My core set is chosen from 25+ export-grade factories in Foshan; once a project is underway, I share the catalogs and showroom photos.
+            </p>
+            <figure class="factory-photo reveal reveal--d3">
+                <img
+                    src="images/factory_3.jpg"
+                    alt="Export-grade furniture manufacturing campus in Foshan"
+                    width="1200"
+                    height="750"
+                    loading="lazy"
+                    decoding="async"
+                >
             </figure>
         </div>
-        <div class="container">
-            <div class="factory-direct reveal reveal--d3">
-                <p class="eyebrow">Why buy from factories?</p>
-                <ul class="factory-direct__list">
-                    <li class="factory-direct__item">
-                        <span class="factory-direct__label">Bespoke designer furniture</span> &mdash; Custom sizes, materials, fabrics, and finishes readily available.
-                    </li>
-                    <li class="factory-direct__item">
-                        <span class="factory-direct__label">More home for your budget</span> &mdash; Access options not available to you locally, while avoiding luxury markups.
-                    </li>
-                    <li class="factory-direct__item">
-                        <span class="factory-direct__label">Trusted network of export-grade factories</span> &mdash; Thousands of large home projects already completed worldwide.
-                    </li>
-                </ul>
-            </div>
-        </div>
     </section>
 
-    <!-- 6. Success stories -->
-    <section class="section section--warm case-studies" aria-labelledby="homes-title">
+    <section class="section case-studies" id="homes" aria-labelledby="homes-title">
         <div class="container">
             <div class="case-studies__header reveal">
-                <h2 id="homes-title" class="section-title section-title--lg">Success Stories</h2>
-                <p class="case-studies__intro reveal reveal--d1">Showrooms show what&rsquo;s possible. Here are <span class="emphasis">actual finished homes</span>, delivered by my factory partners.</p>
+                <h2 id="homes-title" class="section-title section-title--lg">Project case studies</h2>
+                <p class="case-studies__intro reveal reveal--d1">Finished homes from my partner factories&mdash;this is the level they deliver.</p>
             </div>
         </div>
         <div class="container container--wide">
@@ -1841,119 +360,47 @@
                                     <div class="lp-case-carousel__track" data-case-track>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_1.jpg"
-                                                    alt="Grand living room with crystal chandelier and modular sectional"
-                                                    width="1600"
-                                                    height="1000"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_1.jpg" alt="Grand living room with crystal chandelier and modular sectional" width="1600" height="1000" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_2.jpg"
-                                                    alt="Editorial penthouse living room with curved modular sofa and city views"
-                                                    width="1600"
-                                                    height="1000"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_2.jpg" alt="Editorial penthouse living room with curved modular sofa and city views" width="1600" height="1000" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_3.jpg"
-                                                    alt="Sun-drenched organic modern living room with woven pendant light"
-                                                    width="1600"
-                                                    height="1000"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_3.jpg" alt="Sun-drenched organic modern living room with woven pendant light" width="1600" height="1000" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_4.jpg"
-                                                    alt="Modern living room with tufted modular seating and living green wall"
-                                                    width="1600"
-                                                    height="1000"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_4.jpg" alt="Modern living room with tufted modular seating and living green wall" width="1600" height="1000" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_5.jpg"
-                                                    alt="Formal dining room with black marble table and crystal chandelier"
-                                                    width="1600"
-                                                    height="1000"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_5.jpg" alt="Formal dining room with black marble table and crystal chandelier" width="1600" height="1000" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_6.jpg"
-                                                    alt="Minimalist primary bedroom with bouclé modular bed and fluted wood paneling"
-                                                    width="1206"
-                                                    height="1603"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_6.jpg" alt="Minimalist primary bedroom with bouclé modular bed and fluted wood paneling" width="1206" height="1603" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_7.jpg"
-                                                    alt="Neutral open-plan living room with modular sectional and marble coffee tables"
-                                                    width="1206"
-                                                    height="1387"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_7.jpg" alt="Neutral open-plan living room with modular sectional and marble coffee tables" width="1206" height="1387" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_8.jpg"
-                                                    alt="Classic living room with curved sectional and marble fireplace"
-                                                    width="1206"
-                                                    height="1603"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_8.jpg" alt="Classic living room with curved sectional and marble fireplace" width="1206" height="1603" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                         <article class="lp-case-carousel__slide" data-case-slide aria-roledescription="slide">
                                             <figure class="lp-case-carousel__figure">
-                                                <img
-                                                    class="lp-case-carousel__img"
-                                                    src="images/case_study_9.jpg"
-                                                    alt="Luxury primary suite with wraparound headboard and garden views"
-                                                    width="1600"
-                                                    height="1000"
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                >
+                                                <img class="lp-case-carousel__img" src="images/case_study_9.jpg" alt="Luxury primary suite with wraparound headboard and garden views" width="1600" height="1000" loading="lazy" decoding="async">
                                             </figure>
                                         </article>
                                     </div>
@@ -1969,57 +416,39 @@
                     <div class="lp-case-carousel__caption-panel">
                         <article class="lp-case-carousel__caption" data-case-caption>
                             <h3 class="lp-case-carousel__title">Grand living under crystal light</h3>
-                            <p class="lp-case-carousel__desc">
-                                Minotti-inspired plush modular sectional under tiered crystal light &mdash; warm neutrals with teal and burnt-orange accents across a full living footprint.
-                            </p>
+                            <p class="lp-case-carousel__desc">Minotti-inspired plush modular sectional under tiered crystal light &mdash; warm neutrals with teal and burnt-orange accents across a full living footprint.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">Editorial penthouse living</h3>
-                            <p class="lp-case-carousel__desc">
-                                Minotti-inspired curved modular sofa with bold textiles in an open penthouse living room.
-                            </p>
+                            <p class="lp-case-carousel__desc">Minotti-inspired curved modular sofa with bold textiles in an open penthouse living room.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">Sun-drenched organic modern</h3>
-                            <p class="lp-case-carousel__desc">
-                                RH Cloud&ndash;inspired sink-in sectional in soft organic neutrals, flooded with natural light.
-                            </p>
+                            <p class="lp-case-carousel__desc">RH Cloud&ndash;inspired sink-in sectional in soft organic neutrals, flooded with natural light.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">Sculpture and serenity</h3>
-                            <p class="lp-case-carousel__desc">
-                                B&amp;B Italia&ndash;inspired Camaleonda tufted modular seating in a calm, sculptural living arrangement.
-                            </p>
+                            <p class="lp-case-carousel__desc">B&amp;B Italia&ndash;inspired Camaleonda tufted modular seating in a calm, sculptural living arrangement.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">Dining as a statement</h3>
-                            <p class="lp-case-carousel__desc">
-                                Poliform-inspired upholstered dining chairs at a black marble table &mdash; leather sectional visible beyond.
-                            </p>
+                            <p class="lp-case-carousel__desc">Poliform-inspired upholstered dining chairs at a black marble table &mdash; leather sectional visible beyond.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">Quiet texture, deep rest</h3>
-                            <p class="lp-case-carousel__desc">
-                                B&amp;B Italia&ndash;inspired Camaleonda boucl&eacute; bed with layered linens in a quiet primary suite.
-                            </p>
+                            <p class="lp-case-carousel__desc">B&amp;B Italia&ndash;inspired Camaleonda boucl&eacute; bed with layered linens in a quiet primary suite.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">Layered neutrals, open-plan calm</h3>
-                            <p class="lp-case-carousel__desc">
-                                Low-profile modular sectional in coordinated neutrals across an open-plan living space.
-                            </p>
+                            <p class="lp-case-carousel__desc">Low-profile modular sectional in coordinated neutrals across an open-plan living space.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">Classic bones, modern ease</h3>
-                            <p class="lp-case-carousel__desc">
-                                Minotti-inspired boucl&eacute; curved sectional in a heritage interior with classic architectural details.
-                            </p>
+                            <p class="lp-case-carousel__desc">Minotti-inspired boucl&eacute; curved sectional in a heritage interior with classic architectural details.</p>
                         </article>
                         <article class="lp-case-carousel__caption" data-case-caption hidden>
                             <h3 class="lp-case-carousel__title">A sanctuary primary suite</h3>
-                            <p class="lp-case-carousel__desc">
-                                Minotti-inspired tufted daybed and leather headboard in a serene primary retreat.
-                            </p>
+                            <p class="lp-case-carousel__desc">Minotti-inspired tufted daybed and leather headboard in a serene primary retreat.</p>
                         </article>
                     </div>
 
@@ -2031,8 +460,7 @@
         </div>
     </section>
 
-    <!-- 7. My promise & closing -->
-    <section class="section section--closing" aria-labelledby="promise-title">
+    <section class="section section--closing" id="promise" aria-labelledby="promise-title">
         <div class="container">
             <div class="founder-intro reveal">
                 <figure class="founder-portrait">
@@ -2053,10 +481,7 @@
             </div>
 
             <p class="body-text reveal reveal--d1">
-                I&rsquo;m selective &mdash; no sales team, no call centre. You work with me, start to finish.
-            </p>
-            <p class="body-text reveal reveal--d2">
-                <span class="emphasis">No fees until you place an order.</span> If you&rsquo;re serious about your project, I&rsquo;m serious about helping you. If it&rsquo;s not the right fit, I&rsquo;ll say so &mdash; no hard sell, no follow-up spam.
+                I&rsquo;m selective. No sales team, and no call centre. You work with me from the first message to the day it&rsquo;s in your home. If it&rsquo;s not the right fit, I&rsquo;ll say so.
             </p>
 
             <p class="founder-sign reveal reveal--d3">
@@ -2066,9 +491,19 @@
             <hr class="founder-divider reveal" aria-hidden="true">
 
             <div class="founder-closing reveal">
-                <p class="founder-closing__lede">Ready when you are &mdash; tell me what&rsquo;s on your mind.</p>
+                <p class="founder-closing__lede">Ready when you are.</p>
                 <div class="btn-row founder-closing__btn">
-                    <button type="button" class="btn" data-open-contact>CONTACT ME, tell me what you need</button>
+                    <a class="btn" href="https://wa.me/8618500507027?text=Hi%20David%2C%20I%27m%20looking%20at%20Beyond%20Showrooms%20and%20want%20to%20talk%20about%20a%20home%20project." data-whatsapp>
+                        <svg class="header-wa__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                        WhatsApp me
+                    </a>
+                </div>
+                <p class="contact-whatsapp-hint">+86 185 0050 7027</p>
+                <div class="email-line">
+                    <details class="email-disclosure">
+                        <summary>Prefer email? Click here.</summary>
+                        <p class="email-reveal"><a href="mailto:david.tan@wildchina.com?subject=My%20home%20project">david.tan@wildchina.com</a></p>
+                    </details>
                 </div>
             </div>
         </div>
@@ -2078,54 +513,53 @@
 
 <footer class="site-footer">
     <div class="site-footer__inner">
+        <div class="site-footer__sister">
+            <p class="site-footer__label">More on Foshan</p>
+            <a class="sister-mark" href="https://insidefoshan.com" target="_blank" rel="noopener noreferrer">InsideFoshan</a>
+        </div>
+        <div class="site-footer__media">
+            <p class="site-footer__label">Watch on YouTube</p>
+            <a class="site-footer__series-link" href="https://www.youtube.com/playlist?list=PLem0TGDnDhbR_qDtnVKB2VRIXDtdB-se5" target="_blank" rel="noopener noreferrer">The Secret Furniture Empire</a>
+        </div>
         <div class="site-footer__brand">
             <p class="site-footer__label">From the team behind</p>
-            <a
-                class="site-footer__logo-link"
-                href="https://www.wildchina.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WildChina (opens in new tab)"
-            >
-                <img
-                    class="site-footer__logo"
-                    src="images/wildchina_logo.svg"
-                    alt=""
-                    width="1030"
-                    height="115"
-                    loading="lazy"
-                    decoding="async"
-                >
+            <a class="site-footer__logo-link" href="https://www.wildchina.com" target="_blank" rel="noopener noreferrer" aria-label="WildChina (opens in new tab)">
+                <img class="site-footer__logo" src="images/wildchina_logo.svg" alt="" width="1030" height="115" loading="lazy" decoding="async">
             </a>
         </div>
         <div class="site-footer__note">
             <p>Bespoke travel in China since 2001.</p>
-            <p>Visiting Foshan? WildChina handles travel and logistics.</p>
+            <p>Visiting Foshan? WildChina can handle your travel.</p>
             <p>
-                <a href="https://wildchina.com/tour/foshan-guangdong-designer-furniture/" target="_blank" rel="noopener noreferrer">View itinerary here.</a>
+                <a href="https://wildchina.com/tour/foshan-guangdong-designer-furniture/" target="_blank" rel="noopener noreferrer">View their itinerary</a>
             </p>
         </div>
     </div>
 </footer>
 
-<!-- Factory partners modal -->
-<div id="partnersModal" class="lp-modal lp-modal--partners" hidden>
-    <div class="lp-modal__backdrop" data-close-partners></div>
-    <div
-        class="lp-modal__panel lp-modal__panel--partners"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="partnersModalTitle"
-    >
-        <button type="button" class="lp-modal__close" data-close-partners aria-label="Close">&times;</button>
-        <span class="lp-modal-eyebrow">My network</span>
-        <h2 id="partnersModalTitle" class="lp-modal__title">Sample factory partners</h2>
-        <p class="lp-modal__lead">I&rsquo;ve curated a network of <span class="emphasis">over 25 export-grade manufacturers</span> in Foshan, vetted for quality, scale, and large-home projects. Here are a few sample partners.</p>
-        <div id="partnersList" class="lp-partners-list" aria-live="polite"></div>
+<div id="showroomCarouselLightbox" class="carousel-lightbox" hidden>
+    <button type="button" class="carousel-lightbox__backdrop" data-close-carousel-lightbox aria-label="Close enlarged image"></button>
+    <div class="carousel-lightbox__panel" role="dialog" aria-modal="true" aria-label="Enlarged showroom photo">
+        <button type="button" class="carousel-lightbox__close" data-close-carousel-lightbox aria-label="Close">&times;</button>
+        <div class="carousel-lightbox__stage">
+            <button type="button" class="carousel-lightbox__nav carousel-lightbox__nav--prev" data-carousel-lightbox-prev aria-label="Previous collection">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <figure class="carousel-lightbox__figure">
+                <img class="carousel-lightbox__img" alt="" decoding="async">
+            </figure>
+            <button type="button" class="carousel-lightbox__nav carousel-lightbox__nav--next" data-carousel-lightbox-next aria-label="Next collection">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+        </div>
+        <figcaption class="carousel-lightbox__caption" hidden></figcaption>
+        <button type="button" class="lp-btn--brass carousel-lightbox__cta" data-carousel-lightbox-collections>
+            See more collections
+            <svg class="carousel-lightbox__cta-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
     </div>
 </div>
 
-<!-- Showroom preview modal -->
 <div id="showroomModal" class="lp-modal lp-modal--showroom" hidden>
     <div class="lp-modal__backdrop" data-close-showroom></div>
     <div class="lp-modal__panel lp-modal__panel--showroom" role="dialog" aria-modal="true" aria-labelledby="showroomModalTitle">
@@ -2137,10 +571,7 @@
             </div>
             <div class="lp-showroom-header__ask">
                 <p class="lp-showroom-header__prompt">See something you like?</p>
-                <button type="button" class="lp-showroom-header__cta" data-showroom-book>
-                    <svg class="lp-showroom-header__cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                    Contact me
-                </button>
+                <button type="button" class="lp-showroom-header__cta" data-showroom-book>WhatsApp me</button>
             </div>
         </header>
         <div class="lp-showroom-scroll" id="showroomScroll">
@@ -2149,33 +580,8 @@
             </div>
             <div class="lp-showroom-cta">
                 <p class="lp-showroom-cta__kicker">Everything here is available for purchase.</p>
-                <p class="lp-showroom-cta__kicker">More options and factory brochures on request.</p>
+                <p class="lp-showroom-cta__kicker">More options once we&rsquo;re talking.</p>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Contact modal (placeholder — wire up URLs before launch) -->
-<div id="contactModal" class="modal" hidden>
-    <div class="modal__backdrop" data-close-contact></div>
-    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
-        <button type="button" class="modal__close" data-close-contact aria-label="Close">&times;</button>
-        <h2 id="contactModalTitle" class="modal__title">Tell me about your project</h2>
-        <p class="modal__lede">Quick questions welcome. Let&rsquo;s chat &mdash; I&rsquo;ll be straight about whether I can help.</p>
-        <div class="contact-primary">
-            <a href="https://wa.me/8618500507027" class="btn contact-whatsapp-btn" data-contact="whatsapp" target="_blank" rel="noopener noreferrer">
-                <svg class="contact-option__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-                WhatsApp me
-            </a>
-            <p class="contact-whatsapp-hint">+86 185 0050 7027</p>
-        </div>
-        <p class="contact-email-fallback">
-            <svg class="contact-email-fallback__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            Prefer email?
-            <a href="mailto:david.tan@wildchina.com?subject=My%20home%20project" data-contact="email">david.tan@wildchina.com</a>
-        </p>
-        <div class="modal__foot">
-            <p class="modal__note">No obligation. No fees until you order.</p>
         </div>
     </div>
 </div>
@@ -2183,60 +589,7 @@
 <script src="founder_image_captions.js"></script>
 <script src="founder_factory_partners.js"></script>
 <script src="founder_showroom.js"></script>
-<script>
-(function () {
-    var modal = document.getElementById('contactModal');
-    var openBtns = document.querySelectorAll('[data-open-contact]');
-    var closeEls = document.querySelectorAll('[data-close-contact]');
-    var lastFocus = null;
-
-    function closeModal() {
-        if (!modal) return;
-        modal.hidden = true;
-        if (window.syncFounderModalBodyLock) {
-            window.syncFounderModalBodyLock();
-        } else if (!document.getElementById('showroomModal') || document.getElementById('showroomModal').hidden) {
-            document.body.style.overflow = '';
-        }
-        if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
-    }
-
-    function openModal() {
-        if (!modal) return;
-        lastFocus = document.activeElement;
-        modal.hidden = false;
-        if (window.syncFounderModalBodyLock) {
-            window.syncFounderModalBodyLock();
-        } else {
-            document.body.style.overflow = 'hidden';
-        }
-        var closeBtn = modal.querySelector('.modal__close');
-        if (closeBtn) closeBtn.focus({ preventScroll: true });
-    }
-
-    window.openFounderContact = openModal;
-
-    openBtns.forEach(function (btn) {
-        btn.addEventListener('click', openModal);
-    });
-
-    closeEls.forEach(function (el) {
-        el.addEventListener('click', closeModal);
-    });
-
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal && !modal.hidden) {
-            closeModal();
-        }
-    });
-
-    requestAnimationFrame(function () {
-        document.querySelectorAll('.reveal').forEach(function (el) {
-            el.classList.add('is-visible');
-        });
-    });
-})();
-</script>
+<script src="index.js"></script>
 
 </body>
 </html>
