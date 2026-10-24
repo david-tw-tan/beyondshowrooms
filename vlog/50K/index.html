@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>50k for everything?</title>
+  <script>
+  try {
+    if (new URLSearchParams(location.search).has('noanalytics')) {
+      localStorage.setItem('umami.disabled', '1');
+    }
+  } catch (e) {}
+  </script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="9070ab5c-784f-469f-b0df-e73f0f32084e"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Permanent+Marker&display=swap" rel="stylesheet" />
