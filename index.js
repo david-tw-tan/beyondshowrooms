@@ -1,9 +1,58 @@
 (function () {
-    var WHATSAPP_URL = 'https://wa.me/8618500507027?text=' + encodeURIComponent("Hi David, I'm looking at Beyond Showrooms and want to talk about a home project.");
+    var contactModal = document.getElementById('contactModal');
+    var contactFocus = null;
+
+    function syncContactScrollLock() {
+        if (typeof window.syncFounderModalBodyLock === 'function') {
+            window.syncFounderModalBodyLock();
+            return;
+        }
+        if (contactModal) {
+            document.body.style.overflow = contactModal.hidden ? '' : 'hidden';
+        }
+    }
+
+    function closeFounderContactModal() {
+        if (!contactModal || contactModal.hidden) return;
+        contactModal.hidden = true;
+        syncContactScrollLock();
+        if (contactFocus && typeof contactFocus.focus === 'function') {
+            contactFocus.focus({ preventScroll: true });
+        }
+        contactFocus = null;
+    }
+
+    function openFounderContactModal() {
+        if (!contactModal) return;
+        contactFocus = document.activeElement;
+        contactModal.hidden = false;
+        syncContactScrollLock();
+        var closeBtn = contactModal.querySelector('.modal__close');
+        if (closeBtn) closeBtn.focus({ preventScroll: true });
+    }
 
     window.openFounderContact = function () {
-        window.location.href = WHATSAPP_URL;
+        openFounderContactModal();
     };
+
+    document.querySelectorAll('[data-open-contact]').forEach(function (el) {
+        el.addEventListener('click', function (event) {
+            event.preventDefault();
+            openFounderContactModal();
+        });
+    });
+
+    document.querySelectorAll('[data-close-contact]').forEach(function (el) {
+        el.addEventListener('click', closeFounderContactModal);
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        if (contactModal && !contactModal.hidden) {
+            event.preventDefault();
+            closeFounderContactModal();
+        }
+    });
 
     requestAnimationFrame(function () {
         document.querySelectorAll('.reveal').forEach(function (el) {
@@ -128,14 +177,6 @@
         lightboxFocus = null;
     }
 
-    function openCollectionsFromLightbox() {
-        var opener = document.querySelector('.collections-block__cta [data-open-showroom]');
-        closeShowroomCarouselLightbox();
-        if (opener) {
-            opener.click();
-        }
-    }
-
     function initShowroomCarouselLightbox() {
         var carousel = document.querySelector('[data-showroom-carousel]');
         if (!carousel || !lightbox) return;
@@ -178,11 +219,6 @@
             if (activeShowroomCarousel) {
                 stepShowroomCarousel(activeShowroomCarousel, 1);
             }
-        });
-
-        lightbox.querySelector('[data-carousel-lightbox-collections]')?.addEventListener('click', function (event) {
-            event.preventDefault();
-            openCollectionsFromLightbox();
         });
 
         document.addEventListener('keydown', function (event) {

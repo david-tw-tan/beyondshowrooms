@@ -433,7 +433,7 @@ function initShowroomModal() {
         el.addEventListener('click', async () => {
             await closeShowroomModal();
             if (typeof window.openFounderContact === 'function') {
-                window.openFounderContact();
+                window.openFounderContact('catalog');
             }
         });
     });
@@ -548,7 +548,9 @@ async function warmImageUrlQueue(urls) {
  */
 async function runHomepageImageWarmPipeline() {
     await warmImageUrlQueue(getInPageWarmUrls());
-    await warmImageUrlQueue(getModalPrefetchUrls());
+    if (showroomModal) {
+        await warmImageUrlQueue(getModalPrefetchUrls());
+    }
 }
 
 function scheduleHomepageImageWarmPipeline() {
@@ -707,6 +709,16 @@ function handleFounderModalEscape(event) {
     if (showroomModal && !showroomModal.hidden) {
         event.preventDefault();
         closeShowroomModal();
+        return;
+    }
+
+    const contactModal = document.getElementById('contactModal');
+    if (contactModal && !contactModal.hidden) {
+        event.preventDefault();
+        contactModal.hidden = true;
+        if (typeof window.syncFounderModalBodyLock === 'function') {
+            window.syncFounderModalBodyLock();
+        }
     }
 }
 

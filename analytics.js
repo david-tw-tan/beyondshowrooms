@@ -21,6 +21,7 @@
         { selector: '[data-whatsapp]', event: 'contact_whatsapp' },
         { selector: '[data-open-contact]', event: 'contact_cta' },
         { selector: '[data-hero-collections]', event: 'hero_collections' },
+        { selector: '[data-explore-styles]', event: 'showroom_cta' },
         { selector: '[data-open-showroom]', event: 'showroom_cta' },
         { selector: '[data-carousel-lightbox-collections]', event: 'showroom_cta' },
         { selector: '[data-open-partners]', event: 'partners_cta' },
@@ -431,7 +432,6 @@
         observeSectionOnce(document.getElementById('promise-title'), 'scroll_promise');
         observeSectionOnce(document.querySelector('.site-footer'), 'scroll_bottom');
 
-        watchModalScrollBottom('showroomModal', '.lp-showroom-scroll', '.lp-showroom-cta', 'showroom');
         watchModalScrollBottom('partnersModal', '.lp-partners-list', '.lp-partner-card:last-child', 'partners');
 
         initSuccessStoriesCarouselTracking();

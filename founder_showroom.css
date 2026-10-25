@@ -135,6 +135,10 @@
     }
 }
 
+a.lp-btn--brass {
+    text-decoration: none;
+}
+
 .lp-btn--brass {
     display: inline-flex;
     align-items: center;
