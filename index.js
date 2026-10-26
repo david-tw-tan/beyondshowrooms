@@ -66,6 +66,7 @@
     var lightboxTitle = lightbox && lightbox.querySelector('.carousel-lightbox__title');
     var lightboxSubtitle = lightbox && lightbox.querySelector('.carousel-lightbox__subtitle');
     var lightboxCta = lightbox && lightbox.querySelector('.carousel-lightbox__cta');
+    var lightboxNote = lightbox && lightbox.querySelector('.carousel-lightbox__note');
     var lightboxPanel = lightbox && lightbox.querySelector('.carousel-lightbox__panel');
     var lightboxPrev = lightbox && lightbox.querySelector('[data-carousel-lightbox-prev]');
     var lightboxNext = lightbox && lightbox.querySelector('[data-carousel-lightbox-next]');
@@ -83,7 +84,8 @@
             dialogLabel: 'Enlarged showroom photo',
             prevLabel: 'Previous collection',
             nextLabel: 'Next collection',
-            showCta: true
+            showCta: true,
+            showNote: true
         },
         case: {
             root: '[data-case-carousel]',
@@ -93,7 +95,8 @@
             dialogLabel: 'Enlarged project photo',
             prevLabel: 'Previous home',
             nextLabel: 'Next home',
-            showCta: false
+            showCta: false,
+            showNote: false
         }
     };
 
@@ -134,16 +137,11 @@
 
             var label = showroomCap.querySelector('.lp-case-carousel__label');
             var note = showroomCap.querySelector('.lp-showroom-caption__note');
-            var parts = [];
 
-            if (label && label.textContent.trim()) {
-                parts.push(label.textContent.trim());
-            }
-            if (note && note.textContent.trim()) {
-                parts.push(note.textContent.trim());
-            }
-
-            return { title: parts.join(' — '), subtitle: '' };
+            return {
+                title: label && label.textContent.trim() ? label.textContent.trim() : '',
+                subtitle: note && note.textContent.trim() ? note.textContent.trim() : ''
+            };
         }
 
         var caseCap = carousel.querySelector('[data-case-caption]:not([hidden])');
@@ -219,6 +217,9 @@
         if (lightboxCta) {
             lightboxCta.hidden = !config.showCta;
         }
+        if (lightboxNote) {
+            lightboxNote.hidden = !config.showNote;
+        }
     }
 
     function openCarouselLightbox(carousel, kind, trigger) {
@@ -253,6 +254,9 @@
         setLightboxCaption('', '');
         if (lightboxCta) {
             lightboxCta.hidden = false;
+        }
+        if (lightboxNote) {
+            lightboxNote.hidden = true;
         }
         unlockScroll();
 
