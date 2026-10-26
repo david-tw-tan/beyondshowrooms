@@ -26,7 +26,7 @@
 .collections-block__header { margin-bottom: 1.25rem; }
 .collections-block__intro {
     margin: 0.75rem 0 0;
-    font-size: clamp(1rem, 2vw, 1.08rem);
+    font-size: clamp(1.0625rem, 2.3vw, 1.125rem);
     line-height: 1.75;
     color: var(--color-ink-muted, #5e5a54);
 }
@@ -58,7 +58,7 @@
 .case-studies__intro {
     margin: 0.75rem 0 0;
     margin-bottom: clamp(2rem, 5vw, 2.75rem);
-    font-size: clamp(1rem, 2vw, 1.08rem);
+    font-size: clamp(1.0625rem, 2.3vw, 1.125rem);
     line-height: 1.75;
     color: var(--color-ink-muted, #5e5a54);
 }
@@ -88,7 +88,7 @@
 }
 
 .case-studies .lp-case-carousel__desc {
-    font-size: clamp(0.82rem, 1.75vw, 0.9rem);
+    font-size: clamp(0.95rem, 2vw, 1.02rem);
     line-height: 1.6;
 }
 
@@ -310,7 +310,7 @@ a.lp-btn--brass {
 .lp-showroom-caption__note {
     margin: 0;
     max-width: 36rem;
-    font-size: clamp(0.82rem, 2vw, 0.92rem);
+    font-size: clamp(0.95rem, 2vw, 1.02rem);
     font-style: italic;
     line-height: 1.55;
     color: var(--color-ink-muted);

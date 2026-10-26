@@ -7,10 +7,9 @@ Disallow: /firstlook/
 
 # Archived homepages and internal drafts
 Disallow: /hp_alt_versions/
-Disallow: /sample_catalogs/
 Disallow: /bridge pages (old)/
 
-# Duplicate browse surface; primary tool is /showrooms/
+# Legacy duplicate browse tool (redirects to sample catalogs)
 Disallow: /catalogue/
 
 Sitemap: https://www.beyondshowrooms.com/sitemap.xml
