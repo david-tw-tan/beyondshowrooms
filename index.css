@@ -5,6 +5,7 @@
     --color-ink: #1a1a18;
     --color-ink-muted: #5e5a54;
     --color-ink-faint: #8a847c;
+    --color-compare-away: #746860;
     --color-paper: #f0ebe4;
     --color-surface: #f9f7f4;
     --color-surface-warm: #f3efe8;
@@ -1795,7 +1796,7 @@ main {
     margin: 0;
     font-size: 1.02rem;
     line-height: 1.6;
-    color: var(--color-ink-muted);
+    color: var(--color-compare-away);
 }
 
 .compare__line + .compare__line {
@@ -1815,6 +1816,10 @@ main {
     font-style: normal;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: var(--color-ink-faint);
+}
+
+.compare__line--here .compare__tag {
     color: var(--color-brass);
 }
 
