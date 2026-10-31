@@ -132,14 +132,32 @@
             <div class="quality-chapter" data-quality-chapter>
                 <div class="quality-chapter__pin" data-quality-pin>
                     <span class="quality-chapter__sheen" aria-hidden="true"></span>
+                    <span class="quality-chapter__progress" aria-hidden="true">
+                        <svg class="quality-chapter__progress-stroke" viewBox="0 0 240 8" preserveAspectRatio="none" focusable="false">
+                            <defs>
+                                <linearGradient id="quality-hold-quill" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0" stop-color="#a68b5b" stop-opacity="0"/>
+                                    <stop offset="0.08" stop-color="#c4a97a" stop-opacity="0.28"/>
+                                    <stop offset="0.72" stop-color="#a68b5b" stop-opacity="0.42"/>
+                                    <stop offset="1" stop-color="#c4a97a" stop-opacity="0.08"/>
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#quality-hold-quill)" d="M0 3.55 C36 3.38 160 3.32 198 3.52 L222 3.84 L240 4 L222 4.16 L198 4.48 C160 4.68 36 4.62 0 4.45 Z"/>
+                        </svg>
+                    </span>
                     <h2 id="quality-title" class="section-title section-title--lg"><span class="quality-title__ink">Quality comes first</span></h2>
                 </div>
-            <p class="body-text reveal reveal--d1">
-                Buying direct only makes sense if the furniture is <span class="emphasis">genuinely good</span>. I work with Foshan factories whose owners I&rsquo;d trust to furnish my own home&mdash;among <span class="emphasis">the best export-grade factories</span> there.
-            </p>
-            <p class="body-text reveal reveal--d2">
-                And it&rsquo;s not just me: Every client who has come with me &mdash; from the US, Middle East, and Australia &mdash; was <span class="emphasis">impressed by the factories, and by the quality</span>.
-            </p>
+                <div class="quality-hold" data-quality-hold>
+                    <div class="quality-hold__copy" data-quality-hold-copy>
+                        <p class="body-text reveal reveal--d1">
+                            Buying direct only makes sense if the furniture is <span class="emphasis">genuinely good</span>. I work with Foshan factories whose owners I&rsquo;d trust to furnish my own home&mdash;among <span class="emphasis">the best export-grade factories</span> there.
+                        </p>
+                        <p class="body-text reveal reveal--d2">
+                            And it&rsquo;s not just me: Every client who has come with me &mdash; from the US, Middle East, and Australia &mdash; was <span class="emphasis">impressed by the factories, and by the quality</span>.
+                        </p>
+                    </div>
+                    <div class="quality-hold__runway" data-quality-runway aria-hidden="true"></div>
+                </div>
 
             <figure class="client-photo reveal reveal--d3">
                 <img
@@ -258,7 +276,7 @@
                 <li class="compare__item">
                     <span class="compare__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M6 20V9l6-5 6 5v11"/><path d="M10 20v-6h4v6"/></svg></span>
                     <h3 class="compare__title">More customization</h3>
-                    <p class="compare__line"><span class="compare__tag">At a local store</span> Custom options are limited. When it&rsquo;s offered, it is extremely expensive.</p>
+                    <p class="compare__line"><span class="compare__tag">At a local store</span> Custom options are limited. When offered, it&rsquo;s extremely expensive.</p>
                     <p class="compare__line compare__line--here"><span class="compare__tag">Foshan direct</span> Size, materials, and upholstery you can change, often at little or no extra cost.</p>
                 </li>
                 <li class="compare__item">

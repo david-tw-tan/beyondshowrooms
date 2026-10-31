@@ -1026,6 +1026,9 @@ function docVideoEmbedOrigin() {
 function initQualityStickyChapter() {
     const chapter = document.querySelector('[data-quality-chapter]');
     const pin = document.querySelector('[data-quality-pin]');
+    const hold = document.querySelector('[data-quality-hold]');
+    const holdCopy = document.querySelector('[data-quality-hold-copy]');
+    const runway = document.querySelector('[data-quality-runway]');
     const header = document.querySelector('.page-header');
     if (!chapter || !pin) return;
 
@@ -1036,15 +1039,27 @@ function initQualityStickyChapter() {
     let qualityShimmerReady = true;
     let qualityWasStuck = false;
     let qualityShimmerTimer = null;
-    const title = pin.querySelector('#quality-title');
 
     function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
     }
 
+    function clearHoldVars() {
+        pin.style.removeProperty('--quality-hold');
+        pin.style.removeProperty('--quality-hold-release');
+        chapter.style.removeProperty('--quality-hold');
+        chapter.style.removeProperty('--quality-hold-release');
+        chapter.style.removeProperty('--quality-hold-top');
+        chapter.style.removeProperty('--quality-pin-strength');
+        pin.classList.remove('is-quality-holding');
+    }
+
     function syncStickyTop() {
         const headerHeight = header ? header.getBoundingClientRect().height : 56;
         pin.style.setProperty('--quality-sticky-top', `${Math.round(headerHeight)}px`);
+        const titleHeight = pin.getBoundingClientRect().height || pin.offsetHeight || 0;
+        const holdTop = Math.round(headerHeight + titleHeight);
+        chapter.style.setProperty('--quality-hold-top', `${holdTop}px`);
     }
 
     function playQualityShimmer() {
@@ -1061,6 +1076,24 @@ function initQualityStickyChapter() {
         }, 2650);
     }
 
+    function measureHoldProgress(isStuck) {
+        if (!hold || !holdCopy || !runway || reduceMotionQuery.matches) return 0;
+
+        const runwayHeight = runway.offsetHeight;
+        if (runwayHeight < 8) return 0;
+
+        const copyRect = holdCopy.getBoundingClientRect();
+        const holdRect = hold.getBoundingClientRect();
+        const runwayRect = runway.getBoundingClientRect();
+
+        if (isStuck && holdRect.bottom <= copyRect.bottom + 2) {
+            return 1;
+        }
+
+        const consumed = copyRect.bottom - runwayRect.top;
+        return clamp(consumed / runwayHeight, 0, 1);
+    }
+
     function updatePinStrength() {
         if (!mobileQuery.matches) {
             pin.style.removeProperty('--quality-pin-strength');
@@ -1072,6 +1105,7 @@ function initQualityStickyChapter() {
                 'is-quality-exiting',
                 'is-quality-shimmer'
             );
+            clearHoldVars();
             qualityWasStuck = false;
             qualityShimmerReady = true;
             return;
@@ -1105,23 +1139,36 @@ function initQualityStickyChapter() {
         enter = clamp(enter, 0, 1);
         exit = clamp(exit, 0, 1);
         const strength = enter * exit;
+        let holdProgress = 0;
 
         if (reduceMotionQuery.matches) {
-            const pinned = isStuck;
-            pin.classList.toggle('is-quality-pinned', pinned);
+            pin.classList.toggle('is-quality-pinned', isStuck);
             pin.style.removeProperty('--quality-pin-strength');
             pin.style.removeProperty('--quality-enter');
             pin.style.removeProperty('--quality-exit');
+            clearHoldVars();
             qualityWasStuck = isStuck;
             return;
         }
 
+        if (isStuck || distanceToStick <= 6) {
+            holdProgress = measureHoldProgress(isStuck);
+        }
+
+        const holdRelease = clamp((holdProgress - 0.88) / 0.12, 0, 1);
+
         pin.style.setProperty('--quality-enter', enter.toFixed(3));
         pin.style.setProperty('--quality-exit', exit.toFixed(3));
         pin.style.setProperty('--quality-pin-strength', strength.toFixed(3));
+        pin.style.setProperty('--quality-hold', holdProgress.toFixed(3));
+        pin.style.setProperty('--quality-hold-release', holdRelease.toFixed(3));
+        chapter.style.setProperty('--quality-pin-strength', strength.toFixed(3));
+        chapter.style.setProperty('--quality-hold', holdProgress.toFixed(3));
+        chapter.style.setProperty('--quality-hold-release', holdRelease.toFixed(3));
         pin.classList.toggle('is-quality-pinned', strength > 0.12);
         pin.classList.toggle('is-quality-entering', enter > 0.05 && enter < 0.98);
         pin.classList.toggle('is-quality-exiting', exit < 0.98 && exit > 0.05 && enter > 0.85);
+        pin.classList.toggle('is-quality-holding', holdProgress > 0.02 && holdProgress < 0.98);
 
         if (!isStuck && distanceToStick > 16) {
             qualityShimmerReady = true;
@@ -1163,6 +1210,7 @@ function initQualityStickyChapter() {
             'is-quality-exiting',
             'is-quality-shimmer'
         );
+        clearHoldVars();
         clearTimeout(qualityShimmerTimer);
         qualityShimmerReady = true;
         qualityWasStuck = false;

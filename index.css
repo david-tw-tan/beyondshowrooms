@@ -143,7 +143,7 @@ main {
     font-size: clamp(1.12rem, 2.85vw, 1.38rem);
     font-weight: 600;
     line-height: 1.4;
-    color: #92764a;
+    color: #b09060;
 }
 
 .hero-title {
@@ -1603,6 +1603,22 @@ main {
             background: none;
             animation: none;
         }
+
+        .quality-hold__runway {
+            display: none;
+        }
+
+        .quality-hold__copy {
+            position: static;
+            margin-inline: 0;
+            padding: 0;
+            background: none;
+        }
+
+        .quality-hold__copy::after,
+        .quality-chapter__progress {
+            display: none;
+        }
     }
 }
 
@@ -1989,20 +2005,93 @@ main {
     margin-bottom: 0;
 }
 
+.quality-hold__runway {
+    display: none;
+}
+
+.quality-hold__copy .body-text + .body-text {
+    margin-top: 1.1rem;
+}
+
 @media (max-width: 768px) {
+    .quality-chapter {
+        --quality-hold: 0;
+        --quality-hold-release: 0;
+        --quality-hold-top: 7rem;
+    }
+
     .quality-chapter__pin {
         --quality-enter: 0;
         --quality-exit: 1;
         --quality-pin-strength: 0;
+        --quality-hold: 0;
+        --quality-hold-release: 0;
         --quality-sticky-top: 3.5rem;
         position: sticky;
         top: var(--quality-sticky-top);
         z-index: 5;
-        margin: -0.15rem 0 1.15rem;
+        margin: -0.15rem 0 0;
         margin-inline: calc(-1 * clamp(1.25rem, 4vw, 2rem));
         padding: 0.55rem clamp(1.25rem, 4vw, 2rem) 0.78rem;
         background: transparent;
         isolation: isolate;
+    }
+
+    .quality-hold__copy {
+        position: sticky;
+        top: var(--quality-hold-top);
+        z-index: 4;
+        margin-inline: calc(-1 * clamp(1.25rem, 4vw, 2rem));
+        padding: 0.85rem clamp(1.25rem, 4vw, 2rem) 0.55rem;
+        background: var(--color-surface-warm);
+        isolation: isolate;
+    }
+
+    .quality-hold__copy::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        height: 2.75rem;
+        pointer-events: none;
+        z-index: 0;
+        opacity: calc(var(--quality-pin-strength, 0) * (1 - var(--quality-hold, 0)));
+        background: linear-gradient(
+            180deg,
+            rgba(243, 239, 232, 0.94) 0%,
+            rgba(243, 239, 232, 0.55) 38%,
+            rgba(243, 239, 232, 0) 100%
+        );
+    }
+
+    .quality-hold__runway {
+        display: block;
+        height: 48vh;
+        min-height: 11rem;
+        max-height: 55vh;
+        pointer-events: none;
+    }
+
+    .quality-chapter__progress {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -2px;
+        z-index: 3;
+        height: 8px;
+        pointer-events: none;
+        background: none;
+        transform: scaleX(var(--quality-hold, 0));
+        transform-origin: left center;
+        opacity: var(--quality-pin-strength, 0);
+    }
+
+    .quality-chapter__progress-stroke {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
     }
 
     /* Premium fill — opacity driven (Safari-safe; no calc inside rgba) */
@@ -2012,7 +2101,7 @@ main {
         z-index: 0;
         pointer-events: none;
         opacity: var(--quality-pin-strength, 0);
-        border-bottom: 1px solid rgba(232, 226, 217, 0.88);
+        border-bottom: 1px solid rgba(232, 226, 217, 0.42);
         background-color: #f3efe8;
         background-image:
             radial-gradient(
@@ -2067,7 +2156,7 @@ main {
         height: 2.75rem;
         pointer-events: none;
         z-index: 0;
-        opacity: calc(var(--quality-pin-strength) * var(--quality-exit, 1));
+        opacity: calc(var(--quality-pin-strength) * var(--quality-exit, 1) * var(--quality-hold-release, 0));
         transform: translateY(calc((1 - var(--quality-exit, 1)) * -0.65rem));
         background: linear-gradient(
             180deg,
@@ -2126,6 +2215,24 @@ main {
         to {
             background-position: 0% 50%;
         }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
+    .quality-hold__runway {
+        display: none;
+    }
+
+    .quality-hold__copy {
+        position: static;
+        margin-inline: 0;
+        padding: 0;
+        background: none;
+    }
+
+    .quality-hold__copy::after,
+    .quality-chapter__progress {
+        display: none;
     }
 }
 
