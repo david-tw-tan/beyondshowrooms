@@ -1015,20 +1015,15 @@ function initShowroomCarousel() {
     });
 }
 
-function initDocHero() {
-    const config = window.__BS_VISITOR || { staticHero: false };
-    const youtubeAnswer = document.querySelector('[data-bridge-answer="youtube"]');
-    const directAnswer = document.querySelector('[data-bridge-answer="direct"]');
-
-    if (config.staticHero) {
-        if (youtubeAnswer) youtubeAnswer.hidden = false;
-        if (directAnswer) directAnswer.hidden = true;
-        return;
+function docVideoEmbedOrigin() {
+    const origin = window.location.origin;
+    if (origin && origin !== 'null' && !/^file:/i.test(origin)) {
+        return origin;
     }
+    return 'https://www.beyondshowrooms.com';
+}
 
-    if (youtubeAnswer) youtubeAnswer.hidden = true;
-    if (directAnswer) directAnswer.hidden = false;
-
+function initDocHero() {
     const playBtn = document.querySelector('[data-doc-video-play]');
     const embedHost = document.querySelector('[data-doc-video-embed]');
     if (!playBtn || !embedHost) return;
@@ -1039,13 +1034,32 @@ function initDocHero() {
     playBtn.addEventListener('click', () => {
         if (embedHost.querySelector('iframe')) return;
 
+        // YouTube embeds require an http(s) Referer; file:// always yields Error 153.
+        if (/^file:/i.test(window.location.protocol)) {
+            window.open(
+                `https://www.youtube.com/watch?v=${videoId}&t=${startSeconds}s`,
+                '_blank',
+                'noopener,noreferrer'
+            );
+            return;
+        }
+
+        const params = new URLSearchParams({
+            start: String(startSeconds),
+            autoplay: '1',
+            rel: '0',
+            enablejsapi: '1',
+            origin: docVideoEmbedOrigin()
+        });
+
         const iframe = document.createElement('iframe');
         iframe.className = 'doc-visual__iframe';
-        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?start=${startSeconds}&autoplay=1&rel=0`;
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?${params}`;
         iframe.title = 'Beyond Showrooms docuseries — Episode 1';
         iframe.allow =
             'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
         iframe.allowFullscreen = true;
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
         iframe.loading = 'lazy';
 
         embedHost.appendChild(iframe);
