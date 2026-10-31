@@ -1023,6 +1023,169 @@ function docVideoEmbedOrigin() {
     return 'https://www.beyondshowrooms.com';
 }
 
+function initQualityStickyChapter() {
+    const chapter = document.querySelector('[data-quality-chapter]');
+    const pin = document.querySelector('[data-quality-pin]');
+    const header = document.querySelector('.page-header');
+    if (!chapter || !pin) return;
+
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    let ticking = false;
+    let qualityShimmerReady = true;
+    let qualityWasStuck = false;
+    let qualityShimmerTimer = null;
+    const title = pin.querySelector('#quality-title');
+
+    function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+    }
+
+    function syncStickyTop() {
+        const headerHeight = header ? header.getBoundingClientRect().height : 56;
+        pin.style.setProperty('--quality-sticky-top', `${Math.round(headerHeight)}px`);
+    }
+
+    function playQualityShimmer() {
+        if (reduceMotionQuery.matches) return;
+        pin.classList.remove('is-quality-shimmer');
+        window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+                pin.classList.add('is-quality-shimmer');
+            });
+        });
+        clearTimeout(qualityShimmerTimer);
+        qualityShimmerTimer = window.setTimeout(function () {
+            pin.classList.remove('is-quality-shimmer');
+        }, 2650);
+    }
+
+    function updatePinStrength() {
+        if (!mobileQuery.matches) {
+            pin.style.removeProperty('--quality-pin-strength');
+            pin.style.removeProperty('--quality-enter');
+            pin.style.removeProperty('--quality-exit');
+            pin.classList.remove(
+                'is-quality-pinned',
+                'is-quality-entering',
+                'is-quality-exiting',
+                'is-quality-shimmer'
+            );
+            qualityWasStuck = false;
+            qualityShimmerReady = true;
+            return;
+        }
+
+        syncStickyTop();
+        const stickyTop = header
+            ? header.getBoundingClientRect().height
+            : parseFloat(getComputedStyle(pin).getPropertyValue('--quality-sticky-top')) || 56;
+
+        const chapterRect = chapter.getBoundingClientRect();
+        const pinRect = pin.getBoundingClientRect();
+        const pinHeight = pinRect.height || pin.offsetHeight || 1;
+        const chapterBottom = chapterRect.bottom;
+        const distanceToStick = pinRect.top - stickyTop;
+        const remainingChapter = chapterBottom - pinRect.bottom;
+        const isStuck = distanceToStick <= 6 && remainingChapter > 8;
+
+        const enterRange = 88;
+        const exitRange = Math.max(pinHeight + 112, 160);
+        let enter = 0;
+        let exit = 1;
+
+        if (distanceToStick > 0) {
+            enter = 1 - distanceToStick / enterRange;
+        } else if (remainingChapter > 0) {
+            enter = 1;
+            exit = remainingChapter / exitRange;
+        }
+
+        enter = clamp(enter, 0, 1);
+        exit = clamp(exit, 0, 1);
+        const strength = enter * exit;
+
+        if (reduceMotionQuery.matches) {
+            const pinned = isStuck;
+            pin.classList.toggle('is-quality-pinned', pinned);
+            pin.style.removeProperty('--quality-pin-strength');
+            pin.style.removeProperty('--quality-enter');
+            pin.style.removeProperty('--quality-exit');
+            qualityWasStuck = isStuck;
+            return;
+        }
+
+        pin.style.setProperty('--quality-enter', enter.toFixed(3));
+        pin.style.setProperty('--quality-exit', exit.toFixed(3));
+        pin.style.setProperty('--quality-pin-strength', strength.toFixed(3));
+        pin.classList.toggle('is-quality-pinned', strength > 0.12);
+        pin.classList.toggle('is-quality-entering', enter > 0.05 && enter < 0.98);
+        pin.classList.toggle('is-quality-exiting', exit < 0.98 && exit > 0.05 && enter > 0.85);
+
+        if (!isStuck && distanceToStick > 16) {
+            qualityShimmerReady = true;
+        }
+
+        if (isStuck && !qualityWasStuck && qualityShimmerReady) {
+            qualityShimmerReady = false;
+            playQualityShimmer();
+        }
+
+        qualityWasStuck = isStuck;
+    }
+
+    function onScrollOrResize() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            ticking = false;
+            updatePinStrength();
+        });
+    }
+
+    function bind() {
+        syncStickyTop();
+        updatePinStrength();
+        window.addEventListener('scroll', onScrollOrResize, { passive: true });
+        window.addEventListener('resize', onScrollOrResize, { passive: true });
+    }
+
+    function unbind() {
+        window.removeEventListener('scroll', onScrollOrResize);
+        window.removeEventListener('resize', onScrollOrResize);
+        pin.style.removeProperty('--quality-pin-strength');
+        pin.style.removeProperty('--quality-enter');
+        pin.style.removeProperty('--quality-exit');
+        pin.classList.remove(
+            'is-quality-pinned',
+            'is-quality-entering',
+            'is-quality-exiting',
+            'is-quality-shimmer'
+        );
+        clearTimeout(qualityShimmerTimer);
+        qualityShimmerReady = true;
+        qualityWasStuck = false;
+    }
+
+    function handleBreakpoint(event) {
+        if (event.matches) {
+            bind();
+        } else {
+            unbind();
+        }
+    }
+
+    mobileQuery.addEventListener('change', handleBreakpoint);
+    reduceMotionQuery.addEventListener('change', () => updatePinStrength());
+
+    if (mobileQuery.matches) {
+        bind();
+        requestAnimationFrame(updatePinStrength);
+        window.addEventListener('load', updatePinStrength, { once: true });
+    }
+}
+
 function initDocHero() {
     const playBtn = document.querySelector('[data-doc-video-play]');
     const embedHost = document.querySelector('[data-doc-video-embed]');
@@ -1077,6 +1240,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initShowroomModal();
     initPartnersModal();
     initDocHero();
+    initQualityStickyChapter();
     scheduleHomepageImageWarmPipeline();
     window.syncFounderModalBodyLock = syncFounderModalBodyLock;
 });

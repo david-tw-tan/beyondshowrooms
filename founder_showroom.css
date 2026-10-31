@@ -168,6 +168,35 @@ a.lp-btn--brass {
     transform: translateY(-1px);
 }
 
+.lp-btn--brass:has(.lp-btn__chevron) {
+    position: relative;
+    padding-inline: 2.25rem;
+}
+
+.lp-btn--brass:has(.lp-btn__chevron) .lp-btn__label {
+    display: inline-block;
+    line-height: 1.05;
+}
+
+.lp-btn__chevron {
+    position: absolute;
+    right: 1.22rem;
+    top: 50%;
+    width: 0.875rem;
+    height: 0.875rem;
+    flex-shrink: 0;
+    opacity: 0.72;
+    transform: translateY(calc(-50% + 0.11em));
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.lp-btn--brass:hover .lp-btn__chevron {
+    opacity: 0.95;
+    transform: translateY(calc(-50% + 0.11em)) translateX(2px);
+}
+
 .lp-btn--brass:focus-visible {
     outline: 2px solid var(--color-brass-light);
     outline-offset: 3px;

@@ -123,6 +123,123 @@
             color: var(--color-ink);
         }
 
+        .page-header__actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.35rem;
+            flex: 0 0 auto;
+        }
+
+        .site-nav--desktop {
+            display: none;
+            align-items: center;
+            gap: 0.15rem;
+            margin-right: 0.15rem;
+        }
+
+        .site-nav__link {
+            padding: 0.42rem 0.55rem;
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--color-ink-muted);
+            transition: color var(--transition-fast);
+        }
+
+        .site-nav__link:hover {
+            color: var(--color-ink);
+        }
+
+        .site-nav__link[aria-current="page"] {
+            color: var(--color-ink);
+        }
+
+        .site-nav--mobile {
+            position: relative;
+        }
+
+        .site-nav__menu-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.65rem;
+            height: 2.65rem;
+            padding: 0;
+            border: 1px solid transparent;
+            border-radius: 999px;
+            background: transparent;
+            color: var(--color-ink-muted);
+            cursor: pointer;
+            transition:
+                color var(--transition-fast),
+                border-color var(--transition-fast),
+                background var(--transition-fast);
+        }
+
+        .site-nav__menu-btn:hover {
+            color: var(--color-ink);
+            border-color: rgba(94, 90, 84, 0.22);
+            background: rgba(249, 247, 244, 0.75);
+        }
+
+        .site-nav__menu-btn[aria-expanded="true"] {
+            color: var(--color-ink);
+            border-color: rgba(166, 139, 91, 0.35);
+            background: rgba(243, 239, 232, 0.95);
+        }
+
+        .site-nav__menu-icon {
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .site-nav__panel {
+            position: absolute;
+            top: calc(100% + 0.45rem);
+            right: 0;
+            z-index: 20;
+            min-width: 11.5rem;
+            padding: 0.35rem;
+            border: 1px solid var(--color-hairline);
+            border-radius: 4px;
+            background: var(--color-surface);
+            box-shadow: 0 10px 28px rgba(26, 26, 24, 0.12);
+        }
+
+        .site-nav__panel[hidden] {
+            display: none;
+        }
+
+        .site-nav__panel-link {
+            display: block;
+            padding: 0.55rem 0.75rem;
+            border-radius: 2px;
+            font-size: 0.92rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            color: var(--color-ink-muted);
+            transition:
+                color var(--transition-fast),
+                background var(--transition-fast);
+        }
+
+        .site-nav__panel-link:hover {
+            color: var(--color-ink);
+            background: rgba(243, 239, 232, 0.85);
+        }
+
+        .site-nav__panel-link[aria-current="page"] {
+            color: var(--color-ink);
+            background: rgba(243, 239, 232, 0.65);
+        }
+
+        .site-nav__menu-btn:focus-visible,
+        .site-nav__panel-link:focus-visible,
         .page-logo:focus-visible,
         .header-wa:focus-visible,
         .catalog__open:focus-visible,
@@ -157,6 +274,82 @@
                 padding: 0.32rem 0.62rem;
                 font-size: 0.86rem;
                 letter-spacing: 0.05em;
+            }
+        }
+
+        @media (max-width: 639px) {
+            .page-header__actions {
+                gap: 0.45rem;
+            }
+
+            .site-nav__menu-btn {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+
+            .site-nav__panel {
+                top: calc(100% + 0.35rem);
+            }
+        }
+
+        @media (min-width: 640px) {
+            .site-nav--desktop {
+                display: flex;
+            }
+
+            .site-nav--mobile {
+                display: none;
+            }
+
+            .page-logo {
+                font-size: 1.08rem;
+                font-weight: 600;
+                letter-spacing: 0.17em;
+            }
+
+            .page-header__actions {
+                gap: 0.55rem;
+            }
+
+            .site-nav--desktop {
+                margin-right: 0.25rem;
+            }
+
+            .site-nav__link {
+                padding: 0.32rem 0.42rem;
+                font-size: 0.76rem;
+                font-weight: 400;
+                letter-spacing: 0.09em;
+                color: var(--color-ink-faint);
+            }
+
+            .site-nav__link:hover {
+                color: var(--color-ink-muted);
+            }
+
+            .site-nav__link[aria-current="page"] {
+                color: var(--color-ink-muted);
+                font-weight: 500;
+            }
+
+            .page-header .header-wa--plain {
+                padding: 0.36rem 0.72rem;
+                font-size: 0.76rem;
+                font-weight: 500;
+                letter-spacing: 0.09em;
+                color: #fff;
+                background: var(--color-brass);
+                border: 1px solid var(--color-brass);
+                box-shadow:
+                    0 2px 10px rgba(166, 139, 91, 0.28),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+            }
+
+            .page-header .header-wa--plain:hover {
+                background: #967a4f;
+                border-color: var(--color-brass-light);
+                box-shadow: 0 6px 18px rgba(166, 139, 91, 0.34);
+                transform: translateY(-1px);
             }
         }
 
@@ -330,6 +523,11 @@
         .hero-lede--key {
             font-weight: 500;
             color: var(--color-ink);
+        }
+
+        .hero-lede--note {
+            color: var(--color-ink-faint);
+            font-size: clamp(0.98rem, 2.05vw, 1.06rem);
         }
 
         .factory-head {
@@ -1084,7 +1282,26 @@
     <header class="page-header">
         <div class="page-header__inner">
             <a class="page-logo" href="../index.html">Beyond Showrooms</a>
-            <button type="button" class="btn header-wa header-wa--plain" data-open-contact>Contact</button>
+            <div class="page-header__actions">
+                <nav class="site-nav site-nav--desktop" aria-label="Site">
+                    <a class="site-nav__link" href="../index.html">Home</a>
+                    <a class="site-nav__link" href="./" aria-current="page">Catalogs</a>
+                </nav>
+                <div class="site-nav site-nav--mobile" data-site-nav>
+                    <button type="button" class="site-nav__menu-btn" data-site-nav-toggle aria-expanded="false" aria-controls="site-nav-panel-catalogs" aria-haspopup="true" aria-label="Site menu">
+                        <svg class="site-nav__menu-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                            <path class="site-nav__menu-bar site-nav__menu-bar--top" d="M5 7h14"/>
+                            <path class="site-nav__menu-bar site-nav__menu-bar--mid" d="M5 12h14"/>
+                            <path class="site-nav__menu-bar site-nav__menu-bar--bot" d="M5 17h14"/>
+                        </svg>
+                    </button>
+                    <div id="site-nav-panel-catalogs" class="site-nav__panel" data-site-nav-panel hidden>
+                        <a class="site-nav__panel-link" href="../index.html">Home</a>
+                        <a class="site-nav__panel-link" href="./" aria-current="page">Sample catalogs</a>
+                    </div>
+                </div>
+                <button type="button" class="btn header-wa header-wa--plain" data-open-contact>Contact</button>
+            </div>
         </div>
     </header>
 
@@ -1092,8 +1309,9 @@
         <section class="section section--intro" aria-labelledby="page-title">
             <div class="container">
                 <h1 id="page-title" class="hero-title">Sample factory catalogs</h1>
-                <p class="hero-lede">These select catalogs showcase the breadth and depth of Foshan&rsquo;s designer-inspired furniture offerings. Each factory organizes its collections slightly differently.</p>
+                <p class="hero-lede">These select catalogs showcase the breadth and depth of Foshan&rsquo;s designer-inspired furniture offerings.</p>
                 <p class="hero-lede hero-lede--key">Photos in these catalogs come from actual showrooms, to help you envision the actual Foshan experience.</p>
+                <p class="hero-lede hero-lede--note"><span class="hero-lede__label">Note:</span> Partner factories operate at different quality and price tiers. I work closely with you to choose the best match for your project.</p>
             </div>
         </section>
 
@@ -1197,14 +1415,14 @@
                 <ul class="catalog-list">
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Factory Collection 2025" data-image="thumb_factory2_collection_2025.jpeg" data-images="thumb_factory2_collection_2025.jpeg,thumb_factory2_collection_2025_2.jpeg,thumb_factory2_collection_2025_3.jpeg" data-size="91 MB" data-href="Factory%202%20-%20Factory%20Collection%202025.pdf" data-download="Factory 2 - Factory Collection 2025.pdf" data-description="This factory’s main collection, bringing together the major designer-inspired styles popular in Foshan—from Italian Modern and minimalist designs to Fashion House Luxury—all in one comprehensive catalog.">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="General Catalog 2025" data-image="thumb_factory2_collection_2025.jpeg" data-images="thumb_factory2_collection_2025.jpeg,thumb_factory2_collection_2025_2.jpeg,thumb_factory2_collection_2025_3.jpeg" data-size="91 MB" data-href="Factory%202%20-%20Factory%20Collection%202025.pdf" data-download="Factory 2 - Factory Collection 2025.pdf" data-description="This factory’s main collection, bringing together the major designer-inspired styles popular in Foshan—from Italian Modern and minimalist designs to Fashion House Luxury—all in one comprehensive catalog.">
                                 <img class="catalog__thumb" src="thumb_factory2_collection_2025.jpeg" alt="" width="1266" height="764" loading="lazy" decoding="async">
                                 <span>
-                                    <span class="catalog__title">Factory Collection 2025</span>
+                                    <span class="catalog__title">General Catalog 2025</span>
                                     <span class="catalog__meta"><span class="catalog__size">91 MB</span><span class="catalog__kind">PDF</span></span>
                                 </span>
                             </button>
-                            <a class="catalog__action" href="Factory%202%20-%20Factory%20Collection%202025.pdf" download="Factory 2 - Factory Collection 2025.pdf" aria-label="Download Factory Collection 2025 PDF">
+                            <a class="catalog__action" href="Factory%202%20-%20Factory%20Collection%202025.pdf" download="Factory 2 - Factory Collection 2025.pdf" aria-label="Download General Catalog 2025 PDF">
                                 <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
                                     <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -1590,6 +1808,40 @@
         } else {
             window.setTimeout(prefetchCatalogExtraImages, 2000);
         }
+
+        document.querySelectorAll('[data-site-nav]').forEach(function (root) {
+            var btn = root.querySelector('[data-site-nav-toggle]');
+            var panel = root.querySelector('[data-site-nav-panel]');
+            if (!btn || !panel) return;
+
+            function closeSiteNav() {
+                btn.setAttribute('aria-expanded', 'false');
+                panel.hidden = true;
+            }
+
+            btn.addEventListener('click', function (event) {
+                event.stopPropagation();
+                var open = btn.getAttribute('aria-expanded') === 'true';
+                if (open) {
+                    closeSiteNav();
+                } else {
+                    btn.setAttribute('aria-expanded', 'true');
+                    panel.hidden = false;
+                }
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!root.contains(event.target)) {
+                    closeSiteNav();
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    closeSiteNav();
+                }
+            });
+        });
     }());
     </script>
 </body>

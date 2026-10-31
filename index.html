@@ -56,8 +56,27 @@
 
 <header class="page-header">
     <div class="page-header__inner">
-        <a href="#top" class="page-logo" aria-label="Beyond Showrooms">Beyond Showrooms</a>
-        <button type="button" class="btn header-wa header-wa--plain" data-open-contact>Contact</button>
+        <a href="index.html" class="page-logo" aria-label="Beyond Showrooms home">Beyond Showrooms</a>
+        <div class="page-header__actions">
+            <nav class="site-nav site-nav--desktop" aria-label="Site">
+                <a class="site-nav__link" href="index.html" aria-current="page">Home</a>
+                <a class="site-nav__link" href="sample_catalogs/">Catalogs</a>
+            </nav>
+            <div class="site-nav site-nav--mobile" data-site-nav>
+                <button type="button" class="site-nav__menu-btn" data-site-nav-toggle aria-expanded="false" aria-controls="site-nav-panel-home" aria-haspopup="true" aria-label="Site menu">
+                    <svg class="site-nav__menu-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                        <path class="site-nav__menu-bar site-nav__menu-bar--top" d="M5 7h14"/>
+                        <path class="site-nav__menu-bar site-nav__menu-bar--mid" d="M5 12h14"/>
+                        <path class="site-nav__menu-bar site-nav__menu-bar--bot" d="M5 17h14"/>
+                    </svg>
+                </button>
+                <div id="site-nav-panel-home" class="site-nav__panel" data-site-nav-panel hidden>
+                    <a class="site-nav__panel-link" href="index.html" aria-current="page">Home</a>
+                    <a class="site-nav__panel-link" href="sample_catalogs/">Sample catalogs</a>
+                </div>
+            </div>
+            <button type="button" class="btn header-wa header-wa--plain" data-open-contact>Contact</button>
+        </div>
     </div>
 </header>
 
@@ -110,7 +129,11 @@
 
     <section class="section section--warm" id="quality" aria-labelledby="quality-title">
         <div class="container">
-            <h2 id="quality-title" class="section-title section-title--lg reveal">Quality comes first</h2>
+            <div class="quality-chapter" data-quality-chapter>
+                <div class="quality-chapter__pin" data-quality-pin>
+                    <span class="quality-chapter__sheen" aria-hidden="true"></span>
+                    <h2 id="quality-title" class="section-title section-title--lg"><span class="quality-title__ink">Quality comes first</span></h2>
+                </div>
             <p class="body-text reveal reveal--d1">
                 Buying direct only makes sense if the furniture is <span class="emphasis">genuinely good</span>. I work with Foshan factories whose owners I&rsquo;d trust to furnish my own home&mdash;among <span class="emphasis">the best export-grade factories</span> there.
             </p>
@@ -130,6 +153,7 @@
             </figure>
 
             <p class="collections-block__intro collections-block__intro--body reveal reveal--d3">Want to see the quality these factories produce? Below are a few <span class="emphasis">designer-inspired collections</span>, photographed from actual factory showrooms. Foshan&rsquo;s most popular styles include <span class="emphasis">Italian Modern</span>, <span class="emphasis">Fashion House</span> and <span class="emphasis">Natural Modern</span>.</p>
+            </div>
         </div>
         <div class="container container--wide quality-collections">
             <div class="collections-block reveal">
@@ -208,15 +232,13 @@
                     </div>
                 </div>
 
-                <p class="collections-block__note section-note">
-                    <span class="section-note__row">
-                        <span class="section-note__mark" aria-hidden="true"><svg class="section-note__icon" width="10" height="11" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0v12l11-6L0 0z"/></svg></span>
-                        <span class="section-note__text">&nbsp;Our factory showrooms show all <span class="emphasis">fully staged collections</span>. Photos are real, not AI.</span>
-                    </span>
-                </p>
+                <p class="collections-block__note">Our factory showrooms show all <span class="emphasis">fully staged collections</span>. Photos are real, not AI.</p>
 
                 <div class="collections-block__cta">
-                    <a class="lp-btn--brass" href="sample_catalogs/" data-explore-styles>See sample catalogs</a>
+                    <a class="lp-btn--brass" href="sample_catalogs/" data-explore-styles>
+                        <span class="lp-btn__label">See sample catalogs</span>
+                        <svg class="lp-btn__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                    </a>
                 </div>
             </div>
         </div>
@@ -351,12 +373,7 @@
                     decoding="async"
                 >
             </figure>
-            <p class="factory-photo__note section-note reveal reveal--d4">
-                <span class="section-note__row">
-                    <span class="section-note__mark" aria-hidden="true"><svg class="section-note__icon" width="10" height="11" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0v12l11-6L0 0z"/></svg></span>
-                    <span class="section-note__text">&nbsp;Every factory has its particular strengths. Different factories also operate at different <span class="emphasis">price/quality tiers</span>. I&rsquo;ll candidly tell you the right mix for your target style and budget.</span>
-                </span>
-            </p>
+            <p class="body-text reveal reveal--d4">Every factory has its particular strengths. Different factories also operate at different <span class="emphasis">price/quality tiers</span>. I&rsquo;ll candidly tell you the right mix for your target style and budget.</p>
         </div>
     </section>
 
