@@ -557,18 +557,165 @@
         }
 
         .lightbox__figure {
+            margin: 0;
+            border-radius: 0;
+            overflow: visible;
+            background: transparent;
+        }
+
+        .lightbox__carousel {
+            position: relative;
             margin: 0 0 1.35rem;
-            border-radius: 2px;
+        }
+
+        .lightbox__viewport {
+            position: relative;
             overflow: hidden;
+            touch-action: pan-y pinch-zoom;
+            border-radius: 2px;
             background: #ece7e0;
+            width: 100%;
+            height: min(46vh, 24rem);
+        }
+
+        .lightbox__track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+
+        .lightbox__slide {
+            flex: 0 0 100%;
+            min-width: 0;
+            height: 100%;
         }
 
         .lightbox__img {
             display: block;
             width: 100%;
-            max-height: min(46vh, 24rem);
-            object-fit: contain;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
             background: #ece7e0;
+        }
+
+        .lightbox__nav {
+            position: absolute;
+            top: 50%;
+            z-index: 2;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.75rem;
+            height: 3.25rem;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .lightbox__nav[hidden] {
+            display: none;
+        }
+
+        .lightbox__nav:hover {
+            transform: translateY(-50%) scale(1.06);
+            opacity: 0.92;
+        }
+
+        .lightbox__nav:focus-visible {
+            outline: 2px solid var(--color-brass-light);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+
+        .lightbox__nav--prev {
+            left: 0.35rem;
+        }
+
+        .lightbox__nav--next {
+            right: 0.35rem;
+        }
+
+        .lightbox__nav svg {
+            width: 1.95rem;
+            height: 1.95rem;
+            stroke: #fff;
+            stroke-width: 2.25;
+            filter:
+                drop-shadow(0 1px 2px rgba(0, 0, 0, 0.75))
+                drop-shadow(0 0 6px rgba(0, 0, 0, 0.35));
+        }
+
+        .lightbox__dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.45rem;
+            margin: 1.05rem 0 0;
+            padding: 0;
+            background: transparent;
+        }
+
+        .lightbox__dots[hidden] {
+            display: none;
+        }
+
+        .lightbox__dot {
+            width: 0.45rem;
+            height: 0.45rem;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(94, 90, 84, 0.28);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .lightbox__dot[aria-selected="true"] {
+            background: var(--color-brass);
+            transform: scale(1.15);
+        }
+
+        .lightbox__dot:focus-visible {
+            outline: 2px solid var(--color-brass-light);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 719px) {
+            .lightbox__viewport {
+                height: auto;
+                aspect-ratio: 7 / 5;
+            }
+
+            .lightbox__nav {
+                width: 2.85rem;
+            }
+
+            .lightbox__nav--prev {
+                left: 0;
+                justify-content: flex-start;
+                padding-left: 0.12rem;
+            }
+
+            .lightbox__nav--next {
+                right: 0;
+                justify-content: flex-end;
+                padding-right: 0.12rem;
+            }
+
+            .lightbox__nav svg {
+                width: 2.35rem;
+                height: 2.35rem;
+            }
+
+            .lightbox__dots {
+                margin-bottom: 0.95rem;
+            }
         }
 
         .lightbox__body {
@@ -959,8 +1106,8 @@
                 <ul class="catalog-list">
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Living" data-image="thumb_factory1_italian_modern_living.jpeg" data-size="93 MB" data-href="Factory%201%20-%20Italian%20Modern%20Living.pdf" data-download="Factory 1 - Italian Modern Living.pdf" data-description="Modern Italian minimalist classics and contemporary reinterpretations, inspired by the likes of Minotti, Flexform, Poliform and B&amp;B Italia.">
-                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_living.jpeg" alt="" width="1184" height="861">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Living" data-image="thumb_factory1_italian_modern_living.jpeg" data-images="thumb_factory1_italian_modern_living.jpeg,thumb_factory1_italian_modern_living_2.jpeg,thumb_factory1_italian_modern_living_3.jpeg" data-size="93 MB" data-href="Factory%201%20-%20Italian%20Modern%20Living.pdf" data-download="Factory 1 - Italian Modern Living.pdf" data-description="Modern Italian minimalist classics and contemporary reinterpretations, inspired by the likes of Minotti, Flexform, Poliform and B&amp;B Italia.">
+                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_living.jpeg" alt="" width="1184" height="861" decoding="async" fetchpriority="high">
                                 <span>
                                     <span class="catalog__title">Italian Modern Living</span>
                                     <span class="catalog__meta"><span class="catalog__size">93 MB</span><span class="catalog__kind">PDF</span></span>
@@ -975,8 +1122,8 @@
                     </li>
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Dining" data-image="thumb_factory1_italian_modern_dining.jpeg" data-size="27 MB" data-href="Factory%201%20-%20Italian%20Modern%20Dining.pdf" data-download="Factory 1 - Italian Modern Dining.pdf" data-description="Italian modernist minimalism for the dining room, from refined marble-top dining tables to coordinated leather-upholstered dining chairs and complete dining sets.">
-                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_dining.jpeg" alt="" width="856" height="750">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Dining" data-image="thumb_factory1_italian_modern_dining.jpeg" data-images="thumb_factory1_italian_modern_dining.jpeg,thumb_factory1_italian_modern_dining_2.jpeg,thumb_factory1_italian_modern_dining_3.jpeg" data-size="27 MB" data-href="Factory%201%20-%20Italian%20Modern%20Dining.pdf" data-download="Factory 1 - Italian Modern Dining.pdf" data-description="Italian modernist minimalism for the dining room, from refined marble-top dining tables to coordinated leather-upholstered dining chairs and complete dining sets.">
+                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_dining.jpeg" alt="" width="856" height="750" loading="lazy" decoding="async">
                                 <span>
                                     <span class="catalog__title">Italian Modern Dining</span>
                                     <span class="catalog__meta"><span class="catalog__size">27 MB</span><span class="catalog__kind">PDF</span></span>
@@ -991,8 +1138,8 @@
                     </li>
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Bedroom" data-image="thumb_factory1_italian_modern_bedroom.jpeg" data-size="28 MB" data-href="Factory%201%20-%20Italian%20Modern%20Bedroom.pdf" data-download="Factory 1 - Italian Modern Bedroom.pdf" data-description="Italian modernist minimalism for the bedroom, featuring refined bedframes, upholstered beds, nightstands, dressers and complementary bedroom furnishings.">
-                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_bedroom.jpeg" alt="" width="864" height="676">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Italian Modern Bedroom" data-image="thumb_factory1_italian_modern_bedroom.jpeg" data-images="thumb_factory1_italian_modern_bedroom.jpeg,thumb_factory1_italian_modern_bedroom_2.jpeg,thumb_factory1_italian_modern_bedroom_3.jpeg" data-size="28 MB" data-href="Factory%201%20-%20Italian%20Modern%20Bedroom.pdf" data-download="Factory 1 - Italian Modern Bedroom.pdf" data-description="Italian modernist minimalism for the bedroom, featuring refined bedframes, upholstered beds, nightstands, dressers and complementary bedroom furnishings.">
+                                <img class="catalog__thumb" src="thumb_factory1_italian_modern_bedroom.jpeg" alt="" width="864" height="676" loading="lazy" decoding="async">
                                 <span>
                                     <span class="catalog__title">Italian Modern Bedroom</span>
                                     <span class="catalog__meta"><span class="catalog__size">28 MB</span><span class="catalog__kind">PDF</span></span>
@@ -1007,8 +1154,8 @@
                     </li>
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Fashion House Luxury" data-image="thumb_factory1_fashion_house_luxury.jpeg" data-size="97 MB" data-href="Factory%201%20-%20Fashion%20House%20Luxury.pdf" data-download="Factory 1 - Fashion House Luxury.pdf" data-description="A luxurious collection of living, dining and bedroom furniture inspired by leading designer and fashion-house brands—from the refined elegance of Fendi, Hermès and Louis Vuitton to the opulent statement pieces of Versace, Visionnaire and Bentley.">
-                                <img class="catalog__thumb" src="thumb_factory1_fashion_house_luxury.jpeg" alt="" width="1313" height="806">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Fashion House Luxury" data-image="thumb_factory1_fashion_house_luxury.jpeg" data-images="thumb_factory1_fashion_house_luxury.jpeg,thumb_factory1_fashion_house_luxury_2.jpeg,thumb_factory1_fashion_house_luxury_3.jpeg" data-size="97 MB" data-href="Factory%201%20-%20Fashion%20House%20Luxury.pdf" data-download="Factory 1 - Fashion House Luxury.pdf" data-description="A luxurious collection of living, dining and bedroom furniture inspired by leading designer and fashion-house brands—from the refined elegance of Fendi, Hermès and Louis Vuitton to the opulent statement pieces of Versace, Visionnaire and Bentley.">
+                                <img class="catalog__thumb" src="thumb_factory1_fashion_house_luxury.jpeg" alt="" width="1313" height="806" loading="lazy" decoding="async">
                                 <span>
                                     <span class="catalog__title">Fashion House Luxury</span>
                                     <span class="catalog__meta"><span class="catalog__size">97 MB</span><span class="catalog__kind">PDF</span></span>
@@ -1023,8 +1170,8 @@
                     </li>
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Natural Modern &amp; Eclectic Styles" data-image="thumb_factory1_natural_eclectic_styles.jpeg" data-size="100 MB" data-href="Factory%201%20-%20Natural%20Modern%20%26%20Eclectic%20Styles.pdf" data-download="Factory 1 - Natural Modern &amp; Eclectic Styles.pdf" data-description="This catalog captures the remaining styles from this factory not covered in the other collections—a diverse mix ranging from the natural woods and tactile fabrics of Natural Modern design (think Restoration Hardware) to the more playful forms, colors and combinations of Eclectic design (think Ligne Roset and Roche Bobois).">
-                                <img class="catalog__thumb" src="thumb_factory1_natural_eclectic_styles.jpeg" alt="" width="1404" height="1154">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Natural Modern &amp; Eclectic Styles" data-image="thumb_factory1_natural_eclectic_styles.jpeg" data-images="thumb_factory1_natural_eclectic_styles.jpeg,thumb_factory1_natural_eclectic_styles_2.jpeg,thumb_factory1_natural_eclectic_styles_3.jpeg" data-size="100 MB" data-href="Factory%201%20-%20Natural%20Modern%20%26%20Eclectic%20Styles.pdf" data-download="Factory 1 - Natural Modern &amp; Eclectic Styles.pdf" data-description="This catalog captures the remaining styles from this factory not covered in the other collections—a diverse mix ranging from the natural woods and tactile fabrics of Natural Modern design (think Restoration Hardware) to the more playful forms, colors and combinations of Eclectic design (think Ligne Roset and Roche Bobois).">
+                                <img class="catalog__thumb" src="thumb_factory1_natural_eclectic_styles.jpeg" alt="" width="1404" height="1154" loading="lazy" decoding="async">
                                 <span>
                                     <span class="catalog__title">Natural Modern &amp; Eclectic Styles</span>
                                     <span class="catalog__meta"><span class="catalog__size">100 MB</span><span class="catalog__kind">PDF</span></span>
@@ -1050,8 +1197,8 @@
                 <ul class="catalog-list">
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Factory Collection 2025" data-image="thumb_factory2_collection_2025.jpeg" data-size="91 MB" data-href="Factory%202%20-%20Factory%20Collection%202025.pdf" data-download="Factory 2 - Factory Collection 2025.pdf" data-description="This factory’s main collection, bringing together the major designer-inspired styles popular in Foshan—from Italian Modern and minimalist designs to Fashion House Luxury—all in one comprehensive catalog.">
-                                <img class="catalog__thumb" src="thumb_factory2_collection_2025.jpeg" alt="" width="1266" height="764">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Factory Collection 2025" data-image="thumb_factory2_collection_2025.jpeg" data-images="thumb_factory2_collection_2025.jpeg,thumb_factory2_collection_2025_2.jpeg,thumb_factory2_collection_2025_3.jpeg" data-size="91 MB" data-href="Factory%202%20-%20Factory%20Collection%202025.pdf" data-download="Factory 2 - Factory Collection 2025.pdf" data-description="This factory’s main collection, bringing together the major designer-inspired styles popular in Foshan—from Italian Modern and minimalist designs to Fashion House Luxury—all in one comprehensive catalog.">
+                                <img class="catalog__thumb" src="thumb_factory2_collection_2025.jpeg" alt="" width="1266" height="764" loading="lazy" decoding="async">
                                 <span>
                                     <span class="catalog__title">Factory Collection 2025</span>
                                     <span class="catalog__meta"><span class="catalog__size">91 MB</span><span class="catalog__kind">PDF</span></span>
@@ -1066,8 +1213,8 @@
                     </li>
                     <li>
                         <div class="catalog">
-                            <button type="button" class="catalog__open" data-open-lightbox data-title="Modern Rustic Collection 2026" data-image="thumb_factory2_modern_rustic_collection_2025.jpeg" data-size="22 MB" data-href="Factory%202%20-%20Modern%20Rustic%20Collection%202026.pdf" data-download="Factory 2 - Modern Rustic Collection 2026.pdf" data-description="A newly released collection representing this factory’s significant new focus on the emerging Modern Rustic aesthetic, pairing warm fabrics, relaxed leather, natural wood and stone with the understated, earthy elegance of Liaigre-inspired design.">
-                                <img class="catalog__thumb" src="thumb_factory2_modern_rustic_collection_2025.jpeg" alt="" width="1092" height="794">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Modern Rustic Collection 2026" data-image="thumb_factory2_modern_rustic_collection_2025.jpeg" data-images="thumb_factory2_modern_rustic_collection_2025.jpeg,thumb_factory2_modern_rustic_collection_2025_2.jpeg,thumb_factory2_modern_rustic_collection_2025_3.jpeg" data-size="22 MB" data-href="Factory%202%20-%20Modern%20Rustic%20Collection%202026.pdf" data-download="Factory 2 - Modern Rustic Collection 2026.pdf" data-description="A newly released collection representing this factory’s significant new focus on the emerging Modern Rustic aesthetic, pairing warm fabrics, relaxed leather, natural wood and stone with the understated, earthy elegance of Liaigre-inspired design.">
+                                <img class="catalog__thumb" src="thumb_factory2_modern_rustic_collection_2025.jpeg" alt="" width="1092" height="794" loading="lazy" decoding="async">
                                 <span>
                                     <span class="catalog__title">Modern Rustic Collection 2026</span>
                                     <span class="catalog__meta"><span class="catalog__size">22 MB</span><span class="catalog__kind">PDF</span></span>
@@ -1153,7 +1300,18 @@
         <div class="lightbox__panel" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
             <button type="button" class="lightbox__close" data-close-lightbox aria-label="Close">&times;</button>
             <figure class="lightbox__figure">
-                <img class="lightbox__img" alt="" width="1184" height="861">
+                <div class="lightbox__carousel" data-catalog-carousel tabindex="0" aria-roledescription="carousel">
+                    <div class="lightbox__viewport" data-carousel-viewport>
+                        <button type="button" class="lightbox__nav lightbox__nav--prev" data-carousel-prev aria-label="Previous preview" hidden>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                        </button>
+                        <div class="lightbox__track" data-carousel-track></div>
+                        <button type="button" class="lightbox__nav lightbox__nav--next" data-carousel-next aria-label="Next preview" hidden>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                    <div class="lightbox__dots" data-carousel-dots role="tablist" aria-label="Catalog previews" hidden></div>
+                </div>
             </figure>
             <div class="lightbox__body">
                 <div class="lightbox__heading">
@@ -1177,13 +1335,174 @@
     (function () {
         var modal = document.getElementById('contactModal');
         var lightbox = document.getElementById('catalogLightbox');
-        var lbImg = lightbox.querySelector('.lightbox__img');
         var lbTitle = document.getElementById('lightboxTitle');
         var lbDesc = lightbox.querySelector('.lightbox__desc');
         var lbSize = lightbox.querySelector('.lightbox__size');
         var lbDownload = lightbox.querySelector('.lightbox__download');
+        var lbTrack = lightbox.querySelector('[data-carousel-track]');
+        var lbDots = lightbox.querySelector('[data-carousel-dots]');
+        var lbPrev = lightbox.querySelector('[data-carousel-prev]');
+        var lbNext = lightbox.querySelector('[data-carousel-next]');
+        var lbViewport = lightbox.querySelector('[data-carousel-viewport]');
+        var carouselIndex = 0;
+        var carouselCount = 0;
+        var touchStartX = null;
         var contactFocus = null;
         var lightboxFocus = null;
+
+        function parseCatalogImages(btn) {
+            var list = btn.getAttribute('data-images');
+            if (list) {
+                return list.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+            }
+            var single = btn.getAttribute('data-image');
+            return single ? [single] : [];
+        }
+
+        function updateCarouselDots() {
+            if (!lbDots) return;
+            lbDots.querySelectorAll('.lightbox__dot').forEach(function (dot, i) {
+                dot.setAttribute('aria-selected', i === carouselIndex ? 'true' : 'false');
+            });
+        }
+
+        function ensureSlideImageLoaded(index) {
+            if (!lbTrack) return;
+            var slide = lbTrack.children[index];
+            if (!slide) return;
+            var img = slide.querySelector('img');
+            if (!img || !img.dataset.src) return;
+            img.src = img.dataset.src;
+            delete img.dataset.src;
+        }
+
+        function goToCarouselSlide(index) {
+            if (!carouselCount) return;
+            carouselIndex = (index + carouselCount) % carouselCount;
+            if (lbTrack) lbTrack.style.transform = 'translateX(-' + (carouselIndex * 100) + '%)';
+            ensureSlideImageLoaded(carouselIndex);
+            ensureSlideImageLoaded((carouselIndex + 1) % carouselCount);
+            updateCarouselDots();
+        }
+
+        function queueHydrateCarouselExtras() {
+            if (!lbTrack) return;
+            var imgs = lbTrack.querySelectorAll('.lightbox__img');
+            var i = 1;
+
+            function next() {
+                if (i >= imgs.length) return;
+                var img = imgs[i];
+                if (img.dataset.src) {
+                    var advance = function () {
+                        i += 1;
+                        next();
+                    };
+                    img.onload = advance;
+                    img.onerror = advance;
+                    img.src = img.dataset.src;
+                    delete img.dataset.src;
+                } else {
+                    i += 1;
+                    next();
+                }
+            }
+
+            next();
+        }
+
+        function prefetchCatalogExtraImages() {
+            var queue = [];
+            document.querySelectorAll('[data-open-lightbox]').forEach(function (btn) {
+                var images = parseCatalogImages(btn);
+                for (var i = 1; i < images.length; i += 1) queue.push(images[i]);
+            });
+
+            var idx = 0;
+            function next() {
+                if (idx >= queue.length) return;
+                var img = new Image();
+                var advance = function () {
+                    idx += 1;
+                    next();
+                };
+                img.onload = advance;
+                img.onerror = advance;
+                img.src = queue[idx];
+            }
+
+            next();
+        }
+
+        function buildCatalogCarousel(images, title) {
+            carouselCount = images.length;
+            carouselIndex = 0;
+            if (!lbTrack || !lbDots) return;
+
+            lbTrack.innerHTML = '';
+            lbDots.innerHTML = '';
+
+            images.forEach(function (src, i) {
+                var slide = document.createElement('div');
+                slide.className = 'lightbox__slide';
+                var img = document.createElement('img');
+                img.className = 'lightbox__img';
+                if (i === 0) {
+                    img.src = src;
+                } else {
+                    img.dataset.src = src;
+                }
+                img.alt = title + ' — preview ' + (i + 1) + ' of ' + images.length;
+                img.width = 1184;
+                img.height = 861;
+                img.decoding = 'async';
+                slide.appendChild(img);
+                lbTrack.appendChild(slide);
+
+                if (images.length > 1) {
+                    var dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.className = 'lightbox__dot';
+                    dot.setAttribute('role', 'tab');
+                    dot.setAttribute('aria-label', 'Preview ' + (i + 1));
+                    dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+                    (function (idx) {
+                        dot.addEventListener('click', function () { goToCarouselSlide(idx); });
+                    })(i);
+                    lbDots.appendChild(dot);
+                }
+            });
+
+            var multi = images.length > 1;
+            if (lbPrev) lbPrev.hidden = !multi;
+            if (lbNext) lbNext.hidden = !multi;
+            lbDots.hidden = !multi;
+            lbTrack.style.transform = 'translateX(0)';
+            updateCarouselDots();
+        }
+
+        if (lbPrev) {
+            lbPrev.addEventListener('click', function () { goToCarouselSlide(carouselIndex - 1); });
+        }
+        if (lbNext) {
+            lbNext.addEventListener('click', function () { goToCarouselSlide(carouselIndex + 1); });
+        }
+
+        if (lbViewport) {
+            lbViewport.addEventListener('touchstart', function (e) {
+                if (carouselCount < 2 || !e.changedTouches.length) return;
+                touchStartX = e.changedTouches[0].clientX;
+            }, { passive: true });
+
+            lbViewport.addEventListener('touchend', function (e) {
+                if (carouselCount < 2 || touchStartX === null || !e.changedTouches.length) return;
+                var delta = e.changedTouches[0].clientX - touchStartX;
+                touchStartX = null;
+                if (Math.abs(delta) < 40) return;
+                if (delta < 0) goToCarouselSlide(carouselIndex + 1);
+                else goToCarouselSlide(carouselIndex - 1);
+            }, { passive: true });
+        }
 
         function syncScrollLock() {
             var contactOpen = modal && !modal.hidden;
@@ -1214,9 +1533,11 @@
 
         function openLightbox(btn) {
             if (!lightbox || !btn) return;
-            lbImg.src = btn.getAttribute('data-image');
-            lbImg.alt = btn.getAttribute('data-title');
-            lbTitle.textContent = btn.getAttribute('data-title');
+            var title = btn.getAttribute('data-title');
+            buildCatalogCarousel(parseCatalogImages(btn), title);
+            ensureSlideImageLoaded(0);
+            queueHydrateCarouselExtras();
+            lbTitle.textContent = title;
             lbDesc.textContent = btn.getAttribute('data-description');
             lbSize.textContent = btn.getAttribute('data-size');
             lbDownload.href = btn.getAttribute('data-href');
@@ -1245,10 +1566,30 @@
         });
 
         document.addEventListener('keydown', function (e) {
-            if (e.key !== 'Escape') return;
-            if (lightbox && !lightbox.hidden) closeLightbox();
-            else closeModal();
+            if (lightbox && !lightbox.hidden) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                    return;
+                }
+                if (carouselCount > 1 && e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    goToCarouselSlide(carouselIndex - 1);
+                    return;
+                }
+                if (carouselCount > 1 && e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    goToCarouselSlide(carouselIndex + 1);
+                    return;
+                }
+            }
+            if (e.key === 'Escape') closeModal();
         });
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(function () { prefetchCatalogExtraImages(); }, { timeout: 4000 });
+        } else {
+            window.setTimeout(prefetchCatalogExtraImages, 2000);
+        }
     }());
     </script>
 </body>
