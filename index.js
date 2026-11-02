@@ -377,6 +377,12 @@
                 }
             });
 
+            panel.addEventListener('click', function (event) {
+                if (event.target.closest('a')) {
+                    closeSiteNav();
+                }
+            });
+
             document.addEventListener('click', function (event) {
                 if (!root.contains(event.target)) {
                     closeSiteNav();
