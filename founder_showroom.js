@@ -1039,6 +1039,7 @@ function initQualityStickyChapter() {
     let qualityShimmerReady = true;
     let qualityWasStuck = false;
     let qualityShimmerTimer = null;
+    let qualityShimmerDelayTimer = null;
 
     function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
@@ -1172,11 +1173,22 @@ function initQualityStickyChapter() {
 
         if (!isStuck && distanceToStick > 16) {
             qualityShimmerReady = true;
+            clearTimeout(qualityShimmerDelayTimer);
+            qualityShimmerDelayTimer = null;
         }
 
-        if (isStuck && !qualityWasStuck && qualityShimmerReady) {
+        if (isStuck && holdProgress >= 0.98 && qualityShimmerReady && !qualityShimmerDelayTimer) {
             qualityShimmerReady = false;
-            playQualityShimmer();
+            qualityShimmerDelayTimer = window.setTimeout(function () {
+                qualityShimmerDelayTimer = null;
+                const headerHeight = header ? header.getBoundingClientRect().height : 56;
+                const stillLocked = Math.abs(pin.getBoundingClientRect().top - headerHeight) <= 24;
+                if (!stillLocked) {
+                    qualityShimmerReady = true;
+                    return;
+                }
+                playQualityShimmer();
+            }, 1500);
         }
 
         qualityWasStuck = isStuck;
@@ -1212,6 +1224,8 @@ function initQualityStickyChapter() {
         );
         clearHoldVars();
         clearTimeout(qualityShimmerTimer);
+        clearTimeout(qualityShimmerDelayTimer);
+        qualityShimmerDelayTimer = null;
         qualityShimmerReady = true;
         qualityWasStuck = false;
     }

@@ -22,8 +22,28 @@
         contactFocus = null;
     }
 
-    function openFounderContactModal() {
+    var contactCopy = {
+        contact: {
+            title: 'Want to find out more?',
+            lede: 'Contact me and let\u2019s chat. I\u2019m David, and I\u2019d love to hear from you.'
+        },
+        home: {
+            title: 'Tell me about your project',
+            lede: 'A floor plan, a few photos, and the furniture styles you\u2019re looking for are enough. I\u2019m David.'
+        }
+    };
+
+    function setContactCopy(intent) {
+        var copy = contactCopy[intent] || contactCopy.contact;
+        var title = document.getElementById('contactModalTitle');
+        var lede = contactModal && contactModal.querySelector('.modal__lede');
+        if (title) title.textContent = copy.title;
+        if (lede) lede.textContent = copy.lede;
+    }
+
+    function openFounderContactModal(intent) {
         if (!contactModal) return;
+        setContactCopy(intent);
         contactFocus = document.activeElement;
         contactModal.hidden = false;
         syncContactScrollLock();
@@ -38,7 +58,7 @@
     document.querySelectorAll('[data-open-contact]').forEach(function (el) {
         el.addEventListener('click', function (event) {
             event.preventDefault();
-            openFounderContactModal();
+            openFounderContactModal(el.getAttribute('data-contact-intent'));
         });
     });
 
