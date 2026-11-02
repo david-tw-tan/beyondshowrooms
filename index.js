@@ -25,11 +25,11 @@
     var contactCopy = {
         contact: {
             title: 'Want to find out more?',
-            lede: 'Contact me and let\u2019s chat. I\u2019m David, and I\u2019d love to hear from you.'
+            lede: 'I\u2019m David. Let\u2019s chat! When you write, include your timing, which rooms or pieces, and the styles you want, so I can help.'
         },
         home: {
             title: 'Tell me about your project',
-            lede: 'A floor plan, a few photos, and the furniture styles you\u2019re looking for are enough. I\u2019m David.'
+            lede: 'I\u2019m David. Let\u2019s chat! Tell me your timing, which rooms or pieces, and the styles you want, so I can help.'
         }
     };
 
