@@ -1151,9 +1151,9 @@ main {
     margin-top: 0.75rem;
 }
 
-.promise-points__line {
+.promise-points p.promise-points__line {
     font-weight: 500;
-    color: var(--color-ink);
+    color: var(--color-brass);
 }
 
 .promise-points a {
