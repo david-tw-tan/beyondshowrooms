@@ -1039,7 +1039,6 @@ function initQualityStickyChapter() {
     let qualityShimmerReady = true;
     let qualityWasStuck = false;
     let qualityShimmerTimer = null;
-    let qualityShimmerDelayTimer = null;
 
     function clamp(value, min, max) {
         return Math.min(max, Math.max(min, value));
@@ -1173,22 +1172,15 @@ function initQualityStickyChapter() {
 
         if (!isStuck && distanceToStick > 16) {
             qualityShimmerReady = true;
-            clearTimeout(qualityShimmerDelayTimer);
-            qualityShimmerDelayTimer = null;
         }
 
-        if (isStuck && holdProgress >= 0.98 && qualityShimmerReady && !qualityShimmerDelayTimer) {
+        const shimmerMark = holdCopy && holdCopy.querySelector('[data-quality-shimmer-mark]');
+        const markArrived = shimmerMark && holdCopy
+            && holdCopy.getBoundingClientRect().top <= pin.getBoundingClientRect().bottom + 12;
+
+        if (isStuck && markArrived && qualityShimmerReady) {
             qualityShimmerReady = false;
-            qualityShimmerDelayTimer = window.setTimeout(function () {
-                qualityShimmerDelayTimer = null;
-                const headerHeight = header ? header.getBoundingClientRect().height : 56;
-                const stillLocked = Math.abs(pin.getBoundingClientRect().top - headerHeight) <= 24;
-                if (!stillLocked) {
-                    qualityShimmerReady = true;
-                    return;
-                }
-                playQualityShimmer();
-            }, 1500);
+            playQualityShimmer();
         }
 
         qualityWasStuck = isStuck;
@@ -1224,8 +1216,6 @@ function initQualityStickyChapter() {
         );
         clearHoldVars();
         clearTimeout(qualityShimmerTimer);
-        clearTimeout(qualityShimmerDelayTimer);
-        qualityShimmerDelayTimer = null;
         qualityShimmerReady = true;
         qualityWasStuck = false;
     }
