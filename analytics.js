@@ -163,6 +163,59 @@
         return pagePath();
     }
 
+    function catalogLabelFromOpener(opener) {
+        if (!opener) {
+            return '';
+        }
+
+        var title = (opener.getAttribute('data-title') || '').trim();
+        var section = opener.closest('section');
+        var factoryEl = section ? section.querySelector('.factory-title') : null;
+        var factory = factoryEl && factoryEl.textContent
+            ? factoryEl.textContent.replace(/\s+/g, ' ').trim()
+            : '';
+
+        if (factory && title) {
+            return factory + ' — ' + title;
+        }
+        return title;
+    }
+
+    function catalogLabelFromDownload(link) {
+        if (!link) {
+            return '';
+        }
+
+        var labeled = (link.getAttribute('data-catalog-label') || '').trim();
+        if (labeled) {
+            return labeled;
+        }
+
+        var row = link.closest('.catalog');
+        if (row) {
+            var opener = row.querySelector('[data-open-lightbox]');
+            var fromOpener = catalogLabelFromOpener(opener);
+            if (fromOpener) {
+                return fromOpener;
+            }
+        }
+
+        var downloadName = (link.getAttribute('download') || '').trim();
+        if (downloadName) {
+            return downloadName.replace(/\.pdf$/i, '').trim();
+        }
+
+        try {
+            var href = link.getAttribute('href') || '';
+            if (href && /\.pdf/i.test(href)) {
+                var file = decodeURIComponent((href.split('?')[0].split('/').pop()) || '');
+                return file.replace(/\.pdf$/i, '').trim();
+            }
+        } catch (e) {}
+
+        return '';
+    }
+
     function onReady(fn) {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', fn);
@@ -440,6 +493,32 @@
     document.addEventListener('click', function (event) {
         var target = event.target;
         if (!target || typeof target.closest !== 'function') {
+            return;
+        }
+
+        var catalogDownload = target.closest('.catalog__action, .lightbox__download');
+        if (catalogDownload) {
+            var catalog = catalogLabelFromDownload(catalogDownload);
+            if (catalog) {
+                trackEvent('catalog_download', withYoutubeEpisode({
+                    catalog: catalog,
+                    page: pagePath()
+                }));
+                flushPendingEvents();
+            }
+            return;
+        }
+
+        var catalogPreview = target.closest('[data-open-lightbox]');
+        if (catalogPreview) {
+            var previewCatalog = catalogLabelFromOpener(catalogPreview);
+            if (previewCatalog) {
+                trackEvent('catalog_preview', withYoutubeEpisode({
+                    catalog: previewCatalog,
+                    page: pagePath()
+                }));
+                flushPendingEvents();
+            }
             return;
         }
 

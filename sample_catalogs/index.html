@@ -1449,6 +1449,33 @@
             </div>
         </section>
 
+        <section class="section section--factory" id="factory-3" aria-labelledby="factory-3-title">
+            <div class="container">
+                <div class="factory-head">
+                    <h2 id="factory-3-title" class="factory-title">Factory 3</h2>
+                    <p class="factory-count">1 catalog</p>
+                </div>
+                <ul class="catalog-list">
+                    <li>
+                        <div class="catalog">
+                            <button type="button" class="catalog__open" data-open-lightbox data-title="Fashion House Specialist" data-image="thumb_factory3_fashion_house_specialist.jpeg" data-images="thumb_factory3_fashion_house_specialist.jpeg,thumb_factory3_fashion_house_specialist_2.jpeg,thumb_factory3_fashion_house_specialist_3.jpeg" data-size="35 MB" data-href="Factory%203%20-%20Fashion%20House%20Specialist.pdf" data-download="Factory 3 - Fashion House Specialist.pdf" data-description="Fashion-house furniture has been this factory’s specialty from day one—they began manufacturing in this demanding style and have honed this craft over years. This specialist collection covers designer-inspired furniture from the major fashion houses. In addition to sofas and beds, they also offer a rich complement of consoles, shelves, desks, and chairs.">
+                                <img class="catalog__thumb" src="thumb_factory3_fashion_house_specialist.jpeg" alt="" width="1024" height="763" loading="lazy" decoding="async">
+                                <span>
+                                    <span class="catalog__title">Fashion House Specialist</span>
+                                    <span class="catalog__meta"><span class="catalog__size">35 MB</span><span class="catalog__kind">PDF</span></span>
+                                </span>
+                            </button>
+                            <a class="catalog__action" href="Factory%203%20-%20Fashion%20House%20Specialist.pdf" download="Factory 3 - Fashion House Specialist.pdf" aria-label="Download Fashion House Specialist PDF">
+                                <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.35">
+                                    <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
         <section class="section section--more" id="more-styles" aria-labelledby="more-styles-title">
             <div class="container">
                 <div class="more-styles">
@@ -1760,6 +1787,13 @@
             lbSize.textContent = btn.getAttribute('data-size');
             lbDownload.href = btn.getAttribute('data-href');
             lbDownload.setAttribute('download', btn.getAttribute('data-download'));
+            var factoryEl = btn.closest('section') && btn.closest('section').querySelector('.factory-title');
+            var factory = factoryEl && factoryEl.textContent
+                ? factoryEl.textContent.replace(/\s+/g, ' ').trim()
+                : '';
+            var catalogLabel = factory && title ? (factory + ' — ' + title) : (title || '');
+            if (catalogLabel) lbDownload.setAttribute('data-catalog-label', catalogLabel);
+            else lbDownload.removeAttribute('data-catalog-label');
             lightboxFocus = btn;
             lightbox.hidden = false;
             syncScrollLock();
