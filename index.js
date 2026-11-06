@@ -25,11 +25,11 @@
     var contactCopy = {
         contact: {
             title: 'Want to find out more?',
-            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you \u2014 let\u2019s chat! When you write, include timing, rooms or pieces, and styles. I usually reply the same day.'
+            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you. When you write, include your project timing, rooms, and preferred pieces and styles.'
         },
         home: {
             title: 'Tell me about your project',
-            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you \u2014 let\u2019s chat! When you write, include timing, rooms or pieces, and styles. I usually reply the same day.'
+            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you. When you write, include your project timing, rooms, and preferred pieces and styles.'
         }
     };
 

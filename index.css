@@ -1506,10 +1506,18 @@ main {
 }
 
 .modal__lede {
-    margin: 0 0 2rem;
+    margin: 0;
     font-size: 1.02rem;
     line-height: 1.65;
     color: var(--color-ink-muted);
+    text-align: center;
+}
+
+.modal__reply {
+    margin: 0.85rem 0 1.85rem;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--color-ink-faint, #8a847c);
     text-align: center;
 }
 
