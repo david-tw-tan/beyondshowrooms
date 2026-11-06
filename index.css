@@ -2409,6 +2409,11 @@ main {
 
 .quality-collections {
     margin-top: clamp(1.25rem, 3vw, 1.65rem);
+    padding-bottom: clamp(0.75rem, 2.5vw, 1.35rem);
+}
+
+#quality {
+    padding-bottom: clamp(3.75rem, 9vw, 5.5rem);
 }
 
 .compare {
