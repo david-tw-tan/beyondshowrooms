@@ -1253,6 +1253,11 @@ main {
     color: var(--color-ink-muted);
 }
 
+.founder-closing__note--emphasis {
+    color: var(--color-ink);
+    font-weight: 500;
+}
+
 .founder-closing__note + .founder-closing__note {
     margin-top: 0.35rem;
 }
