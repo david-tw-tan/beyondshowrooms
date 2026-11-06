@@ -1275,7 +1275,7 @@ main {
 }
 
 .site-footer {
-    padding: clamp(3rem, 7vw, 4rem) clamp(1.25rem, 4vw, 2rem) clamp(2.25rem, 5vw, 2.75rem);
+    padding: clamp(3rem, 7vw, 4rem) clamp(1.25rem, 4vw, 2rem) clamp(2.85rem, 7vw, 3.5rem);
     border-top: 1px solid #e4ddd2;
     background-color: #fcfbf9;
     color: var(--color-ink-muted);
@@ -1299,6 +1299,58 @@ main {
 .site-footer__inner {
     max-width: 24rem;
     margin: 0 auto;
+}
+
+.site-footer__follow {
+    margin: 0 0 1.85rem;
+    padding-bottom: 2.15rem;
+    border-bottom: 1px solid rgba(94, 90, 84, 0.14);
+}
+
+.site-footer__follow-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.site-footer__follow-link:hover {
+    color: var(--color-ink);
+}
+
+.site-footer__follow-link:focus-visible {
+    outline: 2px solid var(--color-brass-light);
+    outline-offset: 4px;
+}
+
+.site-footer__follow-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+}
+
+.site-footer__follow-icon {
+    width: 1.28rem;
+    height: 1.28rem;
+    flex-shrink: 0;
+    color: #ff0000;
+}
+
+.site-footer__follow-label,
+.site-footer__follow-name {
+    font-size: 0.92rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+.site-footer__follow-note {
+    margin: 0.45rem 0 0;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--color-ink-faint);
 }
 
 .site-footer__brand {
@@ -1344,16 +1396,6 @@ main {
     padding-top: 0;
     max-width: 19rem;
     border-top: none;
-}
-
-.site-footer__note::before {
-    content: "";
-    display: block;
-    width: 2.75rem;
-    height: 1px;
-    margin: 0 auto 0.85rem;
-    background: rgba(94, 90, 84, 0.35);
-    transform: scaleY(0.5);
 }
 
 .site-footer__note p {
