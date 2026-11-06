@@ -25,11 +25,11 @@
     var contactCopy = {
         contact: {
             title: 'Want to find out more?',
-            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you. When you write include your project timing and size, and preferred pieces and styles.'
+            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you. When you write include your project timing and size, and preferred pieces and styles. Floor plans help too.'
         },
         home: {
             title: 'Tell me about your project',
-            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you. When you write include your project timing and size, and preferred pieces and styles.'
+            lede: 'I\u2019m David. I\u2019m here to make Foshan work for you. When you write include your project timing and size, and preferred pieces and styles. Floor plans help too.'
         }
     };
 
