@@ -37,8 +37,12 @@
         var copy = contactCopy[intent] || contactCopy.contact;
         var title = document.getElementById('contactModalTitle');
         var lede = contactModal && contactModal.querySelector('.modal__lede');
-        if (title) title.textContent = copy.title;
-        if (lede) lede.textContent = copy.lede;
+        var pageTitle = contactModal && contactModal.getAttribute('data-contact-title-' + (intent || 'contact'));
+        var pageLede = contactModal && contactModal.getAttribute('data-contact-lede-' + (intent || 'contact'));
+        if (!pageTitle && contactModal) pageTitle = contactModal.getAttribute('data-contact-title');
+        if (!pageLede && contactModal) pageLede = contactModal.getAttribute('data-contact-lede');
+        if (title) title.textContent = pageTitle || copy.title;
+        if (lede) lede.textContent = pageLede || copy.lede;
     }
 
     function openFounderContactModal(intent) {
