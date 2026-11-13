@@ -66,7 +66,7 @@ if (typeof mobileGridQuery.addEventListener === "function") {
   mobileGridQuery.addListener(() => applyCardZoom());
 }
 
-const FX_KEY = "andreasofas.currency";
+const FX_KEY = "whocanitrust.currency";
 
 function thirdReady() {
   return Boolean(state.fx?.third?.code && state.fx.third.perUsd > 0);
@@ -232,16 +232,22 @@ function renderCard(item) {
   return card;
 }
 
+function lightboxTitleHtml(item) {
+  const line = String(item?.line || "").trim();
+  if (!line) return "";
+  return `${escapeHtml(line)}<br><span class="lightbox-collection">(Fendi-inspired collection)</span>`;
+}
+
 function openLightbox(item) {
   els.lightboxImage.src = mediaSrc(item.file);
   els.lightboxImage.alt = item.line || "Furniture piece";
-  const label = String(item.line || "").trim();
+  const label = lightboxTitleHtml(item);
   if (label) {
     els.lightboxLabel.hidden = false;
-    els.lightboxLabel.textContent = label;
+    els.lightboxLabel.innerHTML = label;
   } else {
     els.lightboxLabel.hidden = true;
-    els.lightboxLabel.textContent = "";
+    els.lightboxLabel.innerHTML = "";
   }
   els.lightboxPrice.textContent = formatMoney(item);
   const note = String(item.detail || "").trim();
@@ -260,7 +266,7 @@ function closeLightbox() {
   els.lightboxImage.src = "";
   els.lightboxImage.alt = "";
   els.lightboxLabel.hidden = true;
-  els.lightboxLabel.textContent = "";
+  els.lightboxLabel.innerHTML = "";
   els.lightboxPrice.textContent = "";
   els.lightboxComment.hidden = true;
   els.lightboxComment.textContent = "";

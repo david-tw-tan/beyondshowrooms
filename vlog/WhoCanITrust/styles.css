@@ -632,12 +632,21 @@ body.edit .delete { display: grid; }
   letter-spacing: 0.01em;
   color: rgba(255, 255, 255, 0.96);
 }
+
+.lightbox-collection {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: rgba(255, 255, 255, 0.86);
+}
 .lightbox-label[hidden] {
   display: none !important;
   margin: 0;
 }
 .lightbox-price {
-  margin: 8px 0 0;
+  margin: 18px 0 0;
   font-family: var(--marker);
   font-size: clamp(1.9rem, 4vw, 2.7rem);
   line-height: 1;
@@ -705,6 +714,7 @@ body.edit .delete { display: grid; }
 body.empty-mode main,
 body.empty-mode .totals,
 body.empty-mode .pack-footer,
+body.empty-mode .early-note,
 body.empty-mode .section-group,
 body.empty-mode .section-split { display: none; }
 body.empty-mode .empty { display: block; }
@@ -718,7 +728,7 @@ body.empty-mode .empty { display: block; }
   .lightbox { padding: 56px 16px 28px; }
   .lightbox img { max-height: 36vh; }
   .lightbox-label { font-size: 1.35rem; }
-  .lightbox-price { font-size: 2rem; }
+  .lightbox-price { margin-top: 16px; font-size: 2rem; }
   .lightbox-comment { font-size: 0.98rem; }
   .section { scroll-margin-top: 96px; margin: 28px 0 40px; }
   .section-head {
